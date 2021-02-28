@@ -2,10 +2,10 @@
 
 ### Contributors
 
-*Kekoa Wong (kwong6@nd.edu)
-*Chase Saca (csaca@nd.edu)
-*Ross McIlvaine (rmcilvai@nd.edu)
-*JaeYoung Chang (jchang5@nd.edu)
+*Kekoa Wong (kwong6@nd.edu);
+*Chase Saca (csaca@nd.edu);
+*Ross McIlvaine (rmcilvai@nd.edu);
+*JaeYoung Chang (jchang5@nd.edu);
 
 ## What is Campus Wayzz?
 
