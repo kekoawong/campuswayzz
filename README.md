@@ -1,6 +1,6 @@
 # Campus Wayzz
 
-### Contributors
+### Contributors:
 
 * Kekoa Wong (kwong6@nd.edu)
 * Chase Saca (csaca@nd.edu)
