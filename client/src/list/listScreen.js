@@ -1,11 +1,22 @@
 import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function ListScreen() {
+function flatList() {
     return (
-      <View style={styles.container}>
-        <Text>List Screen</Text>
-      </View>
+        <View style={styles.container}>
+          <Text>List Screen</Text>
+        </View>
+      );
+}
+
+export default function ListScreen() {
+
+    const Stack = createStackNavigator();
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Listings" component={flatList} />
+        </Stack.Navigator>
     );
 }
 
