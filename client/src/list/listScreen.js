@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet } from 'react-native';
 
-function flatList() {
+function MainList() {
     return (
         <View style={styles.container}>
           <Text>List Screen</Text>
@@ -11,11 +11,10 @@ function flatList() {
 }
 
 export default function ListScreen() {
-
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Listings" component={flatList} />
+            <Stack.Screen name="Listings" component={MainList} />
         </Stack.Navigator>
     );
 }
