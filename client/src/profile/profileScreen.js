@@ -14,7 +14,7 @@ export default function ProfileScreen() {
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>
-          <Stack.Screen name="Profile" component={MainProfile} />
+          <Stack.Screen name="Profile" component={MainProfile}/>
       </Stack.Navigator>
   );
 }
