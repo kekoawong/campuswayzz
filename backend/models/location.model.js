@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const buildingTypes = ['Restaurant', 'Study Space', 'Recreation', 'R&R'];
+const buildingTypes = ['Restaurant', 'Study Space', 'Recreation', 'R&R', 'Other'];
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const locationSchema = new mongoose.Schema({
     name: {
@@ -18,12 +19,20 @@ const locationSchema = new mongoose.Schema({
         required: true
     },
     coordinates: {
-        type: String,
-        required: true
+        required: true,
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        }
     },
     hoursOfOperation: [{
         day: {
             type: String,
+            enum: days,
             required: true
         },
         startTime: {

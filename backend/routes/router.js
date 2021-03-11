@@ -13,6 +13,7 @@ router.post('/signup', usersCtrl.signup);
 router.post('/login', usersCtrl.login);
 
 // reviews
+router.post('/review', reviewsCtrl.uploadReview);
 
 // locations
 

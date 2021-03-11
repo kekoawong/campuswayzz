@@ -27,7 +27,14 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     coordinates: {
-        type: String
+        // latitude: {
+        //     type: String,
+        //     required: true
+        // },
+        // longitude: {
+        //     type: String,
+        //     required: true
+        // }
     },
     friends: [{
         friendNetID: {
