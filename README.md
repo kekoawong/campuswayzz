@@ -14,5 +14,5 @@ Campus Wayzz is a location discovery mobile application that will enable users t
 ## Libraries Used
 
 * Navigation: https://reactnavigation.org/
-* Material Design: https://callstack.github.io/react-native-paper/index.html
+* UI Library: https://wix.github.io/react-native-ui-lib/
 * Maps: https://github.com/react-native-maps/react-native-maps
