@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const options = require('../options.json');
+
+const buildingTypes = options['Location.types'];
 
 const reviewSchema = new mongoose.Schema({
     description: {
@@ -21,6 +24,7 @@ const reviewSchema = new mongoose.Schema({
     },
     locationType: {
         type: String,
+        enum: buildingTypes,
         required: true
     }
 }, {timestamps: true});

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const options = require('../options.json');
 
-const buildingTypes = ['Restaurant', 'Study Space', 'Recreation', 'R&R', 'Other'];
+const buildingTypes = options['Location.types'];
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const locationSchema = new mongoose.Schema({
