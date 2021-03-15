@@ -39,7 +39,15 @@ function getReviewsForLocation(req, res){
 }
 
 function getReviewsForUser(req, res){
-
+    Review.find(req.params)
+    .then(userReviews => {
+        res.status(200).json(userReviews);
+    }).catch(err => {
+        console.log('weird error');
+        console.log(err);
+        res.status(401).json(err);
+        return;
+    })
 }
 
 function uploadReview(req, res){

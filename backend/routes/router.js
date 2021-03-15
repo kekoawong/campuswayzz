@@ -14,7 +14,8 @@ router.post('/login', usersCtrl.login);
 
 // reviews
 router.get('/review', reviewsCtrl.getReviews);
-router.get('/review/:locationName', reviewsCtrl.getReviewsForLocation);
+router.get('/review/location/:locationName', reviewsCtrl.getReviewsForLocation);
+router.get('/review/user/:userNetID', reviewsCtrl.getReviewsForUser);
 router.post('/review', reviewsCtrl.uploadReview);
 router.put('/review/:_id', reviewsCtrl.editReview);
 router.delete('/review/:_id', reviewsCtrl.deleteReview);
