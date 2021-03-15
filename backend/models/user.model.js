@@ -1,7 +1,15 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+/* user model (schema) file */
 
-const privacyOptions = ['Share indefinitely', 'Share while using', 'Never share'];
+/* TODO:
+1. make sure password is encrypted when user is updated
+*/
+
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt'); // use bcrypt for password encryption
+
+// import global options
+const options = require('../options.json');
+const privacyOptions = options['User.privacyOptions'];
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -42,6 +50,7 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+/* encrypt password before saving user */
 userSchema.pre('save', function(next){
     const user = this;
 
@@ -52,6 +61,7 @@ userSchema.pre('save', function(next){
     });
 })
 
+/* check password using bcrypt compare when user attempts login*/
 userSchema.methods.checkPassword = function(password, params) {
     bcrypt.compare(password, this.password, params);
 }

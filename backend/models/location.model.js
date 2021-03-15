@@ -1,8 +1,10 @@
+/* location model (schema) file */
 const mongoose = require('mongoose');
-const options = require('../options.json');
 
+// import global options
+const options = require('../options.json');
 const buildingTypes = options['Location.types'];
-const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const days = options['Location.days'];
 
 const locationSchema = new mongoose.Schema({
     name: {
