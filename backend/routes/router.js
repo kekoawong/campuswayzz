@@ -13,8 +13,10 @@ router.post('/signup', usersCtrl.signup);
 router.post('/login', usersCtrl.login);
 
 // reviews
+router.get('/review', reviewsCtrl.getReviews)
 router.post('/review', reviewsCtrl.uploadReview);
 router.put('/review/:_id', reviewsCtrl.editReview);
+router.delete('/review/:_id', reviewsCtrl.deleteReview);
 
 // locations
 
