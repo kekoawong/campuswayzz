@@ -14,6 +14,7 @@ router.post('/login', usersCtrl.login);
 
 // reviews
 router.post('/review', reviewsCtrl.uploadReview);
+router.put('/review/:_id', reviewsCtrl.editReview);
 
 // locations
 

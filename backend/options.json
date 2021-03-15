@@ -1,0 +1,6 @@
+{
+    "Location.types": ["Restaurant", "Study Space", "Recreation", "R&R", "Other"],
+    "Location.locations": [
+        {"name": "North Dining Hall", "type": "Restaurant"}
+    ]
+}

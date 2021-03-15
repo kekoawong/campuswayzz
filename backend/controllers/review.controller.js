@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Review = require('../models/review.model');
 
 module.exports = {
@@ -31,8 +32,20 @@ function uploadReview(req, res){
     })
 }
 
+/* edit review */
 function editReview(req, res){
-
+    req.params['_id'] = mongoose.Types.ObjectId(req.params['_id']);
+    console.log(req.params);
+    Review.updateOne(req.params, {$set: req.body})
+    .then(dbResponse => {
+        if (dbResponse.nModified == 1){
+            res.status(200).json({result: 'success', message: 'Review update successful'});
+        } else {
+            res.status(404).json({result: 'Review not found'});
+        }
+    }).catch(err => {
+        res.status(500).json(err.message);
+    });
 }
 
 function deleteReview(req, res){
