@@ -27,7 +27,15 @@ function getReviews(req, res){
 }
 
 function getReviewsForLocation(req, res){
-
+    Review.find(req.params)
+    .then(locationReviews => {
+        res.status(200).json(locationReviews);
+    }).catch(err => {
+        console.log('weird error');
+        console.log(err);
+        res.status(401).json(err);
+        return;
+    })
 }
 
 function getReviewsForUser(req, res){
