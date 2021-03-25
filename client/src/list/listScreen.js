@@ -2,29 +2,30 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { Button, FlatList, View, Text, StyleSheet } from 'react-native';
-import Item from './item'
+import Item from './item';
+import DetailsScreen from './detailsScreen';
 
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
+
+const DATA = [
+  {
+    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    title: "First Item",
+  },
+  {
+    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+    title: "Second Item",
+  },
+  {
+    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    title: "Third Item",
+  },
+];
 
 function Empty(){
   const navigation = useNavigation();
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Listings Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
+    <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
+      <Text>EMPTY!!</Text>
     </View>
   );
 }
@@ -34,6 +35,9 @@ function MainList({navigation}) {
         <View style={styles.container}>
           <FlatList
             ListEmptyComponent={Empty}
+            data={DATA}
+            renderItem={Item}
+            keyExtractor={(item) => item.id}
           />
         </View>
       );
@@ -54,5 +58,5 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       overflow: 'scroll'
-    },
+    }
 });

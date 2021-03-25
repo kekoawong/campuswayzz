@@ -1,21 +1,31 @@
 import React from 'react';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Card, Title, Paragraph } from 'react-native-paper';
 
-const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
-
-export default function Item() {
+// takes in the item object as a prop
+export default function Item({ item }) {
     return (
-        <Card>
-            <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
+        <TouchableOpacity>
+            <Card
+                style
+                elevation={5}
+                style={styles.container}
+            >
                 <Card.Content>
-                    <Title>Card title</Title>
-                    <Paragraph>Card content</Paragraph>
+                    <Title>{item.title}</Title>
+                    <Paragraph>Card stuff</Paragraph>
                 </Card.Content>
                 <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-                <Card.Actions>
-                    <Button>Cancel</Button>
-                    <Button>Ok</Button>
-                </Card.Actions>
-        </Card>
+            </Card>
+        </TouchableOpacity>
+
     );
 }
+
+const styles = StyleSheet.create({ 
+    container: {
+        marginBottom: 15,
+        marginHorizontal: 10
+    }
+});
