@@ -22,7 +22,6 @@ const DATA = [
 ];
 
 function Empty(){
-  const navigation = useNavigation();
   return (
     <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
       <Text>EMPTY!!</Text>
@@ -30,15 +29,18 @@ function Empty(){
   );
 }
 
-function MainList({navigation}) {
+function MainList() {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
           <FlatList
             ListEmptyComponent={Empty}
+            style={{paddingTop: 20}}
             data={DATA}
             renderItem={Item}
             keyExtractor={(item) => item.id}
           />
+          <Button title="Go to Home" onPress={() => navigation.navigate('Details')} />
         </View>
       );
 }
