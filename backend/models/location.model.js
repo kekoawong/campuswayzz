@@ -22,16 +22,15 @@ const locationSchema = new mongoose.Schema({
         required: true
     },
     coordinates: {
-        required: true,
-        latitude: {
+        lat: {
             type: String,
             required: true
         },
-        longitude: {
+        long: {
             type: String,
             required: true
         }
-    },
+    }/*,
     hoursOfOperation: [{
         day: {
             type: String,
@@ -46,7 +45,7 @@ const locationSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }]*/
 });
 
 module.exports = mongoose.model('location', locationSchema);

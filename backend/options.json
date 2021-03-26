@@ -1,9 +1,5 @@
 {
     "Location.days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
     "Location.types": ["Restaurant", "Study Space", "Recreation", "R&R", "Other"],
-    "Location.locations": [
-        {"name": "North Dining Hall", "type": "Restaurant"},
-        {"name": "South Dining Hall", "type": "Restaurant"}
-    ],
     "User.privacyOptions": ["Share indefinitely", "Share while using", "Never share"]
 }

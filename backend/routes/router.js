@@ -5,7 +5,7 @@ const router = express.Router();
 /* link controllers */
 const usersCtrl = require('../controllers/user.controller');
 const reviewsCtrl = require('../controllers/review.controller');
-const locationCtrl = require('../controllers/location.controller');
+const locationsCtrl = require('../controllers/location.controller');
 
 /* route endpoints */
 
@@ -22,5 +22,7 @@ router.put('/review/:_id', reviewsCtrl.editReview);
 router.delete('/review/:_id', reviewsCtrl.deleteReview);
 
 // locations
+router.post('/location', locationsCtrl.postLocation);
+router.get('/locations/:type', locationsCtrl.getLocationsForType);
 
 module.exports = router;
