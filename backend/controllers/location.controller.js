@@ -3,6 +3,7 @@ const Location = require('../models/location.model');
 
 module.exports = {
     postLocation,
+    getLocations,
     getLocationsForType
 }
 
@@ -29,6 +30,40 @@ function postLocation(req, res){
     })
 };
 
+/* GET request for ALL locations
+Search for all locations in database (no filter)
+
+- req endpoint: '/api/locations
+- req body: n/a
+
+- res body: [ {location1obj}, {location2obj}, etc. ]
+
+*/
+function getLocations(req, res){
+    Location.find()
+    .then(allLocations => {
+        if (!allLocations){
+            res.status(404).json({result: 'error', message: 'Locations not found'});
+            return;
+        }
+        res.status(200).json(allLocations);
+    }).catch(err => { // catch errors
+        console.log('weird error');
+        console.log(err);
+        res.status(401).json(err);
+        return;
+    })
+}
+
+/* GET request for locations by type
+Search for all locations for a given type
+
+- req endpoint: '/api/locations/:type'
+- req body: n/a
+
+- res body: [ {location1obj}, {location2obj}, etc. ]
+
+*/
 function getLocationsForType(req, res){
     Location.find(req.params) // req.params: {"type": "___"}
     .then(locations => {

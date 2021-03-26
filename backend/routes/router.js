@@ -23,6 +23,7 @@ router.delete('/review/:_id', reviewsCtrl.deleteReview);
 
 // locations
 router.post('/location', locationsCtrl.postLocation);
+router.get('/locations', locationsCtrl.getLocations)
 router.get('/locations/:type', locationsCtrl.getLocationsForType);
 
 module.exports = router;
