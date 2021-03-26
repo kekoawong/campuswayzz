@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { 
+  Marker,
+  Callout,
+  CalloutSubview 
+} from 'react-native-maps';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
@@ -22,11 +26,7 @@ function MainMap() {
   ]
 
   /* eventually, make coordinates and markers a state so that they can RELOAD when the user queries */
-
-  /* state for type of places showing */
-  /*const [locationType, setLocationType] = useState('all');*/
-
-  /* function onClick for marker */
+  const [markerType, setMarkerType] = useState('all');
 
   return (
       <View style={styles.container}>
@@ -39,7 +39,14 @@ function MainMap() {
             <Marker 
               key={index}
               coordinate={coord}
-            />
+              /*onPress={() => handleMarkerPress(index) }*/
+            >
+              <Callout style={styles.plainView}>
+                <View>
+                  <Text> hopefully this works!</Text>
+                </View>
+              </Callout>
+            </Marker>
           ))}
         </MapView>
       </View>
