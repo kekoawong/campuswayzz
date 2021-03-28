@@ -37,6 +37,7 @@ function MainList() {
             ListEmptyComponent={Empty}
             style={{paddingTop: 20}}
             data={DATA}
+            // pass the item data and navigation to the location component
             renderItem={(item) => Location(item, navigation)}
             keyExtractor={(item) => item.id}
           />

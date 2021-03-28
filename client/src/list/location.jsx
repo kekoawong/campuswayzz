@@ -5,11 +5,11 @@ import { Card, Title, Paragraph } from 'react-native-paper';
 
 
 // takes in the item object as a prop
-export default function Location({ item, navigation }) {
+export default function Location({ item }, navigation) {
 
     return (
         <TouchableOpacity 
-            onPress={() => console.log(navigation)}>
+            onPress={() => navigation.navigate('Details')}>
             <Card
                 style
                 elevation={5}
