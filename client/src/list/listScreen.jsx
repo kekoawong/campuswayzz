@@ -73,7 +73,8 @@ export default function ListScreen() {
             <Stack.Screen 
               name="Details" 
               component={DetailsScreen} 
-              options={({ route }) => ({ title: route.params.title })} />
+              // set title of screen to the location title
+              options={({ route }) => ({ title: route.params.item.title })} />
         </Stack.Navigator>
     );
 }

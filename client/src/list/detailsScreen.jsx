@@ -14,7 +14,7 @@ export default function DetailsScreen({ route, navigation }) {
         <Text>{item.title}</Text>
         <Button
           title="Go to Details... again"
-          onPress={() => console.log(item)}
+          onPress={() => console.log(route)}
         />
         <TextInput
           label="Comment"
