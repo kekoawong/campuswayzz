@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { Button, FlatList, View, Text, StyleSheet } from 'react-native';
-import Item from './item';
+import Location from './location';
 import DetailsScreen from './detailsScreen';
 
 
@@ -37,7 +37,7 @@ function MainList() {
             ListEmptyComponent={Empty}
             style={{paddingTop: 20}}
             data={DATA}
-            renderItem={Item}
+            renderItem={(item) => Location(item, navigation)}
             keyExtractor={(item) => item.id}
           />
           <Button title="Go to Home" onPress={() => navigation.navigate('Details')} />

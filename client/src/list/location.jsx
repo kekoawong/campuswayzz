@@ -2,20 +2,18 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Card, Title, Paragraph } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 
 
 // takes in the item object as a prop
-export default function Item({ item }) {
+export default function Location({ item, navigation }) {
 
     return (
-        <TouchableOpacity>
+        <TouchableOpacity 
+            onPress={() => console.log(navigation)}>
             <Card
                 style
                 elevation={5}
-                style={styles.container}
-                onPress={() => console.log('hi')}
-            >
+                style={styles.container}>
                 <Card.Content>
                     <Title>{item.title}</Title>
                     <Paragraph>Card stuff</Paragraph>
