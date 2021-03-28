@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
+import Empty from './emptyList';
 import Location from './location';
 import DetailsScreen from './detailsScreen';
 
@@ -21,26 +22,23 @@ const DATA = [
   },
 ];
 
-function Empty(){
-  return (
-    <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
-      <Text>EMPTY!!</Text>
-    </View>
-  );
-}
-
 
 function getData() {
   return DATA;
 }
 
 function MainList() {
+    // get navigation, set state
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = useState(false);
+    const [data, setData] = useState(getData());
+
+    // pull down to refresh function
     const onRefresh = () => {
       setRefreshing(true);
       setTimeout(() => { 
-        getData();
+        // fetch the data
+        setData(getData());
         setRefreshing(false);
       }, 700)
     }
@@ -57,7 +55,7 @@ function MainList() {
                 onRefresh={onRefresh}
               />}
             onRefresh={onRefresh}
-            data={DATA}
+            data={data}
             // pass the item data and navigation to the location component
             renderItem={(item) => Location(item, navigation)}
             keyExtractor={(item) => item.id}
