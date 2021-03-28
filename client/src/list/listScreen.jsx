@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { Button, FlatList, View, Text, StyleSheet } from 'react-native';
+import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
 import Location from './location';
 import DetailsScreen from './detailsScreen';
 
@@ -29,19 +29,32 @@ function Empty(){
   );
 }
 
+
+function getData() {
+  return DATA;
+}
+
 function MainList() {
     const navigation = useNavigation();
+    const [refreshing, setRefreshing] = useState(false);
+
     return (
         <View style={styles.container}>
           <FlatList
             ListEmptyComponent={Empty}
             style={{paddingTop: 20}}
+            refreshing={refreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={getData}
+              />}
+            onRefresh={getData}
             data={DATA}
             // pass the item data and navigation to the location component
             renderItem={(item) => Location(item, navigation)}
             keyExtractor={(item) => item.id}
           />
-          <Button title="Go to Home" onPress={() => navigation.navigate('Details')} />
         </View>
       );
 }
