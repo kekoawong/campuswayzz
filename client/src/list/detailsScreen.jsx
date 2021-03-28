@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 
 
 export default function DetailsScreen({ route, navigation }) {
@@ -11,15 +12,23 @@ export default function DetailsScreen({ route, navigation }) {
     const { item } = route.params;
     return (
       <View style={styles.container}>
-        <Text>{item.title}</Text>
-        <Button
-          title="Go to Details... again"
-          onPress={() => console.log(route)}
-        />
-        <TextInput
-          label="Comment"
-          value={text}
-          onChangeText={text => setText(text)}
+        <ScrollView style={styles.details}>
+            <Text>{item.title}</Text>
+            <Button
+              title="Go to Details... again"
+              onPress={() => console.log(route)}
+            />
+            <TextInput
+              label="Comment"
+              value={text}
+              onChangeText={text => setText(text)}
+            />
+        </ScrollView>
+        <KeyboardAccessoryNavigation
+          avoidKeyboard
+          inSafeAreaView
+          nextHidden
+          previousHidden
         />
       </View>
     );
@@ -27,8 +36,9 @@ export default function DetailsScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      overflow: 'scroll'
+      flex: 1
+    },
+    details: {
+      flex: 1
     }
 });
