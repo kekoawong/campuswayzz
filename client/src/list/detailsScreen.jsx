@@ -1,17 +1,34 @@
-import React from 'react';
-import { Button, View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Button, View, Text, StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
 
-export default function DetailsScreen({item}) {
-    const navigation = useNavigation();
+export default function DetailsScreen({ route, navigation }) {
+    // text state
+    const [text, setText] = useState('');
+
+    // get item from route params
+    const { item } = route.params;
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
+      <View style={styles.container}>
+        <Text>{item.title}</Text>
         <Button
           title="Go to Details... again"
-          onPress={() => navigation.push('Details')}
+          onPress={() => console.log(item)}
+        />
+        <TextInput
+          label="Comment"
+          value={text}
+          onChangeText={text => setText(text)}
         />
       </View>
     );
-  }
+}
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      overflow: 'scroll'
+    }
+});

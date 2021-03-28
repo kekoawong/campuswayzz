@@ -10,7 +10,7 @@ export default function Location({ item }, navigation) {
 
     return (
         <TouchableOpacity 
-            onPress={() => navigation.navigate('Details')}>
+            onPress={() => navigation.navigate('Details', { item })}>
             <Card
                 style
                 elevation={5}
