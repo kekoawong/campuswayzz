@@ -37,6 +37,13 @@ function getData() {
 function MainList() {
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = () => {
+      setRefreshing(true);
+      setTimeout(() => { 
+        getData();
+        setRefreshing(false);
+      }, 700)
+    }
 
     return (
         <View style={styles.container}>
@@ -47,9 +54,9 @@ function MainList() {
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
-                onRefresh={getData}
+                onRefresh={onRefresh}
               />}
-            onRefresh={getData}
+            onRefresh={onRefresh}
             data={DATA}
             // pass the item data and navigation to the location component
             renderItem={(item) => Location(item, navigation)}
