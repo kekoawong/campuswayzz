@@ -64,6 +64,7 @@ function MainList() {
       );
 }
 
+// stack wrapper around main list screen
 export default function ListScreen() {
     const Stack = createStackNavigator();
     return (
