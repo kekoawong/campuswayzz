@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MapView, { 
   Marker,
   Callout
@@ -6,8 +6,7 @@ import MapView, {
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Dimensions, Button } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-/* import maputil from '../utils/'; */
+import maputil from '../utils/map.util';
 
 function MainMap() {
 
@@ -15,29 +14,34 @@ function MainMap() {
   const initialCoordinates = {
     latitude: 41.7030,
     longitude: -86.2390,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    //latitudeDelta: 0.0922,
+    //longitudeDelta: 0.0421,
+    latitudeDelta: 0.03,
+    longitudeDelta: 0.01,
   }
 
-  /* hard-coded marker coordinates - temporary until middleware works */
+  /* hard-coded marker coordinates - temporary until middleware works 
   const arrLocations = [
     {type:"Other", coordinates: {latitude: 41.7030, longitude: -86.2390}, name:"Main Building", building:"Main Building"},
     {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Notre Dame Stadium"},
     {type:"Study Space", coordinates: {latitude: 41.7025, longitude: -86.2341}, name:"Hesburgh Library", building:"Hesburgh Library"}
   ]
-
   const arrLocations1 = [
     {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
   ]
+  */
 
   /* markers are a state so that they can RELOAD when the user queries */
-  const [locations, setLocations] = useState(arrLocations);
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    setNewMarkers('All');
+  }, []);
 
   function setNewMarkers(type) {
     console.log(type);
 
-    /* call the api */
-    /*
+    /* call the api to pull locations from the database */    
     if (type == 'All') {
       maputil.getLocations()
         .then(res => {
@@ -52,13 +56,9 @@ function MainMap() {
         return
       })
     }
-    */
 
-    /* return array with specific choice */
-
-    /* switch or if statements to get the specific locations?*/
-
-    setLocations(arrLocations1); 
+    /* return array with specific choice 
+    setLocations(arrLocations1); */
   }
 
   return (
@@ -83,6 +83,7 @@ function MainMap() {
             {label: 'Recreation', value: 'Recreation'},
             {label: 'Rest and Relaxation', value: 'R&R'},
             {label: 'Study Spaces', value: 'Study Space'},
+            {label: 'Shopping', value: 'Shop'},
             {label: 'Other', value: 'Other'},
           ]}
           defaultValue={'All'}

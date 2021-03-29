@@ -1,4 +1,4 @@
-const https = require('https');
+// const http = require('http');
 
 /* make API call to server to get locations for a given type */
 function getLocationsForType(type){
