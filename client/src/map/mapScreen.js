@@ -3,7 +3,7 @@ import MapView, {
   Marker,
   Callout
 } from 'react-native-maps';
-
+import DropDownPicker from 'react-native-dropdown-picker'
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Dimensions, Button } from 'react-native';
 
@@ -19,40 +19,78 @@ function MainMap() {
 
   /* hard-coded marker coordinates - temporary until middleware works */
   const arrLocations = [
-    {type:"all", latlng: {latitude: 41.7030, longitude: -86.2390}, name:"Main Building", address:"Main Building,\nNotre Dame, IN 46556", description:"Heart of campus."},
-    {type:"restaurant", latlng: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", address:"2010 Moose Krause Circle,\nNotre Dame, IN 46556", description: "Where the Irish win!"},
-    {type:"study", latlng: {latitude: 41.7025, longitude: -86.2341}, name:"Hesburgh Library", address:"284 Hesburgh Library,\nNotre Dame, IN 46556", description:"A great place to study."}
+    {type:"all", coordinates: {latitude: 41.7030, longitude: -86.2390}, name:"Main Building", building:"Main Building"},
+    {type:"restaurant", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
+    {type:"study", coordinates: {latitude: 41.7025, longitude: -86.2341}, name:"Hesburgh Library", building:"Hesburgh"}
   ]
 
-  /* eventually, make coordinates and markers a state so that they can RELOAD when the user queries */
-  const [markerType, setMarkerType] = useState('all');
+  const arrLocations1 = [
+    {type:"restaurant", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
+  ]
+
+  /* markers are a state so that they can RELOAD when the user queries */
+  const [locations, setLocations] = useState(arrLocations);
+
+  function setNewMarkers(type) {
+    console.log(type);
+
+    /* call the api */
+
+    /* return array with specific choice */
+
+    /* switch or if statements to get the specific locations?*/
+
+    setLocations(arrLocations1); 
+  }
 
   return (
       <View style={styles.container}>
-        <Button title="Test"></Button>
+
+        <DropDownPicker 
+          style={styles.dropdown} /* the main strip */
+          dropDownStyle={ /* the dropdown menu itself */
+            {backgroundColor: '#fafafa'},
+            {width: 250}
+          }
+          containerStyle={
+            {height: 30}
+          }
+          itemStyle={
+            {justifyContent: 'flex-start'}
+          }
+          labelStyle={
+            {textAlign: 'center'}
+          }
+          items={[
+            {label: 'All Locations', value: 'all'},
+            {label: 'Restaurants', value: 'restaurant'},
+            {label: 'Study Spaces', value: 'study'},
+          ]}
+          defaultValue={'all'}
+          onChangeItem={item => setNewMarkers(item.value)}
+        /> 
+
         <MapView style={styles.map} 
           initialRegion={initialCoordinates}
           showsBuildings={true}
           loadingEnabled={true}
         >
-          {arrLocations.map((marker, index) => (
+          {locations.map((marker, index) => (
             <Marker 
               key={index}
-              coordinate={marker.latlng}
-              /*title={marker.name}
-              description={marker.address}*/
-              /*onPress={() => handleMarkerPress(index) }*/
+              coordinate={marker.coordinates}
             >
               <Callout style={styles.plainView}>
                 <View>
                   <Text style={{ fontWeight: 'bold' }}>{marker.name}</Text>
-                  <Text>{marker.address}</Text>
-                  <Text>{marker.description}</Text>
+                  <Text>{marker.building}</Text>
+                  <Text>{marker.type}</Text>
                 </View>
               </Callout>
             </Marker>
           ))}
         </MapView>
+
       </View>
     );
 }
@@ -75,6 +113,11 @@ const styles = StyleSheet.create({
     },
     map: {
       width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+      height: Dimensions.get('window').height - 205,
     },
+    dropdown: {
+      width: 250,
+      //height: Dimensions.get('window').height - 775,
+      backgroundColor: '#fafafa',
+    }
 });
