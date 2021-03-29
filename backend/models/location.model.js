@@ -22,11 +22,11 @@ const locationSchema = new mongoose.Schema({
         required: true
     },
     coordinates: {
-        lat: {
+        latitude: {
             type: String,
             required: true
         },
-        long: {
+        longitude: {
             type: String,
             required: true
         }
