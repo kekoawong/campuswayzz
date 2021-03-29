@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const backend_port = 5000;
+const backend_port = 5002;
 
 app.use(express.json());
 

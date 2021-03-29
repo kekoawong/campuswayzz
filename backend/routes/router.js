@@ -8,6 +8,10 @@ const reviewsCtrl = require('../controllers/review.controller');
 const locationsCtrl = require('../controllers/location.controller');
 
 /* route endpoints */
+router.get('/test', (req, res) => {
+    res.json({'result': 'test success'});
+    console.log('test sup');
+});
 
 // users
 router.post('/signup', usersCtrl.signup);
