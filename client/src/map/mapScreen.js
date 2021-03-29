@@ -19,13 +19,13 @@ function MainMap() {
 
   /* hard-coded marker coordinates - temporary until middleware works */
   const arrLocations = [
-    {type:"all", coordinates: {latitude: 41.7030, longitude: -86.2390}, name:"Main Building", building:"Main Building"},
-    {type:"restaurant", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
-    {type:"study", coordinates: {latitude: 41.7025, longitude: -86.2341}, name:"Hesburgh Library", building:"Hesburgh"}
+    {type:"Other", coordinates: {latitude: 41.7030, longitude: -86.2390}, name:"Main Building", building:"Main Building"},
+    {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
+    {type:"Study Space", coordinates: {latitude: 41.7025, longitude: -86.2341}, name:"Hesburgh Library", building:"Hesburgh"}
   ]
 
   const arrLocations1 = [
-    {type:"restaurant", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
+    {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
   ]
 
   /* markers are a state so that they can RELOAD when the user queries */
@@ -62,9 +62,12 @@ function MainMap() {
             {textAlign: 'center'}
           }
           items={[
-            {label: 'All Locations', value: 'all'},
-            {label: 'Restaurants', value: 'restaurant'},
-            {label: 'Study Spaces', value: 'study'},
+            {label: 'All Locations', value: 'All'},
+            {label: 'Restaurants', value: 'Restaurants'},
+            {label: 'Study Spaces', value: 'Study Space'},
+            {label: 'Recreation', value: 'Recreation'},
+            {label: 'Rest and Relaxation', value: 'R&R'},
+            {label: 'Other', value: 'Other'},
           ]}
           defaultValue={'all'}
           onChangeItem={item => setNewMarkers(item.value)}
