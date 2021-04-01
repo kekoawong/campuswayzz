@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button, Divider, Switch} from 'react-native-paper';
+import profileutil from '../utils/profile.util';
 
 // Ghost mode switch
 const GhostSwitch = () => {
@@ -28,22 +29,35 @@ const GhostSwitch = () => {
 
 
 function MainProfile() {
+  // User Information reloads after signing in or when user alters personal info
+  const [userInfo, setUserInfo] = useState([]);
+
+  useEffect(() => {
+    profileutil.getUserData('kwong6')
+    .then(res => {
+      setUserInfo(res)
+      return
+    })
+  }, [])
+
   return (
     <View style={{flex:1}}> 
       <View style={styles.container_picture}> 
-        <Avatar.Image size={100}/>
+        <Avatar.Image size={100} source={require('./kwong.jpg')}/>
       </View> 
       <View style={styles.container_picture}>
-        <Button icon='camera' mode='contained'>
-          <Text>Choose Photo</Text>
+        <Button icon='account-edit' mode='contained' onPress={() => console.log('Pressed')}>
+          Edit Profile
         </Button>
       </View>
       <View style={styles.container_info}>
-        <Text style={styles.rows}>First Name: {firstName}</Text>
+        <Text style={styles.rows}>First Name: {userInfo.firstName}</Text>
         <Divider />
-        <Text style={styles.rows}>Last Name: {lastName}</Text>
+        <Text style={styles.rows}>Last Name: {userInfo.lastName}</Text>
         <Divider />
-        <Text style={styles.rows}>NetID: {netid}</Text>
+        <Text style={styles.rows}>NetID: {userInfo.netID}</Text>
+        <Divider />
+        <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
         <Divider />
       </View>
       <View style={styles.container_switch}>
@@ -65,20 +79,22 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
     container_info: { // User info
       flex: 2,
-      backgroundColor: 'white'
+      backgroundColor: 'navy'
     },
     container_picture: { // Profile Picture
       flex: 1,
-      backgroundColor: 'powderblue',
+      backgroundColor: 'gold',
       justifyContent: 'center',
       alignItems: 'center'
     },
     container_switch: { // Ghost switch
       flex: 1,
+      backgroundColor: 'mediumspringgreen',
       justifyContent: 'center',
       alignItems: 'center'
     },
     rows: { // User info alignment
+      color: 'gold',
       padding: 13.75,
       fontSize: 20
     }
