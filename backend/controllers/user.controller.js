@@ -87,9 +87,13 @@ function login(req, res){
 }
 
 function getUserInfo(req, res){
-    User.find(req.params)
+    User.findOne(req.params)
     .then(userData => {
-        res.status(200).json(userData);
+        if (userData){
+            res.status(200).json(userData);
+        } else {
+            res.status(404).json({result: 'error', message: 'User not found'});
+        }
     }).catch(err => { // catch errors
         console.log('weird error');
         console.log(err);
