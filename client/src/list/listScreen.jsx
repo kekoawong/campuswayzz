@@ -1,37 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
 import Empty from './emptyList';
 import Location from './location';
 import DetailsScreen from './detailsScreen';
-
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    name: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    name: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    name: "Third Item",
-  },
-];
-
-
-function getData() {
-  return DATA;
-}
+import listutil from '../utils/list.util';
 
 function MainList() {
     // get navigation, set state
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = useState(false);
-    const [data, setData] = useState(getData());
+    const [data, setData] = useState();
+
+    useEffect(() => {
+      getData();
+    }, []);
+
+    function getData(){
+      listutil.getLocations()
+      .then(res => {
+        setData(res)
+        return
+      })
+    }
 
     // pull down to refresh function
     const onRefresh = () => {
@@ -58,7 +50,7 @@ function MainList() {
             data={data}
             // pass the item data and navigation to the location component
             renderItem={(item) => Location(item, navigation)}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item._id}
           />
         </View>
       );

@@ -1,5 +1,3 @@
-const https = require('https');
-
 function getLocationsForType(type){
     return fetch('http://db.cse.nd.edu:5002/api/locations/' + type)
     .then(res => res.json())
