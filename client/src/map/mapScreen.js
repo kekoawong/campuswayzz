@@ -14,8 +14,6 @@ function MainMap() {
   const initialCoordinates = {
     latitude: 41.7030,
     longitude: -86.2390,
-    //latitudeDelta: 0.0922,
-    //longitudeDelta: 0.0421,
     latitudeDelta: 0.03,
     longitudeDelta: 0.01,
   }
