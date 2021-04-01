@@ -16,7 +16,7 @@ export default function Location({ item }, navigation) {
                 elevation={5}
                 style={styles.container}>
                 <Card.Content>
-                    <Title>{item.title}</Title>
+                    <Title>{item.name}</Title>
                     <Paragraph>Card stuff</Paragraph>
                     <Rating
                         showRating

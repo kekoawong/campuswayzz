@@ -12,7 +12,7 @@ export default function DetailsScreen({ route, navigation }) {
     return (
         <View style={styles.container}>
           <ScrollView style={styles.details}>
-              <Text>{item.title}</Text>
+              <Text>{item.name}</Text>
               <Button
                 title="Go to Details... again"
                 onPress={() => console.log(route)}
