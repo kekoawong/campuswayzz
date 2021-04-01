@@ -4,6 +4,17 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button, Divider, Switch} from 'react-native-paper';
 import profileutil from '../utils/profile.util';
 
+// Variable to change profile to editor mode
+editMode=0;
+
+const swapMode = () => {
+  console.log('Clicked, editMode=' + editMode);
+  if(editMode)
+    editMode = 0;
+  else if(!editMode)
+    editMode = 1;
+};
+
 // Ghost mode switch
 const GhostSwitch = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -40,31 +51,60 @@ function MainProfile() {
     })
   }, [])
 
-  return (
-    <View style={{flex:1}}> 
-      <View style={styles.container_picture}> 
-        <Avatar.Image size={100} source={require('./kwong.jpg')}/>
-      </View> 
-      <View style={styles.container_picture}>
-        <Button icon='account-edit' mode='contained' onPress={() => console.log('Pressed')}>
-          Edit Profile
-        </Button>
+  if(editMode){
+    return (
+      <View style={{flex:1}}> 
+        <View style={styles.container_picture}> 
+          <Avatar.Image size={100} source={require('./kwong.jpg')}/>
+        </View> 
+        <View style={styles.container_picture}>
+          <Button icon='account-edit' mode='contained' onPress={swapMode}>
+            Save Changes
+          </Button>
+        </View>
+        <View style={styles.container_info}>
+          <Text style={styles.rows}>First Name: {userInfo.firstName}</Text>
+          <Divider />
+          <Text style={styles.rows}>Last Name: {userInfo.lastName}</Text>
+          <Divider />
+          <Text style={styles.rows}>NetID: {userInfo.netID}</Text>
+          <Divider />
+          <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
+          <Divider />
+        </View>
+        <View style={styles.container_switch}>
+          <GhostSwitch/>
+        </View>
       </View>
-      <View style={styles.container_info}>
-        <Text style={styles.rows}>First Name: {userInfo.firstName}</Text>
-        <Divider />
-        <Text style={styles.rows}>Last Name: {userInfo.lastName}</Text>
-        <Divider />
-        <Text style={styles.rows}>NetID: {userInfo.netID}</Text>
-        <Divider />
-        <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
-        <Divider />
+      );
+  }
+  else if(!editMode){
+    return (
+      <View style={{flex:1}}> 
+        <View style={styles.container_picture}> 
+          <Avatar.Image size={100} source={require('./kwong.jpg')}/>
+        </View> 
+        <View style={styles.container_picture}>
+          <Button icon='account-edit' mode='contained' onPress={swapMode}>
+            Edit Profile
+          </Button>
+        </View>
+        <View style={styles.container_info}>
+          <Text style={styles.rows}>First Name: {userInfo.firstName}</Text>
+          <Divider />
+          <Text style={styles.rows}>Last Name: {userInfo.lastName}</Text>
+          <Divider />
+          <Text style={styles.rows}>NetID: {userInfo.netID}</Text>
+          <Divider />
+          <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
+          <Divider />
+        </View>
+        <View style={styles.container_switch}>
+          <GhostSwitch/>
+        </View>
       </View>
-      <View style={styles.container_switch}>
-        <GhostSwitch/>
-      </View>
-    </View>
-    );
+      );
+  }
 }
 
 export default function ProfileScreen() {
