@@ -16,6 +16,7 @@ router.get('/test', (req, res) => {
 // users
 router.post('/signup', usersCtrl.signup);
 router.post('/login', usersCtrl.login);
+router.get('/user/:netID', usersCtrl.getUserInfo);
 
 // reviews
 router.get('/review', reviewsCtrl.getReviews);

@@ -12,6 +12,7 @@ const User = require('../models/user.model');
 module.exports = {
     signup,
     login,
+    getUserInfo,
     getUserLocation
 };
 
@@ -83,6 +84,18 @@ function login(req, res){
         res.status(401).json(err);
         return;
     });
+}
+
+function getUserInfo(req, res){
+    User.find(req.params)
+    .then(userData => {
+        res.status(200).json(userData);
+    }).catch(err => { // catch errors
+        console.log('weird error');
+        console.log(err);
+        res.status(401).json(err);
+        return;
+    })
 }
 
 function getUserLocation(req, res){
