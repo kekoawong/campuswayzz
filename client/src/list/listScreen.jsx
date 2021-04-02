@@ -14,10 +14,10 @@ function MainList() {
     const [data, setData] = useState();
 
     useEffect(() => {
-      getData();
+      getData;
     }, []);
 
-    function getData(){
+    const getData = () => {
       listutil.getLocations()
       .then(res => {
         setData(res)
@@ -30,7 +30,7 @@ function MainList() {
       setRefreshing(true);
       setTimeout(() => { 
         // fetch the data
-        setData(getData());
+        setData(getData);
         setRefreshing(false);
       }, 700)
     }
