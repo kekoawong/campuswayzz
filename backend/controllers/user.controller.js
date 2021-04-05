@@ -13,7 +13,8 @@ module.exports = {
     signup,
     login,
     getUserInfo,
-    getUserLocation
+    getUserLocation,
+    updateUserInfo
 };
 
 /* POST request for new user
@@ -100,6 +101,20 @@ function getUserInfo(req, res){
         res.status(401).json(err);
         return;
     })
+}
+
+function updateUserInfo(req, res){
+    User.updateOne(req.params, {$set: req.body})
+    .then(dbResponse => {
+        // check how many reviews were modified (should only be 1)
+        if (dbResponse.nModified == 1){
+            res.status(200).json({result: 'success', message: 'User update successful'});
+        } else {
+            res.status(404).json({result: 'User not found'});
+        }
+    }).catch(err => { // catch errors
+        res.status(500).json(err.message);
+    });
 }
 
 function getUserLocation(req, res){
