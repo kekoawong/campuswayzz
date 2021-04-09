@@ -6,6 +6,7 @@ import { FAB } from 'react-native-paper';
 import Empty from './emptyList';
 import Location from './location';
 import DetailsScreen from './detailsScreen';
+import MeetupScreen from '../meetup/meetupScreen';
 import listutil from '../utils/list.util';
 
 function MainList() {
@@ -57,7 +58,7 @@ function MainList() {
             style={styles.fab}
             label='Create Meetup'
             icon="plus"
-            onPress={() => console.log('Pressed')}
+            onPress={() => navigation.navigate('Meetup')}
           />
         </View>
       );
@@ -74,6 +75,7 @@ export default function ListScreen() {
               component={DetailsScreen} 
               // set title of screen to the location title
               options={({ route }) => ({ title: route.params.item.name })} />
+            <Stack.Screen name="Meetup" component={MeetupScreen} />
         </Stack.Navigator>
     );
 }
