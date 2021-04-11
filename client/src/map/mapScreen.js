@@ -5,7 +5,9 @@ import MapView, {
 } from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Dimensions, Button } from 'react-native';
+import DetailsScreen from '../list/detailsScreen';
 import maputil from '../utils/map.util';
 
 function MainMap() {
@@ -31,6 +33,7 @@ function MainMap() {
 
   /* markers are a state so that they can RELOAD when the user queries */
   const [locations, setLocations] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     setNewMarkers('All');
@@ -98,7 +101,12 @@ function MainMap() {
               key={index}
               coordinate={marker.coordinates}
             >
-              <Callout style={styles.plainView}>
+              <Callout 
+                style={styles.plainView}
+                onPress={() => {
+                  console.log(marker);
+                  navigation.navigate('Details', { item: marker })
+                }}>
                 <View>
                   <Text style={styles.header}>{marker.name}</Text>
                   <Text style={{ fontStyle: 'italic' }}>{marker.type}</Text>
@@ -118,6 +126,12 @@ export default function MapScreen() {
   return (
       <Stack.Navigator>
           <Stack.Screen name="Map" component={MainMap} />
+          <Stack.Screen 
+              name="Details" 
+              component={DetailsScreen} 
+              // set title of screen to the location title
+              options={({ route }) => ({ title: route.params.item.name })}
+          />
       </Stack.Navigator>
   );
 }
