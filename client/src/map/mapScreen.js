@@ -10,6 +10,7 @@ import { View, Text, StyleSheet, Dimensions, Button, TouchableOpacity } from 're
 import MapViewDirections from 'react-native-maps-directions';
 import DetailsScreen from '../list/detailsScreen';
 import maputil from '../utils/map.util';
+import * as Location from 'expo-location';
 
 function MainMap() {
 
@@ -21,10 +22,10 @@ function MainMap() {
     longitudeDelta: 0.01,
   }
 
+  /* google API for directions */
   const GOOGLE_MAPS_APIKEY = 'AIzaSyBiO2kOTm_XtfJLLvVitvEtuzUB3KtRPsY';
 
-  const origin = {latitude: 41.7030, longitude: -86.2390};
-  const destination = {latitude: 41.6984, longitude: -86.2339};
+  const destination = {latitude: 41.7030, longitude: -86.2390};
 
   /* hard-coded marker coordinates - temporary until middleware works 
   const arrLocations = [
@@ -40,9 +41,24 @@ function MainMap() {
   /* markers are a state so that they can RELOAD when the user queries */
   const [locations, setLocations] = useState([]);
   const navigation = useNavigation();
+  const [userLocation, setUserLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     setNewMarkers('All');
+
+    (async () => {
+      let {status} = await Location.requestPermissionsAsync();
+
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied.');
+        return;
+      }
+
+      let userLocation = await Location.getCurrentPositionAsync({});
+      console.log(userLocation);
+      setUserLocation(userLocation);
+    })();
   }, []);
 
   function setNewMarkers(type) {
@@ -120,7 +136,14 @@ function MainMap() {
                   <Text>{marker.building}</Text>
                   <Text></Text>
                   <TouchableOpacity onPress={() => {
-                    alert('Hello!')
+                    // on Get Directions press:
+                    // get the user's location
+                    setUserLocation()
+
+                    // get marker's location
+                    
+
+                    // render directions
                     }} 
                     style={styles.button}>
                     <Text style={styles.buttonText}>Get Directions</Text>
@@ -131,12 +154,13 @@ function MainMap() {
           ))}
 
           <MapViewDirections
-              origin={origin}
+              origin={{latitude: userLocation["coords"]["latitude"], longitude: userLocation["coords"]["longitude"]}}
               destination={destination}
               apikey={GOOGLE_MAPS_APIKEY}
-              strokeWidth={3}
-              strokeColor="blue"
+              strokeWidth={2}
+              strokeColor="dodgerblue"
               optimizeWaypoints={true}
+              mode="WALKING"
           />
 
         </MapView>
