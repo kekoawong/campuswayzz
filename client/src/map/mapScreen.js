@@ -6,7 +6,7 @@ import MapView, {
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, Dimensions, Button } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
 import DetailsScreen from '../list/detailsScreen';
 import maputil from '../utils/map.util';
 
@@ -95,6 +95,7 @@ function MainMap() {
           initialRegion={initialCoordinates}
           showsBuildings={true}
           loadingEnabled={true}
+          showsUserLocation={true}
         >
           {locations.map((marker, index) => (
             <Marker 
@@ -105,12 +106,19 @@ function MainMap() {
                 style={styles.plainView}
                 onPress={() => {
                   console.log(marker);
-                  navigation.navigate('Details', { item: marker })
+                  //navigation.navigate('Details', { item: marker })
                 }}>
                 <View>
                   <Text style={styles.header}>{marker.name}</Text>
                   <Text style={{ fontStyle: 'italic' }}>{marker.type}</Text>
                   <Text>{marker.building}</Text>
+                  <Text></Text>
+                  <TouchableOpacity onPress={() => {
+                    alert('Hello!')
+                    }} 
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>Get Directions</Text>
+                  </TouchableOpacity>
                 </View>
               </Callout>
             </Marker>
@@ -167,5 +175,15 @@ const styles = StyleSheet.create({
     labels: {
       textAlign: 'center',
       color: '#181818'
+    },
+    button: {
+      backgroundColor: "blue",
+      padding: 10,
+      borderRadius: 10,
+    },
+    buttonText: {
+      textAlign: 'center',
+      fontSize: 10,
+      color: '#fff',
     }
 });
