@@ -7,6 +7,7 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
+import MapViewDirections from 'react-native-maps-directions';
 import DetailsScreen from '../list/detailsScreen';
 import maputil from '../utils/map.util';
 
@@ -19,6 +20,11 @@ function MainMap() {
     latitudeDelta: 0.03,
     longitudeDelta: 0.01,
   }
+
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyBiO2kOTm_XtfJLLvVitvEtuzUB3KtRPsY';
+
+  const origin = {latitude: 41.7030, longitude: -86.2390};
+  const destination = {latitude: 41.6984, longitude: -86.2339};
 
   /* hard-coded marker coordinates - temporary until middleware works 
   const arrLocations = [
@@ -123,6 +129,16 @@ function MainMap() {
               </Callout>
             </Marker>
           ))}
+
+          <MapViewDirections
+              origin={origin}
+              destination={destination}
+              apikey={GOOGLE_MAPS_APIKEY}
+              strokeWidth={3}
+              strokeColor="blue"
+              optimizeWaypoints={true}
+          />
+
         </MapView>
 
       </View>
