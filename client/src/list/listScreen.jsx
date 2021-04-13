@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
+import { FAB } from 'react-native-paper';
 import Empty from './emptyList';
 import Location from './location';
 import DetailsScreen from './detailsScreen';
+import MeetupScreen from '../meetup/meetupScreen';
 import listutil from '../utils/list.util';
 
 function MainList() {
@@ -17,7 +19,7 @@ function MainList() {
       getData();
     }, []);
 
-    function getData(){
+    const getData = () => {
       listutil.getLocations()
       .then(res => {
         setData(res)
@@ -30,7 +32,7 @@ function MainList() {
       setRefreshing(true);
       setTimeout(() => { 
         // fetch the data
-        setData(getData());
+        setData(getData);
         setRefreshing(false);
       }, 700)
     }
@@ -52,6 +54,12 @@ function MainList() {
             renderItem={(item) => Location(item, navigation)}
             keyExtractor={(item) => item._id}
           />
+          <FAB
+            style={styles.fab}
+            label='Create Meetup'
+            icon="plus"
+            onPress={() => navigation.navigate('Meetup')}
+          />
         </View>
       );
 }
@@ -66,7 +74,8 @@ export default function ListScreen() {
               name="Details" 
               component={DetailsScreen} 
               // set title of screen to the location title
-              options={({ route }) => ({ title: route.params.item.title })} />
+              options={({ route }) => ({ title: route.params.item.name })} />
+            <Stack.Screen name="Create Meetup" component={MeetupScreen} />
         </Stack.Navigator>
     );
 }
@@ -76,5 +85,11 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       overflow: 'scroll'
+    },
+    fab: {
+      position: 'absolute',
+      alignSelf: 'center',
+      marginBottom: 16,
+      bottom: 0
     }
 });
