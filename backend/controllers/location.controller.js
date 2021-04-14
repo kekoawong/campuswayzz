@@ -40,6 +40,7 @@ Search for all locations in database (no filter)
 
 */
 function getLocations(req, res){
+    console.log("backend: request received for get locations");
     Location.find()
     .then(allLocations => {
         if (!allLocations){
