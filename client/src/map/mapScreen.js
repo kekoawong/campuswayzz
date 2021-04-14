@@ -25,7 +25,8 @@ function MainMap() {
   /* google API for directions */
   const GOOGLE_MAPS_APIKEY = 'AIzaSyBiO2kOTm_XtfJLLvVitvEtuzUB3KtRPsY';
 
-  const destination = {latitude: 41.7030, longitude: -86.2390};
+  //const origin = {latitude: 41.6984, longitude: -86.2339}
+  //const destination = {latitude: 41.7030, longitude: -86.2390};
 
   /* hard-coded marker coordinates - temporary until middleware works 
   const arrLocations = [
@@ -43,9 +44,12 @@ function MainMap() {
   const navigation = useNavigation();
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [showDirections, setShowDirections] = useState(false);
+  const [destination, setDestination] = useState(null);
 
   useEffect(() => {
     setNewMarkers('All');
+    setUserLocation({"coords": {latitude: 41.7030, longitude: -86.2390}});
 
     (async () => {
       let {status} = await Location.requestPermissionsAsync();
@@ -82,6 +86,30 @@ function MainMap() {
 
     /* return array with specific choice 
     setLocations(arrLocations1); */
+  }
+
+  function toggleDirections(destCoordinates) {
+    console.log("HERE2");
+    console.log(destCoordinates)
+
+    setDestination(destCoordinates);
+
+    (async () => {
+      let {status} = await Location.requestPermissionsAsync();
+
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied.');
+        return;
+      }
+
+      let userLocation = await Location.getCurrentPositionAsync({});
+      console.log(userLocation);
+      setUserLocation(userLocation);
+    })();
+
+    console.log("DONE!");
+
+    setShowDirections(!showDirections);
   }
 
   return (
@@ -127,6 +155,7 @@ function MainMap() {
               <Callout 
                 style={styles.plainView}
                 onPress={() => {
+                  toggleDirections(marker.coordinates)
                   console.log(marker);
                   //navigation.navigate('Details', { item: marker })
                 }}>
@@ -135,25 +164,17 @@ function MainMap() {
                   <Text style={{ fontStyle: 'italic' }}>{marker.type}</Text>
                   <Text>{marker.building}</Text>
                   <Text></Text>
-                  <TouchableOpacity onPress={() => {
-                    // on Get Directions press:
-                    // get the user's location
-                    setUserLocation()
-
-                    // get marker's location
-                    
-
-                    // render directions
-                    }} 
+                  <TouchableOpacity 
                     style={styles.button}>
-                    <Text style={styles.buttonText}>Get Directions</Text>
+                    <Text style={styles.buttonText}>Toggle Directions</Text>
                   </TouchableOpacity>
                 </View>
               </Callout>
             </Marker>
           ))}
 
-          <MapViewDirections
+        {showDirections && 
+            <MapViewDirections
               origin={{latitude: userLocation["coords"]["latitude"], longitude: userLocation["coords"]["longitude"]}}
               destination={destination}
               apikey={GOOGLE_MAPS_APIKEY}
@@ -162,6 +183,7 @@ function MainMap() {
               optimizeWaypoints={true}
               mode="WALKING"
           />
+        }
 
         </MapView>
 
