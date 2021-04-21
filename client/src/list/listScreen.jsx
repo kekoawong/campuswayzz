@@ -7,6 +7,7 @@ import Empty from './emptyList';
 import Location from './location';
 import DetailsScreen from './detailsScreen';
 import MeetupScreen from '../meetup/meetupScreen';
+import MeetupMap from '../meetup/meetupMap';
 import listutil from '../utils/list.util';
 
 function MainList() {
@@ -58,14 +59,14 @@ function MainList() {
             style={styles.fab}
             label='Create Meetup'
             icon="plus"
-            onPress={() => navigation.navigate('Meetup')}
+            onPress={() => navigation.navigate('CreateMeetup')}
           />
         </View>
       );
 }
 
 // stack wrapper around main list screen
-export default function ListScreen() {
+function MainListScreen() {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator>
@@ -75,8 +76,21 @@ export default function ListScreen() {
               component={DetailsScreen} 
               // set title of screen to the location title
               options={({ route }) => ({ title: route.params.item.name })} />
-            <Stack.Screen name="Meetup" component={MeetupScreen} options={{title: "Create Meetup"}}/>
+            <Stack.Screen name="CreateMeetup" component={MeetupScreen} options={{title: "Create Meetup"}}/>
+            <Stack.Screen name="MeetupMap" component={MeetupMap} options={{title: "Meetup"}}/>
         </Stack.Navigator>
+    );
+}
+
+export default function ListScreen() {
+
+    const ModalStack = createStackNavigator();
+
+    return (
+        <ModalStack.Navigator mode="modal" headerMode="none">
+            <ModalStack.Screen name="Main" component={MainListScreen} />
+            <ModalStack.Screen name="MyModal" component={MeetupMap} />
+        </ModalStack.Navigator>
     );
 }
 
