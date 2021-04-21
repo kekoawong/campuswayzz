@@ -75,7 +75,7 @@ export default function ListScreen() {
               component={DetailsScreen} 
               // set title of screen to the location title
               options={({ route }) => ({ title: route.params.item.name })} />
-            <Stack.Screen name="Create Meetup" component={MeetupScreen} />
+            <Stack.Screen name="Meetup" component={MeetupScreen} options={{title: "Create Meetup"}}/>
         </Stack.Navigator>
     );
 }
