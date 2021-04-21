@@ -17,7 +17,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        },
+        "NSLocationWhenInUseUsageDescription": "The application CampusWayzz needs user location in order to show the location on the application's map feature and share the location with the user's current groups.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "The application CampusWayzz needs user location in order to show the location on the application's map feature and share the location with the user's current groups.",
+        "UIBackgroundModes": [
+          "location"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -30,3 +40,4 @@
     }
   }
 }
+

@@ -11,9 +11,13 @@ function getLocationsForType(type){
 
 /* make API call to server to get locations for ALL locations */
 function getLocations(){
+    console.log("fetch all locations");
     return fetch('http://db.cse.nd.edu:5002/api/locations')
+    //return fetch('http://www.example.com/index.html')
     .then(res => res.json())
     .then(json => {
+        console.log("resulting json:");
+        console.log(json);
         return json;
     });
 }
