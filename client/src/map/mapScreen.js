@@ -25,20 +25,6 @@ function MainMap() {
   /* google API for directions */
   const GOOGLE_MAPS_APIKEY = 'AIzaSyBiO2kOTm_XtfJLLvVitvEtuzUB3KtRPsY';
 
-  //const origin = {latitude: 41.6984, longitude: -86.2339}
-  //const destination = {latitude: 41.7030, longitude: -86.2390};
-
-  /* hard-coded marker coordinates - temporary until middleware works 
-  const arrLocations = [
-    {type:"Other", coordinates: {latitude: 41.7030, longitude: -86.2390}, name:"Main Building", building:"Main Building"},
-    {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Notre Dame Stadium"},
-    {type:"Study Space", coordinates: {latitude: 41.7025, longitude: -86.2341}, name:"Hesburgh Library", building:"Hesburgh Library"}
-  ]
-  const arrLocations1 = [
-    {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
-  ]
-  */
-
   /* markers are a state so that they can RELOAD when the user queries */
   const [locations, setLocations] = useState([]);
   const navigation = useNavigation();
@@ -48,9 +34,13 @@ function MainMap() {
   const [destination, setDestination] = useState(null);
 
   useEffect(() => {
+    /* show all locations */
     setNewMarkers('All');
+
+    /* set initial user location to the dome while request waits */
     setUserLocation({"coords": {latitude: 41.7030, longitude: -86.2390}});
 
+    /* get and set user location at the start */
     (async () => {
       let {status} = await Location.requestPermissionsAsync();
 
@@ -62,6 +52,8 @@ function MainMap() {
       let userLocation = await Location.getCurrentPositionAsync({});
       console.log(userLocation);
       setUserLocation(userLocation);
+
+      /* TODO: push user location to the database */
     })();
   }, []);
 
@@ -84,16 +76,17 @@ function MainMap() {
       })
     }
 
-    /* return array with specific choice 
-    setLocations(arrLocations1); */
   }
 
+  /* TODO: function to continuously get and set user location in the database */
+
   function toggleDirections(destCoordinates) {
-    console.log("HERE2");
     console.log(destCoordinates)
 
+    /* set directions destination */
     setDestination(destCoordinates);
 
+    /* TODO: get new user location -> CHANGE THIS TO SIMPLY PULL FROM THE DATABSASE */
     (async () => {
       let {status} = await Location.requestPermissionsAsync();
 
@@ -107,8 +100,7 @@ function MainMap() {
       setUserLocation(userLocation);
     })();
 
-    console.log("DONE!");
-
+    /* toggle directions */
     setShowDirections(!showDirections);
   }
 
