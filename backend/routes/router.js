@@ -18,6 +18,8 @@ router.post('/signup', usersCtrl.signup);
 router.post('/login', usersCtrl.login);
 router.get('/user/:netID', usersCtrl.getUserInfo);
 router.put('/user/:netID', usersCtrl.updateUserInfo);
+router.put('/user/location/:netID', usersCtrl.putUserLocation);
+router.get('/user/location/:netID', usersCtrl.getUserLocation);
 
 // reviews
 router.get('/review', reviewsCtrl.getReviews);

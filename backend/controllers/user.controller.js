@@ -13,6 +13,7 @@ module.exports = {
     signup,
     login,
     getUserInfo,
+    putUserLocation,
     getUserLocation,
     updateUserInfo
 };
@@ -117,6 +118,29 @@ function updateUserInfo(req, res){
     });
 }
 
+function putUserLocation(req, res){
+    User.updateOne(req.params, {$set: req.body})
+    .then(dbResponse => {
+        if (dbResponse.nModified == 1) {
+            res.status(200).json({ result: 'success', message: 'User location update successful' });
+        } else {
+            res.status(404).json({ result: 'User not found' });
+        }
+    }).catch(err => { // catch errors
+        res.status(500).json(err.message);
+    });
+}
+
 function getUserLocation(req, res){
-    
+    User.find(req.params) // req.params: {"netID": "___"}
+    .then(dbResponse => {
+        console.log('getUserLoc');
+        console.log(dbResponse[0]["coordinates"]);
+        res.status(200).json(dbResponse[0]["coordinates"]);
+    }).catch(err => { // catch errors
+        console.log('weird error');
+        console.log(err);
+        res.status(401).json(err);
+        return;
+    })
 }

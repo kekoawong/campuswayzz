@@ -36,10 +36,12 @@ const userSchema = new mongoose.Schema({
     },
     coordinates: {
         latitude: {
-            type: String
+            type: Number,
+            default: 41.70307706874321
         },
         longitude: {
-            type: String
+            type: Number,
+            default: -86.23898524167699
         }
     },
     friends: [{
