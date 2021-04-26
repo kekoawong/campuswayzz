@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function () {
     const navigation = useNavigation();
-    return (
 
+    return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 30 }}>Meetup Screen</Text>
             <FAB
@@ -16,7 +16,6 @@ export default function () {
                 onPress={() => navigation.navigate('Main')}
             />
         </View>
-
     );
 }
 
