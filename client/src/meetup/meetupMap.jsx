@@ -14,7 +14,11 @@ import MapViewDirections from "react-native-maps-directions";
 import * as Location from "expo-location";
 import meetuputil from '../utils/meetup.util';
 
-export default function () {
+export default function MeetupMap() {
+  /* TODO: get destination and userId from previous meetup screen */
+  const destination = { latitude: 41.703, longitude: -86.239 };
+  const userId = 'jchang5';
+  
   const navigation = useNavigation();
 
   /* initial coordinates that map will be centered on */
@@ -24,9 +28,6 @@ export default function () {
     latitudeDelta: 0.03,
     longitudeDelta: 0.01,
   };
-
-  /* TODO: get destination from previous meetup screen */
-  const destination = { latitude: 41.703, longitude: -86.239 };
 
   /* google API for directions */
   const GOOGLE_MAPS_APIKEY = "AIzaSyBiO2kOTm_XtfJLLvVitvEtuzUB3KtRPsY";
@@ -47,7 +48,7 @@ export default function () {
 
       /* async to update current user location */
       updateUserLocation();
-    }, 1000);
+    }, 3000);
 
     updateUserLocation();
 
@@ -65,15 +66,16 @@ export default function () {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      console.log(userLocation);
+      //console.log(userLocation);
       setUserLocation(userLocation);
 
-      /* TODO: push user location to the database for friends' screen */
+      /* push user location to the database for friends' screen */
       let coordinates = {"coordinates": {
           "latitude": userLocation["coords"]["latitude"], 
           "longitude": userLocation["coords"]["longitude"]
       }};
-      meetuputil.putUserLocation('jchang5', coordinates);
+
+      meetuputil.putUserLocation(userId, coordinates);
 
     })();
   }
@@ -82,7 +84,9 @@ export default function () {
   function updateFriendsLocations() {
 
     /* TODO: pull from the database to grab friends' locations */
-    setFriends([]);
+
+    setFriends([{'name': 'Chase', 'coordinates': {'latitude': 41.6984, 'longitude': -86.2339}},
+    {'name': 'Jackie', 'coordinates': {'latitude': 41.7031, 'longitude': -86.2390}}]);
   }
 
   return (
@@ -95,7 +99,7 @@ export default function () {
         showsUserLocation={true}
       >
         {friends.map((marker, index) => (
-          <Marker key={index} coordinate={marker.coordinates}>
+          <Marker key={index} coordinate={marker.coordinates} pinColor="blue">
             <Callout style={styles.plainView}>
               <View>
                 <Text style={styles.header}>{marker.name}</Text>
