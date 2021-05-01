@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Text, Button, Keyboard, TextInput } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { FAB, Headline } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import MultiSelect from 'react-native-multiple-select';
 
 
@@ -37,49 +36,55 @@ const items = [{
 ];
 
 export default function MeetupScreen() {
+
     // get navigation, set state
     const navigation = useNavigation();
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [selectedLocation, setSelectedLocation] = useState([]);
       
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
+            keyboardVerticalOffset={5}
             >
-            <DropDownPicker 
-                style={styles.dropdown} /* the main strip */
-                dropDownStyle={styles.dropdownPart}
-                containerStyle={
-                    {height: 40}
-                }
-                itemStyle={
-                    {justifyContent: 'flex-start'}
-                }
-                labelStyle={styles.labels}
-                items={[
-                    {label: 'All Locations', value: 'All'},
-                    {label: 'Restaurants', value: 'Restaurant'},
-                    {label: 'Recreation', value: 'Recreation'},
-                    {label: 'Rest and Relaxation', value: 'R&R'},
-                    {label: 'Study Spaces', value: 'Study Space'},
-                    {label: 'Shopping', value: 'Shop'},
-                    {label: 'Other', value: 'Other'},
-                ]}
-                defaultValue={'All'}
-                onChangeItem={item => setNewMarkers(item.value)}
-            />
-            <MultiSelect
-                items={items}
-                uniqueKey="id"
-                onSelectedItemsChange={setSelectedItems}
-                selectedItems={selectedItems}
-                searchInputPlaceholderText='Search Users...'
-                displayKey='name'
-                searchInputStyle={styles.textInput}
-                styleMainWrapper={styles.mainWrapper}
-                submitButtonText='Add user'
-                submitButtonColor='skyblue'
-            />
+            <View style={styles.selector}>
+                <Headline>Select Users</Headline>
+                <MultiSelect
+                    items={items}
+                    uniqueKey="id"
+                    onSelectedItemsChange={setSelectedUsers}
+                    selectedItems={selectedUsers}
+                    searchInputPlaceholderText='Search Users...'
+                    selectText='Users'
+                    displayKey='name'
+                    searchInputStyle={styles.textInput}
+                    styleDropdownMenu={styles.dropdown}
+                    styleDropdownMenuSubsection={styles.dropdown}
+                    styleMainWrapper={styles.mainWrapper}
+                    submitButtonText='Add user'
+                    submitButtonColor='skyblue'
+                />
+            </View>
+            <View style={styles.selector}>
+                <Headline>Select Location</Headline>
+                <MultiSelect
+                    items={items}
+                    uniqueKey="id"
+                    onSelectedItemsChange={setSelectedLocation}
+                    selectedItems={selectedLocation}
+                    searchInputPlaceholderText='Search Location...'
+                    selectText='Location'
+                    displayKey='name'
+                    searchInputStyle={styles.textInput}
+                    styleDropdownMenu={styles.dropdown}
+                    styleDropdownMenuSubsection={styles.dropdown}
+                    styleMainWrapper={styles.mainWrapper}
+                    submitButtonText='Select Location'
+                    submitButtonColor='skyblue'
+                    single
+                />
+            </View>
             <FAB
                 style={styles.fab}
                 label='Start Meetup'
@@ -95,10 +100,12 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff'
     },
+    selector: {
+        marginVertical: 7,
+        marginHorizontal: 10
+    },
     dropdown: {
-        width: '80%',
-        alignSelf: 'center',
-        backgroundColor: 'transparent',
+        backgroundColor: 'white',
     },
     dropdownPart: {
         width: '80%',
@@ -109,7 +116,9 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         width: '90%',
         alignSelf: 'center',
-        marginBottom: 5
+        marginTop: 10,
+        marginBottom: 5,
+        backgroundColor: 'white'
     },
     inner: {
         padding: 24,
@@ -133,6 +142,7 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       marginBottom: 16,
       bottom: 0,
-      color: 'green'
+      color: 'green',
+      position: 'absolute'
     }
 });
