@@ -133,6 +133,7 @@ export default function MeetupMap() {
 const styles = StyleSheet.create({
   fab: {
     alignSelf: "center",
+    position: 'absolute',
     marginBottom: 16,
     bottom: 0,
     backgroundColor: "red",
