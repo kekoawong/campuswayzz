@@ -70,7 +70,6 @@ export default function MeetupMap() {
       //console.log(userLocation);
       setUserLocation(userLocation);
 
-      /* push user location to the database for friends' screen */
       let coordinates = {"coordinates": {
           "latitude": userLocation["coords"]["latitude"], 
           "longitude": userLocation["coords"]["longitude"]
@@ -78,6 +77,7 @@ export default function MeetupMap() {
 
       setShowDirections(true);
 
+      /* push user location to the database for friends' screen */
       meetuputil.putUserLocation(userId, coordinates);
 
     })();
