@@ -122,7 +122,7 @@ export default function MeetupMap() {
       </MapView>
       <FAB
         style={styles.fab}
-        label="End Meetup"
+        label="Leave Meetup"
         icon="stop"
         onPress={() => navigation.navigate("Main")}
       />
