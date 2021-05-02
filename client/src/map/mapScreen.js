@@ -114,32 +114,31 @@ function MainMap() {
 
   return (
       <View style={styles.container}>
-
-        <DropDownPicker 
-          style={styles.dropdown} /* the main strip */
-          dropDownStyle={ /* the dropdown menu itself */
-            {backgroundColor: '#fafafa'},
-            {width: 275}
-          }
-          containerStyle={
-            {height: 40}
-          }
-          itemStyle={
-            {justifyContent: 'flex-start'}
-          }
-          labelStyle={styles.labels}
-          items={[
-            {label: 'All Locations', value: 'All'},
-            {label: 'Restaurants', value: 'Restaurant'},
-            {label: 'Recreation', value: 'Recreation'},
-            {label: 'Rest and Relaxation', value: 'R&R'},
-            {label: 'Study Spaces', value: 'Study Space'},
-            {label: 'Shopping', value: 'Shop'},
-            {label: 'Other', value: 'Other'},
-          ]}
-          defaultValue={'All'}
-          onChangeItem={item => setNewMarkers(item.value)}
-        /> 
+          <DropDownPicker 
+            style={styles.dropdown} /* the main strip */
+            dropDownStyle={ /* the dropdown menu itself */
+              {backgroundColor: '#fafafa'},
+              {width: 275}
+            }
+            containerStyle={
+              {height: 40}
+            }
+            itemStyle={
+              {justifyContent: 'flex-start'}
+            }
+            labelStyle={styles.labels}
+            items={[
+              {label: 'All Locations', value: 'All'},
+              {label: 'Restaurants', value: 'Restaurant'},
+              {label: 'Recreation', value: 'Recreation'},
+              {label: 'Rest and Relaxation', value: 'R&R'},
+              {label: 'Study Spaces', value: 'Study Space'},
+              {label: 'Shopping', value: 'Shop'},
+              {label: 'Other', value: 'Other'},
+            ]}
+            defaultValue={'All'}
+            onChangeItem={item => setNewMarkers(item.value)}
+          />
 
         <MapView style={styles.map} 
           initialRegion={initialCoordinates}
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     map: {
       width: Dimensions.get('window').width,
@@ -221,8 +220,7 @@ const styles = StyleSheet.create({
     dropdown: {
       width: 275,
       //height: 50,
-      backgroundColor: 'transparent',
-      //position: 'absolute',
+      backgroundColor: 'transparent'
       //bottom: 580,
       //left: 0,
       //right: -105,

@@ -9,10 +9,18 @@ import ProfileScreen from './src/profile/profileScreen';
 
 export default function App() {
   const Tab = createBottomTabNavigator();
+  const linking = {
+    prefixes: ['https://campuswayzz.com', 'campuswayzz://'],
+    screens: {
+      List: 'list',
+      Map: 'map',
+      Profile: 'profile'
+    },
+  };
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <Tab.Navigator>
           <Tab.Screen 
               name="List" 
