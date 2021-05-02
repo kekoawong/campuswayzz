@@ -128,3 +128,11 @@ function getFriendsLocations(req, res){
 function userUpdateStatus(req, res){
 
 }
+
+/* TODO 
+- get list of all users (only netIDs)
+- get list of all locations (only names)
+
+
+
+*/
