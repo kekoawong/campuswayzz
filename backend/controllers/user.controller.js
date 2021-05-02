@@ -107,12 +107,7 @@ function getUserInfo(req, res){
 function updateUserInfo(req, res){
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
-        // check how many reviews were modified (should only be 1)
-        if (dbResponse.nModified == 1){
-            res.status(200).json({result: 'success', message: 'User update successful'});
-        } else {
-            res.status(404).json({result: 'User not found'});
-        }
+        res.status(200).json({result: 'success', message: 'User update successful'});
     }).catch(err => { // catch errors
         res.status(500).json(err.message);
     });

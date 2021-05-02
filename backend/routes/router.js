@@ -6,6 +6,7 @@ const router = express.Router();
 const usersCtrl = require('../controllers/user.controller');
 const reviewsCtrl = require('../controllers/review.controller');
 const locationsCtrl = require('../controllers/location.controller');
+const meetupsCtrl = require('../controllers/meetup.controller');
 
 /* route endpoints */
 router.get('/test', (req, res) => {
@@ -33,5 +34,10 @@ router.delete('/review/:_id', reviewsCtrl.deleteReview);
 router.post('/location', locationsCtrl.postLocation);
 router.get('/locations', locationsCtrl.getLocations)
 router.get('/locations/:type', locationsCtrl.getLocationsForType);
+
+// meetups
+router.post('/meetup', meetupsCtrl.postMeetup);
+router.get('/meetup/:_id/location', meetupsCtrl.getMeetupLocationDestination);
+router.get('/meetup/:_id/friends', meetupsCtrl.getFriendsLocations);
 
 module.exports = router;
