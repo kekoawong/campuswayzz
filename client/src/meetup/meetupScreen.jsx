@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
 import * as Linking from 'expo-linking';
 import { FAB, Headline, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -39,13 +39,13 @@ const items = [{
 
 export default function MeetupScreen() {
 
-    let redirectUrl = Linking.createURL('path/into/app', {
+    const redirectUrl = Linking.createURL('profile', {
       queryParams: { groupID: 'test' },
     });
   
     const copyToClipboard = () => {
       Clipboard.setString(redirectUrl);
-      alert('Copied Link!');
+      Alert.alert('MeetUp Link', 'Link Copied to Clipboard!');
     };
 
     // get navigation, set state
