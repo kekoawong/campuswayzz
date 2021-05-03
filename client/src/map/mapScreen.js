@@ -178,7 +178,7 @@ function MainMap() {
               destination={destination}
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={2}
-              strokeColor="dodgerblue"
+              strokeColor="#004EFF"
               optimizeWaypoints={true}
               mode="WALKING"
           />

@@ -16,7 +16,7 @@ import meetuputil from '../utils/meetup.util';
 
 export default function MeetupMap() {
   /* TODO: get destination and userId from previous meetup screen */
-  const destination = { latitude: 41.703, longitude: -86.239 };
+  const destination = { name: "Main Building", latitude: 41.703, longitude: -86.239 };
   const userId = 'jchang5';
   
   const navigation = useNavigation();
@@ -40,6 +40,7 @@ export default function MeetupMap() {
   const [friends, setFriends] = useState([]);
 
   const [errorMsg, setErrorMsg] = useState(null);
+  const [showDirections, setShowDirections] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,12 +70,14 @@ export default function MeetupMap() {
       //console.log(userLocation);
       setUserLocation(userLocation);
 
-      /* push user location to the database for friends' screen */
       let coordinates = {"coordinates": {
           "latitude": userLocation["coords"]["latitude"], 
           "longitude": userLocation["coords"]["longitude"]
       }};
 
+      setShowDirections(true);
+
+      /* push user location to the database for friends' screen */
       meetuputil.putUserLocation(userId, coordinates);
 
     })();
@@ -85,8 +88,32 @@ export default function MeetupMap() {
 
     /* TODO: pull from the database to grab friends' locations */
 
-    setFriends([{'name': 'Chase', 'coordinates': {'latitude': 41.6984, 'longitude': -86.2339}},
-    {'name': 'Jackie', 'coordinates': {'latitude': 41.7031, 'longitude': -86.2390}}]);
+    setFriends([{'firstName': 'Chase', 'lastName': 'Saca', 'coordinates': {'latitude': 41.6984, 'longitude': -86.2339}},
+    {'firstName': 'Jackie', 'lastName': 'Fletcher', 'coordinates': {'latitude': 41.7031, 'longitude': -86.2390}}]);
+  }
+
+  function findDistance() {
+    const x1 = userLocation["coords"]["latitude"];
+    const x2 = destination["latitude"];
+    const y1 = userLocation["coords"]["longitude"];
+    const y2 = destination["longitude"];
+
+    let lon1 = y1 * Math.PI / 180;
+    let lon2 = y2 * Math.PI / 180;
+    let lat1 = x1 * Math.PI / 180;
+    let lat2 = x2 * Math.PI / 180;
+   
+    // Haversine formula
+    let dlon = lon2 - lon1;
+    let dlat = lat2 - lat1;
+    let a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2),2);
+    let c = 2 * Math.asin(Math.sqrt(a));
+   
+    // Radius of earth in kilometers. Use 3956 for miles
+    let r = 6371;
+   
+    // calculate the result --> assume walk time is 18 minutes per one mile 
+    return Math.round((c * r) * 18);
   }
 
   return (
@@ -102,12 +129,20 @@ export default function MeetupMap() {
           <Marker key={index} coordinate={marker.coordinates} pinColor="blue">
             <Callout style={styles.plainView}>
               <View>
-                <Text style={styles.header}>{marker.name}</Text>
+                <Text>{marker.firstName} {marker.lastName}</Text>
               </View>
             </Callout>
           </Marker>
         ))}
-        <MapViewDirections
+        <Marker coordinate={destination} pinColor="green">
+          <Callout style={styles.plainView}>
+          <View>
+                <Text style={styles.header}>{destination["name"]}</Text>
+                <Text style={{ color: '#0000FF' }}>{findDistance()} Minute Walk (Approx.)</Text>
+              </View>
+          </Callout>
+        </Marker>
+        {showDirections && <MapViewDirections
           origin={{
             latitude: userLocation["coords"]["latitude"],
             longitude: userLocation["coords"]["longitude"],
@@ -115,10 +150,10 @@ export default function MeetupMap() {
           destination={destination}
           apikey={GOOGLE_MAPS_APIKEY}
           strokeWidth={2}
-          strokeColor="dodgerblue"
+          strokeColor="#004EFF"
           optimizeWaypoints={true}
           mode="WALKING"
-        />
+        />}
       </MapView>
       <FAB
         style={styles.fab}
