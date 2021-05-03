@@ -1,8 +1,8 @@
-// const http = require('http');
+const server = 'http://107.191.49.209/api';
 
 /* make API call to server to get locations for a given type */
 function getLocationsForType(type){
-    return fetch('http://db.cse.nd.edu:5002/api/locations/' + type)
+    return fetch(server + '/locations/' + type)
     .then(res => res.json())
     .then(json => {
         return json;
@@ -12,7 +12,7 @@ function getLocationsForType(type){
 /* make API call to server to get locations for ALL locations */
 function getLocations(){
     console.log("fetch all locations");
-    return fetch('http://db.cse.nd.edu:5002/api/locations')
+    return fetch(server + '/locations')
     //return fetch('http://www.example.com/index.html')
     .then(res => res.json())
     .then(json => {

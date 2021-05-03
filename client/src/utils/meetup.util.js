@@ -1,5 +1,7 @@
+const server = 'http://107.191.49.209/api';
+
 function getUserLocation(netID){
-    return fetch('http://db.cse.nd.edu:5002/api/user/location/' + netID)
+    return fetch(server + '/user/location/' + netID)
     .then(res => res.json())
     .then(json => {
         return json;
@@ -7,7 +9,7 @@ function getUserLocation(netID){
 }
 
 function putUserLocation(netID, coordinates){
-    return fetch('http://db.cse.nd.edu:5002/api/user/location/' + netID, {
+    return fetch(server + '/user/location/' + netID, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(coordinates)

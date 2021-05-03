@@ -1,5 +1,7 @@
+const server = 'http://107.191.49.209/api';
+
 function getLocationsForType(type){
-    return fetch('http://db.cse.nd.edu:5002/api/locations/' + type)
+    return fetch(server + '/locations/' + type)
     .then(res => res.json())
     .then(json => {
         return json;
@@ -7,7 +9,7 @@ function getLocationsForType(type){
 }
 
 function getLocations(){
-    return fetch('http://db.cse.nd.edu:5002/api/locations')
+    return fetch(server + '/locations')
     .then(res => res.json())
     .then(json => {
         return json;
@@ -15,7 +17,7 @@ function getLocations(){
 }
 
 function getReviewsForLocation(locationName){
-    return fetch('http://db.cse.nd.edu:5002/api/review/location/' + locationName)
+    return fetch(server + '/review/location/' + locationName)
     .then(res => res.json())
     .then(json => {
         return json;
@@ -23,7 +25,7 @@ function getReviewsForLocation(locationName){
 }
 
 function getReviews(){
-    return fetch('http://db.cse.nd.edu:5002/api/review')
+    return fetch(server + '/review')
     .then(res => res.json())
     .then(json => {
         return json;
