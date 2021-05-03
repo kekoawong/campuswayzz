@@ -119,7 +119,11 @@ function updateUserInfo(req, res){
 function putUserLocation(req, res){
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
-
+        if (dbResponse['n'] == 0){
+            debuglog('ERROR', 'user controller - putUserLocation', 'could not find user');
+            res.status(404).json({ result: 'error', message: 'NetID not found' });
+            return;
+        }
         // debuglog('LOG', 'user controller - putUserLocation', 'updated user location');
         res.status(200).json({ result: 'success', message: 'User location update successful' });
         

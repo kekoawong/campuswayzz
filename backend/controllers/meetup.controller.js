@@ -9,7 +9,8 @@ const debuglog = require('../debuglog');
 module.exports = {
     postMeetup,
     getMeetupLocation,
-    getFriendsLocations
+    getFriendsLocations,
+    updateUserStatus
 }
 
 /* POST request for meetup
@@ -123,14 +124,37 @@ function getFriendsLocations(req, res){
 /* PUT request for user status
 
 */
-function userUpdateStatus(req, res){
+function updateUserStatus(req, res){
+    const userNetID = req.body['netID'];
+    const meetupID = mongoose.Types.ObjectId(req.params['_id']);
+    const status = req.body['status'];
+
+    Meetup.findOne({'_id': meetupID})
+    .then(foundMeetup => {
+        if (!foundMeetup) {
+            debuglog('ERROR', 'meetup controller - updateUserStatus', 'meetup not found');
+            res.status(404).json({ result: 'error', message: 'Meetup not found' });
+            return;
+        }
+
+        let friends = foundMeetup['friends'];
+        
+        for (const i in friends){
+            if (friends[i]['netID'] == userNetID){
+                friends[i]['status'] = status;
+                break;
+            }
+        }
+
+        Meetup.updateOne({ '_id': meetupID }, {"friends": friends})
+        .then(dbResponse => {
+            debuglog('LOG', 'meetup controller - updateUserStatus', 'updated user status')
+            res.status(200).json({ result: 'success', message: 'meetup user status update successful' });
+        }).catch(err => {
+            debuglog('ERROR', 'meetup controller - updateUserStatus', err);
+            res.status(500).json(err.message);
+        })
+
+    })
 
 }
-
-/* TODO 
-- get list of all users (only netIDs)
-- get list of all locations (only names)
-
-
-
-*/
