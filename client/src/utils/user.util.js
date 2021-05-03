@@ -42,9 +42,18 @@ function putUserLocation(netID, coordinates){
     })
 }
 
+function getAllUserNetIDs(){
+    return fetch(server + '/user/netIDs/all')
+    .then(res => res.json())
+    .then(json => {
+        return json;
+    })
+}
+
 export default {
     getUserData,
     putUserData,
     getUserLocation,
-    putUserLocation
+    putUserLocation,
+    getAllUserNetIDs
 }
