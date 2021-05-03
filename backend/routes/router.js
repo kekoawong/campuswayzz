@@ -10,8 +10,8 @@ const meetupsCtrl = require('../controllers/meetup.controller');
 
 /* route endpoints */
 router.get('/test', (req, res) => {
-    res.json({'result': 'test success'});
-    console.log('test sup');
+    console.log('[LOG]::Router Test');
+    res.json({'result': 'router test success'});
 });
 
 // users
@@ -21,7 +21,7 @@ router.get('/user/:netID', usersCtrl.getUserInfo);
 router.put('/user/:netID', usersCtrl.updateUserInfo);
 router.put('/user/location/:netID', usersCtrl.putUserLocation);
 router.get('/user/location/:netID', usersCtrl.getUserLocation);
-router.get('/user/netIDs/all', usersCtrl.getUserNetIDs);
+router.get('/user/netIDs/all', usersCtrl.getAllUserNetIDs);
 
 // reviews
 router.get('/review', reviewsCtrl.getReviews);
@@ -33,9 +33,9 @@ router.delete('/review/:_id', reviewsCtrl.deleteReview);
 
 // locations
 router.post('/location', locationsCtrl.postLocation);
-router.get('/locations', locationsCtrl.getLocations)
+router.get('/locations', locationsCtrl.getAllLocations)
 router.get('/locations/:type', locationsCtrl.getLocationsForType);
-router.get('/location/names/all', locationsCtrl.getLocationNames);
+router.get('/location/names/all', locationsCtrl.getAllLocationNames);
 
 // meetups
 router.post('/meetup', meetupsCtrl.postMeetup);

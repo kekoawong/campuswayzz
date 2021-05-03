@@ -7,6 +7,7 @@
 3. post/put/delete/get user location requests
 */
 
+const debuglog = require('../debuglog');
 const User = require('../models/user.model');
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
     putUserLocation,
     getUserLocation,
     updateUserInfo,
-    getUserNetIDs
+    getAllUserNetIDs
 };
 
 /* POST request for new user
@@ -29,19 +30,17 @@ Signup a new user into the database
 
 */
 function signup(req, res){
-    console.log('USER.CONTROLLER: Signing up');
 
     const user = new User(req.body);
     user.save()
     .then(newUser => {
-        console.log("new user created");
+        debuglog('LOG', 'user controller - signup', 'signed up user');
         // const token = createToken(newUser);
         // res.header('auth-token', token);
         // res.status(201).json({result: 'success', message: 'Signup successful', token: token});
         res.status(201).json({result: 'success', message: 'Signup successful'});
     }).catch(err => { // catch errors
-        console.log('USER.CONTROLLER: signup error');
-        console.log(err);
+        debuglog('ERROR', 'user controller - signup', err);
         res.status(400).json(err);
     });   
 }
@@ -60,30 +59,30 @@ Login an existing user
 
 */
 function login(req, res){
-    console.log('USER.CONTROLLER: Logging in');
+    debuglog('LOG', 'user controller - login', 'attempting login');
     
     User.findOne({netID: req.body.netID})
     .then(foundUser => {
         if (!foundUser){
+            debuglog('ERROR', 'user controller - login', 'user netID not found');
             res.status(404).json({result: 'error', message: 'NetID not found'});
             return;
         }
 
         // check given password against password in db
         foundUser.checkPassword(req.body.password, (err,result) => {
-            if (result){ // correct password
-                console.log('Found user: Correct password');
+            if (result) { // correct password
+                debuglog('LOG', 'user controller - login', 'found user, correct password');
                 // const token = createToken(foundUser);
                 // res.header('auth-token', token);
                 res.status(200).json({result: 'success', message: 'Login successful'});
             } else { // incorrect password
-                console.log('Found user: Incorrect password');
+                debuglog('LOG', 'user controller - login', 'found user, incorrect password');
                 res.status(400).json({result: 'error', message: 'Incorrect password'});
             }
         });
     }).catch(err => { // catch errors
-        console.log('weird error');
-        console.log(err);
+        debuglog('ERROR', 'user controller - login', err);
         res.status(401).json(err);
         return;
     });
@@ -93,13 +92,14 @@ function getUserInfo(req, res){
     User.findOne(req.params)
     .then(userData => {
         if (userData){
+            debuglog('LOG', 'user controller - getUserInfo', 'got user info');
             res.status(200).json(userData);
         } else {
-            res.status(404).json({result: 'error', message: 'User not found'});
+            debuglog('LOG', 'user controller - getUserInfo', 'user not found');
+            res.status(200).json({result: 'error', message: 'User not found'});
         }
     }).catch(err => { // catch errors
-        console.log('weird error');
-        console.log(err);
+        debuglog('ERROR', 'user controller - getUserInfo', err);
         res.status(401).json(err);
         return;
     })
@@ -108,8 +108,10 @@ function getUserInfo(req, res){
 function updateUserInfo(req, res){
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
+        debuglog('LOG', 'user controller - updateUserInfo', 'updated user info');
         res.status(200).json({result: 'success', message: 'User update successful'});
     }).catch(err => { // catch errors
+        debuglog('ERROR', 'user controller - updateUserInfo', err);
         res.status(500).json(err.message);
     });
 }
@@ -117,10 +119,12 @@ function updateUserInfo(req, res){
 function putUserLocation(req, res){
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
-        
+
+        debuglog('LOG', 'user controller - putUserLocation', 'updated user location');
         res.status(200).json({ result: 'success', message: 'User location update successful' });
         
     }).catch(err => { // catch errors
+        debuglog('ERROR', 'user controller - putUserLocation', err);
         res.status(500).json(err.message);
     });
 }
@@ -128,29 +132,26 @@ function putUserLocation(req, res){
 function getUserLocation(req, res){
     User.find(req.params) // req.params: {"netID": "___"}
     .then(dbResponse => {
-        console.log('getUserLoc');
-        console.log(dbResponse[0]["coordinates"]);
+        debuglog('LOG', 'user controller - getUserLocation', 'got user location');
         res.status(200).json(dbResponse[0]["coordinates"]);
     }).catch(err => { // catch errors
-        console.log('weird error');
-        console.log(err);
+        debuglog('ERROR', 'user controller - getUserLocation', err);
         res.status(401).json(err);
         return;
     })
 }
 
-function getUserNetIDs(req, res){
+function getAllUserNetIDs(req, res){
     User.find()
     .then(dbResponse => {
         let netIDs = [];
         for (const i in dbResponse){
             netIDs.push(dbResponse[i]['netID']);
         }
-        console.log(netIDs);
+        debuglog('LOG', 'user controller - getAllUserNetIDs', 'got all user netIDs');
         res.status(201).json(netIDs);
     }).catch(err => { // catch errors
-        console.log('weird error');
-        console.log(err);
+        debuglog('ERROR', 'user controller - getAllUserNetIDs', err);
         res.status(401).json(err);
         return;
     })

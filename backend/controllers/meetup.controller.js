@@ -4,6 +4,7 @@ const Meetup = require('../models/meetup.model');
 const Location = require('../models/location.model');
 const User = require('../models/user.model');
 const reviewModel = require('../models/review.model');
+const debuglog = require('../debuglog');
 
 module.exports = {
     postMeetup,
@@ -19,11 +20,10 @@ function postMeetup(req, res){
 
     meetup.save()
     .then(newMeetup => {
-        console.log('new meetup created');
+        debuglog('LOG', 'meetup controller - postMeetup', 'posted new meetup');
         res.status(201).json({result: 'success', message: 'post meetup success'})
     }).catch(err => {
-        console.log('error with post location');
-        console.log(err);
+        debuglog('ERROR', 'meetup controller - postMeetup', err);
         res.status(400).json(err);
     })
 };
@@ -36,34 +36,32 @@ function getMeetupLocation(req, res){
     Meetup.findOne(req.params)
     .then(foundMeetup => {
         if (!foundMeetup){
+            debuglog('ERROR', 'meetup controller - getMeetupLocation', 'meetup not found');
             res.status(404).json({result: 'error', message: 'Meetup not found'});
             return;
         }
-        console.log('found meetup');
-        console.log(foundMeetup);
+        debuglog('LOG', 'meetup controller - getMeetupLocation', 'found meetup');
 
         Location.findOne({'name': foundMeetup['locationName']})
         .then(foundLocation => {
             if (!foundLocation){
-                res.status(404).json({result: 'error', message: 'Location not found'});
+                debuglog('ERROR', 'meetup controller - getMeetupLocation', 'meetup location not found');
+                res.status(404).json({result: 'error', message: 'meetup location not found'});
                 return;
-            }
-            console.log('found location');
-            console.log(foundLocation);
+            } 
+            debuglog('LOG', 'meetup controller - getMeetupLocation', 'found meetup location');
             let results = {
                 'name': foundLocation['name'],
                 'coordinates': foundLocation['coordinates']
             }
             res.status(200).json(results);
         }).catch(err => { // catch errors
-            console.log('weird error');
-            console.log(err);
+            debuglog('ERROR', 'meetup controller - getMeetupLocation', err);
             res.status(401).json(err);
             return;
         })
     }).catch(err => { // catch errors
-        console.log('weird error');
-        console.log(err);
+        debuglog('ERROR', 'meetup controller - getMeetupLocation', err);
         res.status(401).json(err);
         return;
     })
@@ -76,12 +74,13 @@ function getFriendsLocations(req, res){
     req.params['_id'] = mongoose.Types.ObjectId(req.params['_id']);
     Meetup.findOne(req.params)
     .then(foundMeetup => {
-        if (!foundMeetup){
+        if (!foundMeetup) {
+            debuglog('ERROR', 'meetup controller - getFriendsLocation', 'meetup not found');
             res.status(404).json({result: 'error', message: 'Meetup not found'});
             return;
         }
-        console.log('found meetup');
-        console.log(foundMeetup);
+
+        debuglog('LOG', 'meetup controller - getFriendsLocation', 'found meetup');
 
         const friends = foundMeetup['friends'];
 
@@ -91,16 +90,16 @@ function getFriendsLocations(req, res){
                 netIDs.push(friends[i]['netID']);
             }
         }
-        console.log(netIDs);
         
         User.find().where('netID').in(netIDs)
         .then(foundUsers => {
             if (!foundUsers){
+                debuglog('ERROR', 'meetup controller - getFriendsLocation', 'users not found');
                 res.status(404).json({result: 'error', message: 'Users not found'});
                 return;
             }
-            console.log('found users');
-            console.log(foundUsers);
+
+            debuglog('LOG', 'meetup controller - getFriendsLocation', 'found users');
 
             let results = [];
             for (const i in foundUsers){
@@ -115,8 +114,7 @@ function getFriendsLocations(req, res){
             res.status(200).json(results);
         })
     }).catch(err => { // catch errors
-        console.log('weird error');
-        console.log(err);
+        debuglog('ERROR', 'meetup controller - getFriendsLocation', err);
         res.status(401).json(err);
         return;
     })
