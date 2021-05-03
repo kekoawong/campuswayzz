@@ -4,7 +4,8 @@ const Location = require('../models/location.model');
 module.exports = {
     postLocation,
     getLocations,
-    getLocationsForType
+    getLocationsForType,
+    getLocationNames
 }
 
 /* POST request for location
@@ -69,6 +70,22 @@ function getLocationsForType(req, res){
     Location.find(req.params) // req.params: {"type": "___"}
     .then(locations => {
         res.status(200).json(locations);
+    }).catch(err => { // catch errors
+        console.log('weird error');
+        console.log(err);
+        res.status(401).json(err);
+        return;
+    })
+}
+
+function getLocationNames(req, res){
+    Location.find()
+    .then(locations => {
+        let locationNames = [];
+        for (const i in locations){
+            locationNames.push(locations[i]['name']);
+        }
+        res.status(201).json(locationNames);
     }).catch(err => { // catch errors
         console.log('weird error');
         console.log(err);

@@ -35,6 +35,7 @@ router.delete('/review/:_id', reviewsCtrl.deleteReview);
 router.post('/location', locationsCtrl.postLocation);
 router.get('/locations', locationsCtrl.getLocations)
 router.get('/locations/:type', locationsCtrl.getLocationsForType);
+router.get('/location/names/all', locationsCtrl.getLocationNames);
 
 // meetups
 router.post('/meetup', meetupsCtrl.postMeetup);
