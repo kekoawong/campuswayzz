@@ -6,13 +6,38 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ListScreen from './src/list/listScreen';
 import MapScreen from './src/map/mapScreen';
 import ProfileScreen from './src/profile/profileScreen';
+import * as Linking from 'expo-linking';
+
+
 
 export default function App() {
+
+  // event listener for deep linking
+  Linking.addEventListener('url', (item) => {
+    console.log(item.url);
+    //const [path, queryParams] = Linking.parse(item.url);
+    //console.log(path);
+    //console.log(queryParams)
+  });
+
+  const initialURL = Linking.getInitialURL();
+  console.log(initialURL);
+
+  const linking = {
+    prefixes: ['https://campuswayzz.com', 'campuswayzz://', 'exp://'],
+    screens: {
+      List: 'list',
+      Map: 'map',
+      Profile: 'profile',
+      NotFound: '*',
+    },
+  };
+
   const Tab = createBottomTabNavigator();
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <Tab.Navigator>
           <Tab.Screen 
               name="List" 

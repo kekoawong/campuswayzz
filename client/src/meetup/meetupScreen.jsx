@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { FAB, Headline } from 'react-native-paper';
+import { View, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
+import * as Linking from 'expo-linking';
+import { FAB, Headline, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
+import Clipboard from 'expo-clipboard';
 
 
 const items = [{
@@ -37,6 +39,15 @@ const items = [{
 
 export default function MeetupScreen() {
 
+    const redirectUrl = Linking.createURL('profile', {
+      queryParams: { groupID: 'test' },
+    });
+  
+    const copyToClipboard = () => {
+      Clipboard.setString(redirectUrl);
+      Alert.alert('MeetUp Link', 'Link Copied to Clipboard!');
+    };
+
     // get navigation, set state
     const navigation = useNavigation();
     const [selectedUsers, setSelectedUsers] = useState([]);
@@ -62,7 +73,7 @@ export default function MeetupScreen() {
                     styleDropdownMenu={styles.dropdown}
                     styleDropdownMenuSubsection={styles.dropdown}
                     styleMainWrapper={styles.mainWrapper}
-                    submitButtonText='Add user'
+                    submitButtonText='Add users'
                     submitButtonColor='skyblue'
                 />
             </View>
@@ -73,17 +84,23 @@ export default function MeetupScreen() {
                     uniqueKey="id"
                     onSelectedItemsChange={setSelectedLocation}
                     selectedItems={selectedLocation}
-                    searchInputPlaceholderText='Search Location...'
-                    selectText='Location'
+                    searchInputPlaceholderText='Search Destinations...'
+                    selectText='Destination'
                     displayKey='name'
                     searchInputStyle={styles.textInput}
                     styleDropdownMenu={styles.dropdown}
                     styleDropdownMenuSubsection={styles.dropdown}
                     styleMainWrapper={styles.mainWrapper}
-                    submitButtonText='Select Location'
+                    submitButtonText='Select Destination'
                     submitButtonColor='skyblue'
                     single
                 />
+            </View>
+            <View style={styles.selector}>
+                <Headline>{redirectUrl}</Headline>
+                <Button icon="link" mode="contained" onPress={copyToClipboard}>
+                  Get Link
+                </Button>
             </View>
             <FAB
                 style={styles.fab}
