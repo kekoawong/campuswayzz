@@ -39,7 +39,7 @@ const items = [{
 
 export default function MeetupScreen() {
 
-    const redirectUrl = Linking.createURL('profile');
+    const redirectUrl = Linking.createURL('Profile');
   
     const copyToClipboard = () => {
       Clipboard.setString(redirectUrl);
