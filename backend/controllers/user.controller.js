@@ -146,7 +146,7 @@ function getAllUserNetIDs(req, res){
     .then(dbResponse => {
         let netIDs = [];
         for (const i in dbResponse){
-            netIDs.push(dbResponse[i]['netID']);
+            netIDs.push({'netID': dbResponse[i]['netID']});
         }
         debuglog('LOG', 'user controller - getAllUserNetIDs', 'got all user netIDs');
         res.status(201).json(netIDs);

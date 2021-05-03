@@ -81,7 +81,7 @@ function getAllLocationNames(req, res){
     .then(locations => {
         let locationNames = [];
         for (const i in locations){
-            locationNames.push(locations[i]['name']);
+            locationNames.push({'name': locations[i]['name']});
         }
         debuglog('LOG', 'location controller - getAllLocationNames', 'got all locations names');
         res.status(201).json(locationNames);
