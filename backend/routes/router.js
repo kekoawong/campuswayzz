@@ -21,6 +21,7 @@ router.get('/user/:netID', usersCtrl.getUserInfo);
 router.put('/user/:netID', usersCtrl.updateUserInfo);
 router.put('/user/location/:netID', usersCtrl.putUserLocation);
 router.get('/user/location/:netID', usersCtrl.getUserLocation);
+router.get('/user/netIDs', usersCtrl.getUserNetIDs);
 
 // reviews
 router.get('/review', reviewsCtrl.getReviews);
@@ -37,7 +38,7 @@ router.get('/locations/:type', locationsCtrl.getLocationsForType);
 
 // meetups
 router.post('/meetup', meetupsCtrl.postMeetup);
-router.get('/meetup/:_id/location', meetupsCtrl.getMeetupLocationDestination);
+router.get('/meetup/:_id/location', meetupsCtrl.getMeetupLocation);
 router.get('/meetup/:_id/friends', meetupsCtrl.getFriendsLocations);
 
 module.exports = router;

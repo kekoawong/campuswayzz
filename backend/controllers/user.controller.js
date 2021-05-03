@@ -15,7 +15,8 @@ module.exports = {
     getUserInfo,
     putUserLocation,
     getUserLocation,
-    updateUserInfo
+    updateUserInfo,
+    getUserNetIDs
 };
 
 /* POST request for new user
@@ -135,5 +136,12 @@ function getUserLocation(req, res){
         console.log(err);
         res.status(401).json(err);
         return;
+    })
+}
+
+function getUserNetIDs(req, res){
+    User.find()
+    .then(dbResponse => {
+        console.log(dbResponse);
     })
 }

@@ -7,7 +7,7 @@ const reviewModel = require('../models/review.model');
 
 module.exports = {
     postMeetup,
-    getMeetupLocationDestination,
+    getMeetupLocation,
     getFriendsLocations
 }
 
@@ -31,7 +31,7 @@ function postMeetup(req, res){
 /* GET request for destination location coordinates
 
 */
-function getMeetupLocationDestination(req, res){
+function getMeetupLocation(req, res){
     req.params['_id'] = mongoose.Types.ObjectId(req.params['_id']);
     Meetup.findOne(req.params)
     .then(foundMeetup => {
