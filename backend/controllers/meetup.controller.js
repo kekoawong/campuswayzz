@@ -21,7 +21,7 @@ function postMeetup(req, res){
     meetup.save()
     .then(newMeetup => {
         debuglog('LOG', 'meetup controller - postMeetup', 'posted new meetup');
-        res.status(201).json({result: 'success', message: 'post meetup success'})
+        res.status(201).json({result: 'success', message: 'post meetup success', _id: newMeetup['_id']});
     }).catch(err => {
         debuglog('ERROR', 'meetup controller - postMeetup', err);
         res.status(400).json(err);
@@ -40,7 +40,7 @@ function getMeetupLocation(req, res){
             res.status(404).json({result: 'error', message: 'Meetup not found'});
             return;
         }
-        debuglog('LOG', 'meetup controller - getMeetupLocation', 'found meetup');
+        // debuglog('LOG', 'meetup controller - getMeetupLocation', 'found meetup');
 
         Location.findOne({'name': foundMeetup['locationName']})
         .then(foundLocation => {
@@ -49,7 +49,7 @@ function getMeetupLocation(req, res){
                 res.status(404).json({result: 'error', message: 'meetup location not found'});
                 return;
             } 
-            debuglog('LOG', 'meetup controller - getMeetupLocation', 'found meetup location');
+            // debuglog('LOG', 'meetup controller - getMeetupLocation', 'found meetup location');
             let results = {
                 'name': foundLocation['name'],
                 'coordinates': foundLocation['coordinates']
@@ -80,7 +80,7 @@ function getFriendsLocations(req, res){
             return;
         }
 
-        debuglog('LOG', 'meetup controller - getFriendsLocation', 'found meetup');
+        // debuglog('LOG', 'meetup controller - getFriendsLocation', 'found meetup');
 
         const friends = foundMeetup['friends'];
 
@@ -99,7 +99,7 @@ function getFriendsLocations(req, res){
                 return;
             }
 
-            debuglog('LOG', 'meetup controller - getFriendsLocation', 'found users');
+            // debuglog('LOG', 'meetup controller - getFriendsLocation', 'found users');
 
             let results = [];
             for (const i in foundUsers){

@@ -120,7 +120,7 @@ function putUserLocation(req, res){
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
 
-        debuglog('LOG', 'user controller - putUserLocation', 'updated user location');
+        // debuglog('LOG', 'user controller - putUserLocation', 'updated user location');
         res.status(200).json({ result: 'success', message: 'User location update successful' });
         
     }).catch(err => { // catch errors

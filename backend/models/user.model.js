@@ -44,12 +44,12 @@ const userSchema = new mongoose.Schema({
             default: -86.23898524167699
         }
     },
-    friends: [{
-        friendNetID: {
-            type: String,
-            required: true
-        }
-    }]
+    // friends: [{
+    //     friendNetID: {
+    //         type: String,
+    //         required: true
+    //     }
+    // }]
 });
 
 /* encrypt password before saving user */
