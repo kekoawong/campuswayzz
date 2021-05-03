@@ -142,6 +142,16 @@ function getUserLocation(req, res){
 function getUserNetIDs(req, res){
     User.find()
     .then(dbResponse => {
-        console.log(dbResponse);
+        let netIDs = [];
+        for (const i in dbResponse){
+            netIDs.push(dbResponse[i]['netID']);
+        }
+        console.log(netIDs);
+        res.status(201).json(netIDs);
+    }).catch(err => { // catch errors
+        console.log('weird error');
+        console.log(err);
+        res.status(401).json(err);
+        return;
     })
 }
