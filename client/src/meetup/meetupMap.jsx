@@ -17,7 +17,7 @@ import meetuputil from '../utils/meetup.util';
 
 export default function MeetupMap() {
   /* TODO: get destination and userId from previous meetup screen */
-  const [destination, setDestination] = useState({ name: "Main Building", latitude: 41.703, longitude: -86.239 });
+  const [destination, setDestination] = useState({ name: "Main Building", coordinates: {latitude: 41.703, longitude: -86.239} });
   const userId = 'jchang5';
   // TEMPORARY MEETUPID
   const tempMeetupID = '608efdc66754273ef3935f7e';
@@ -56,7 +56,7 @@ export default function MeetupMap() {
 
     getMeetupLocation()
     .then(response => {
-      console.log('response');
+      console.log('RESPONSE');
       console.log(response);
 
       setDestination(response);
