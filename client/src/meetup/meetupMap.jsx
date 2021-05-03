@@ -12,12 +12,15 @@ import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import * as Location from "expo-location";
+import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
 export default function MeetupMap() {
   /* TODO: get destination and userId from previous meetup screen */
-  const destination = { name: "Main Building", latitude: 41.703, longitude: -86.239 };
+  const [destination, setDestination] = useState({ name: "Main Building", latitude: 41.703, longitude: -86.239 });
   const userId = 'jchang5';
+  // TEMPORARY MEETUPID
+  const tempMeetupID = '608efdc66754273ef3935f7e';
   
   const navigation = useNavigation();
 
@@ -51,6 +54,14 @@ export default function MeetupMap() {
       updateUserLocation();
     }, 3000);
 
+    getMeetupLocation()
+    .then(response => {
+      console.log('response');
+      console.log(response);
+
+      setDestination(response);
+    })
+
     updateUserLocation();
 
     /* TOOD: add cleanup function to useEffect */
@@ -78,7 +89,7 @@ export default function MeetupMap() {
       setShowDirections(true);
 
       /* push user location to the database for friends' screen */
-      meetuputil.putUserLocation(userId, coordinates);
+      userutil.putUserLocation(userId, coordinates);
 
     })();
   }
@@ -87,16 +98,25 @@ export default function MeetupMap() {
   function updateFriendsLocations() {
 
     /* TODO: pull from the database to grab friends' locations */
+    getFriendsLocation().then(response => {
+      setFriends(response);
+    })
+    
+  }
 
-    setFriends([{'firstName': 'Chase', 'lastName': 'Saca', 'coordinates': {'latitude': 41.6984, 'longitude': -86.2339}},
-    {'firstName': 'Jackie', 'lastName': 'Fletcher', 'coordinates': {'latitude': 41.7031, 'longitude': -86.2390}}]);
+  async function getFriendsLocation(){
+    return await meetuputil.getFriendsLocation(tempMeetupID);
+  }
+
+  async function getMeetupLocation(){
+    return await meetuputil.getMeetupLocation(tempMeetupID);
   }
 
   function findDistance() {
     const x1 = userLocation["coords"]["latitude"];
-    const x2 = destination["latitude"];
+    const x2 = destination["coordinates"]["latitude"];
     const y1 = userLocation["coords"]["longitude"];
-    const y2 = destination["longitude"];
+    const y2 = destination["coordinates"]["longitude"];
 
     let lon1 = y1 * Math.PI / 180;
     let lon2 = y2 * Math.PI / 180;
@@ -134,7 +154,7 @@ export default function MeetupMap() {
             </Callout>
           </Marker>
         ))}
-        <Marker coordinate={destination} pinColor="green">
+        <Marker coordinate={destination["coordinates"]} pinColor="green">
           <Callout style={styles.plainView}>
           <View>
                 <Text style={styles.header}>{destination["name"]}</Text>
@@ -147,7 +167,7 @@ export default function MeetupMap() {
             latitude: userLocation["coords"]["latitude"],
             longitude: userLocation["coords"]["longitude"],
           }}
-          destination={destination}
+          destination={destination["coordinates"]}
           apikey={GOOGLE_MAPS_APIKEY}
           strokeWidth={2}
           strokeColor="#004EFF"
