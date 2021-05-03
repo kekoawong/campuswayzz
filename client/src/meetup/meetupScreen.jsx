@@ -25,17 +25,15 @@ export default function MeetupScreen() {
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState([]);
     
-    const [allUserNetIDs, setAllUserNetIDs] = useState();
-    const [allLocations, setAllLocations] = useState();
+    const [allUserNetIDs, setAllUserNetIDs] = useState([{'netID': 'Loading'}]);
+    const [allLocations, setAllLocations] = useState([{'name': 'Loading'}]);
 
 
     useEffect(() => {
       getAllLocationNames().then(response => {
-        console.log('all locations: ' + response)
         setAllLocations(response);
       })
       getAllUserNetIDs().then(response => {
-        console.log('all user netIDs: ' + response);
         setAllUserNetIDs(response);
       })
     }, []);
