@@ -32,12 +32,6 @@ function MainProfile() {
   // User Information reloads after signing in or when user alters personal info
   const [userInfo, setUserInfo] = useState([]);
   const [editMode, swapMode] = useState(false);
-  const [userFirstName, setFirstName] = useState(userInfo['firstName']);
-  const [userLastName, setLastName] = useState(userInfo['lastName']);
-  const [userNetId, setNetId] = useState(userInfo['netID']);
-  const [userPrivacy, setPrivacy] = useState(userInfo['privacy']);
-
-
 
   useEffect(() => {
     profileutil.getUserData('kwong6')
@@ -57,13 +51,7 @@ function MainProfile() {
     } else {
         // on "update" option ==> edit state
         console.log('Saving changes');
-        let updateUserData = {
-          'firstName': userFirstName,
-          'lastName': userLastName,
-          'netID': userNetId,
-          'privacy': userPrivacy
-        };
-        profileutil.putUserData(netID, updateUserData);
+        profileutil.putUserData(userInfo.netID, userInfo);
         swapMode(false);
     }
   }
@@ -80,15 +68,15 @@ function MainProfile() {
             </Button>
           </View>
         <View style={styles.container_info}>
-          <TextInput mode='outlined' label='First Name' value={userInfo.firstName} onChangeText={setFirstName}/>
-          <TextInput mode='outlined' label='Last Name' value={userInfo.lastName} onChangeText={setLastName}/>
-          <TextInput mode='outlined' label='NetID' value={userInfo.netID} onChangeText={setNetId}/>
-          <ToggleButton.Group onValueChange={setPrivacy} value={userPrivacy}>
+          <TextInput mode='outlined' label='First Name' value={userInfo.firstName} onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
+          <TextInput mode='outlined' label='Last Name' value={userInfo.lastName} onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
+          <TextInput mode='outlined' label='NetID' value={userInfo.netID} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
+          <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
             <ToggleButton icon='account-check' value='Share indefinitely'/>
             <ToggleButton icon='account-clock' value='Share while using'/>
             <ToggleButton icon='account-off' value='Never share'/>
           </ToggleButton.Group>
-          <Text style={styles.rows}>Privacy: {userPrivacy}</Text>
+          <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
         </View>
       </View>
       );
@@ -105,13 +93,13 @@ function MainProfile() {
             </Button>
           </View>
         <View style={styles.container_info}>
-          <Text style={styles.rows}>First Name: {userFirstName}</Text>
+          <Text style={styles.rows}>First Name: {userInfo.firstName}</Text>
           <Divider />
-          <Text style={styles.rows}>Last Name: {userLastName}</Text>
+          <Text style={styles.rows}>Last Name: {userInfo.lastName}</Text>
           <Divider />
-          <Text style={styles.rows}>NetID: {userNetId}</Text>
+          <Text style={styles.rows}>NetID: {userInfo.netID}</Text>
           <Divider />
-          <Text style={styles.rows}>Privacy: {userPrivacy}</Text>
+          <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
           <Divider />
         </View>
         <View style={styles.container_switch}>
