@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button, Divider, ToggleButton, Switch, TextInput} from 'react-native-paper';
-import profileutil from '../utils/profile.util';
+import userutil from '../utils/user.util';
 
 // Ghost mode switch
 const GhostSwitch = () => {
@@ -34,7 +34,7 @@ function MainProfile() {
   const [editMode, swapMode] = useState(false);
 
   useEffect(() => {
-    profileutil.getUserData('kwong6')
+    userutil.getUserData('kwong6')
     .then(res => {
       setUserInfo(res)
       return
@@ -51,7 +51,7 @@ function MainProfile() {
     } else {
         // on "update" option ==> edit state
         console.log('Saving changes');
-        profileutil.putUserData(userInfo.netID, userInfo);
+        userutil.putUserData(userInfo.netID, userInfo);
         swapMode(false);
     }
   }
