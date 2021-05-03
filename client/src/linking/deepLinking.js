@@ -6,13 +6,26 @@ export const linkingConfig = {
     screens: {
     List: {
         path: "list",
-        initialRouteName: "Main",
         screens: {
-        Main: 'main',
+        Main: {
+            path: 'main',
+            screens: {
+                Listings: 'listings',
+                Details: 'details',
+                CreateMeetup: 'createmeetup',
+                MeetupMap: 'meetupmap'
+            }
+        },
         MyModal: 'makeMeetup'
         }
     },
-    Map: "map",
+    Map: {
+        path: "map",
+        screens: {
+            Map: 'Map',
+            Details: 'details'
+        }
+    },
     Profile: "profile"
     },
 };
