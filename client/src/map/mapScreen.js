@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import DetailsScreen from '../list/detailsScreen';
-import maputil from '../utils/map.util';
+import locationutil from '../utils/location.util';
 import * as Location from 'expo-location';
 
 function MainMap() {
@@ -62,14 +62,14 @@ function MainMap() {
 
     /* call the api to pull locations from the database */    
     if (type == 'All') {
-      maputil.getLocations()
+      locationutil.getLocations()
         .then(res => {
         setLocations(res)
         return
       })
     }
     else {
-      maputil.getLocationsForType(type)
+      locationutil.getLocationsForType(type)
       .then(res => {
         setLocations(res)
         return

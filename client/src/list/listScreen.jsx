@@ -8,7 +8,7 @@ import Location from './location';
 import DetailsScreen from './detailsScreen';
 import MeetupScreen from '../meetup/meetupScreen';
 import MeetupMap from '../meetup/meetupMap';
-import listutil from '../utils/list.util';
+import locationutil from '../utils/location.util';
 
 function MainList() {
     // get navigation, set state
@@ -21,7 +21,7 @@ function MainList() {
     }, []);
 
     const getData = () => {
-      listutil.getLocations()
+      locationutil.getLocations()
       .then(res => {
         setData(res)
         return
