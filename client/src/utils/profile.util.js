@@ -7,6 +7,19 @@ function getUserData(netID){
     });
 }
 
+function putUserData(netID, data){
+    return fetch('http://db.cse.nd.edu:5002/api/user/' + netID, {
+        method: 'PUT', 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('User not able to update');
+    })
+}
+
 export default {
-    getUserData
+    getUserData,
+    putUserData
 }
