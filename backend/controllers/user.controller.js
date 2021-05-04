@@ -9,6 +9,7 @@
 
 const debuglog = require('../debuglog');
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     signup,
@@ -35,9 +36,9 @@ function signup(req, res){
     user.save()
     .then(newUser => {
         debuglog('LOG', 'user controller - signup', 'signed up user');
-        // const token = createToken(newUser);
-        // res.header('auth-token', token);
-        // res.status(201).json({result: 'success', message: 'Signup successful', token: token});
+        const token = createToken(newUser);
+        res.header('auth-token', token);
+        res.status(201).json({result: 'success', message: 'Signup successful', token: token});
         res.status(201).json({result: 'success', message: 'Signup successful'});
     }).catch(err => { // catch errors
         debuglog('ERROR', 'user controller - signup', err);
@@ -73,9 +74,9 @@ function login(req, res){
         foundUser.checkPassword(req.body.password, (err,result) => {
             if (result) { // correct password
                 debuglog('LOG', 'user controller - login', 'found user, correct password');
-                // const token = createToken(foundUser);
-                // res.header('auth-token', token);
-                res.status(200).json({result: 'success', message: 'Login successful'});
+                const token = createToken(foundUser);
+                res.header('auth-token', token);
+                res.status(200).json({result: 'success', message: 'Login successful', token: token});
             } else { // incorrect password
                 debuglog('LOG', 'user controller - login', 'found user, incorrect password');
                 res.status(400).json({result: 'error', message: 'Incorrect password'});
@@ -86,6 +87,10 @@ function login(req, res){
         res.status(401).json(err);
         return;
     });
+}
+
+function createToken(user){
+    return jwt.sign({ user: { netID: user.netID, firstName: user.firstName, lastName: user.lastName } }, process.env.ACCESS_TOKEN_SECRET);
 }
 
 function getUserInfo(req, res){
