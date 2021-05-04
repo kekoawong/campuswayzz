@@ -1,41 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
 import * as Linking from 'expo-linking';
 import { FAB, Headline, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
 import Clipboard from 'expo-clipboard';
-
-
-const items = [{
-    id: '92iijs7yta',
-    name: 'Ondo'
-  }, {
-    id: 'a0s0a8ssbsd',
-    name: 'Ogun'
-  }, {
-    id: '16hbajsabsd',
-    name: 'Calabar'
-  }, {
-    id: 'nahs75a5sg',
-    name: 'Lagos'
-  }, {
-    id: '667atsas',
-    name: 'Maiduguri'
-  }, {
-    id: 'hsyasajs',
-    name: 'Anambra'
-  }, {
-    id: 'djsjudksjd',
-    name: 'Benue'
-  }, {
-    id: 'sdhyaysdj',
-    name: 'Kaduna'
-  }, {
-    id: 'suudydjsjd',
-    name: 'Abuja'
-    }
-];
+import locationutil from '../utils/location.util';
+import userutil from '../utils/user.util';
+import meetuputil from '../utils/meetup.util';
 
 export default function MeetupScreen() {
 
@@ -50,8 +22,50 @@ export default function MeetupScreen() {
     const navigation = useNavigation();
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState([]);
-      
+    
+    const [allUserNetIDs, setAllUserNetIDs] = useState([{'netID': 'Loading'}]);
+    const [allLocations, setAllLocations] = useState([{'name': 'Loading'}]);
+
+
+    useEffect(() => {
+      getAllLocationNames().then(response => {
+        setAllLocations(response);
+      })
+      getAllUserNetIDs().then(response => {
+        setAllUserNetIDs(response);
+      })
+    }, []);
+
+    async function getAllLocationNames(){
+      return await locationutil.getAllLocationNames();
+    }
+    async function getAllUserNetIDs(){
+      return await userutil.getAllUserNetIDs();
+    }
+
+    function handleMeetupPost(){
+      console.log("LOOK");
+      console.log(selectedLocation);
+      let friendsArray = [];
+      for (const i in selectedUsers){
+        friendsArray.push({"netID": selectedUsers[i], "status": "Pending"});
+      }
+      let requestBody = {"locationName": selectedLocation[0], "friends": friendsArray};
+      postMeetup(requestBody).then(response => {
+        console.log('LOOK HERE');
+        console.log(response);
+        navigation.navigate('MeetupMap', {meetupID: response['_id']});
+      })
+    }
+
+    async function postMeetup(requestBody){
+      return await meetuputil.postMeetup(requestBody);
+    }
+
     return (
+      /* TODO 
+      -- ensure that users put in at least 1 location and 1 user
+      */
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
@@ -60,13 +74,13 @@ export default function MeetupScreen() {
             <View style={styles.selector}>
                 <Headline>Select Users</Headline>
                 <MultiSelect
-                    items={items}
-                    uniqueKey="id"
+                    items={allUserNetIDs}
+                    uniqueKey="netID"
                     onSelectedItemsChange={setSelectedUsers}
                     selectedItems={selectedUsers}
                     searchInputPlaceholderText='Search Users...'
                     selectText='Users'
-                    displayKey='name'
+                    displayKey='netID'
                     searchInputStyle={styles.textInput}
                     styleDropdownMenu={styles.dropdown}
                     styleDropdownMenuSubsection={styles.dropdown}
@@ -78,8 +92,8 @@ export default function MeetupScreen() {
             <View style={styles.selector}>
                 <Headline>Select Location</Headline>
                 <MultiSelect
-                    items={items}
-                    uniqueKey="id"
+                    items={allLocations}
+                    uniqueKey="name"
                     onSelectedItemsChange={setSelectedLocation}
                     selectedItems={selectedLocation}
                     searchInputPlaceholderText='Search Destinations...'
@@ -104,7 +118,7 @@ export default function MeetupScreen() {
                 style={styles.fab}
                 label='Start Meetup'
                 icon="walk"
-                onPress={() => navigation.navigate('MyModal')}
+                onPress={handleMeetupPost}
             />
         </KeyboardAvoidingView>
     );

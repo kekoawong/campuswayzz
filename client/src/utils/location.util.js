@@ -16,13 +16,20 @@ function getLocations(){
     //return fetch('http://www.example.com/index.html')
     .then(res => res.json())
     .then(json => {
-        console.log("resulting json:");
-        console.log(json);
         return json;
     });
 }
 
+function getAllLocationNames(){
+    return fetch(server + '/location/names/all')
+    .then(res => res.json())
+    .then(json => {
+        return json;
+    })
+}
+
 export default {
     getLocationsForType,
-    getLocations
+    getLocations,
+    getAllLocationNames
 }
