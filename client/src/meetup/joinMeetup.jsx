@@ -40,15 +40,15 @@ const styles = StyleSheet.create({
     },
     headline: {
       marginHorizontal: 10,
-      marginVertical: 5
+      marginVertical: 30
     },
     fabDeny: {
       alignSelf: 'center',
-      marginVertical: 20,
+      marginVertical: 15,
       backgroundColor: 'red'
     },
     fabJoin: {
       alignSelf: 'center',
-      marginVertical: 20
+      marginVertical: 15
     }
 });
