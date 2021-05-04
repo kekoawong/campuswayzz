@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { FAB, Headline } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -12,6 +12,9 @@ export default function JoinMeetup() {
       
     return (
         <View style={styles.container}>
+            <Headline style={styles.headline}>
+              Meetup Request from Deez
+            </Headline>
             <FAB
                 style={styles.fabJoin}
                 label='Join Meetup'
@@ -32,7 +35,12 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    headline: {
+      marginHorizontal: 10,
+      marginVertical: 5
     },
     fabDeny: {
       alignSelf: 'center',
