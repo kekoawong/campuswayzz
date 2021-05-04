@@ -7,7 +7,8 @@ import ListScreen from './src/list/listScreen';
 import MapScreen from './src/map/mapScreen';
 import ProfileScreen from './src/profile/profileScreen';
 import * as Linking from 'expo-linking';
-
+import Login from './src/login/loginScreen';
+import Signup from './src/login/signupScreen';
 
 
 export default function App() {
@@ -34,6 +35,10 @@ export default function App() {
   };
 
   const Tab = createBottomTabNavigator();
+
+  return (
+    <Signup />
+  )
 
   return (
     <SafeAreaProvider>
