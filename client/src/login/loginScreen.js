@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native'
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, TextInput} from 'react-native-paper';
 import userutil from '../utils/user.util';
@@ -10,6 +11,8 @@ function login() {
         password: ''
     }); 
 
+    // const navigation = useNavigation();
+
     async function handleSubmit(event){
         event.preventDefault();
         console.log(user);
@@ -18,6 +21,7 @@ function login() {
         } catch (err) {
             console.log('Invalid Credentials');
         }
+        console.log('login complete');
     }
 
     return (

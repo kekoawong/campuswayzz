@@ -1,6 +1,8 @@
 /* make API call to server to get user data based on user netID */
 
 const server = 'http://107.191.49.209/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Base64 } from 'js-base64';
 
 function login(credentials){
     console.log(credentials);
@@ -14,9 +16,9 @@ function login(credentials){
         if (res.ok) return res.json();
         throw new Error('Bad credentials!');
     })
-    // .then(({token}) => {
-    //     createToken(token);
-    // })
+    .then(({token}) => {
+        createToken(token);
+    });
 }
 
 function signup(credentials) {
@@ -31,9 +33,26 @@ function signup(credentials) {
         if (res.ok) return res.json();
         throw new Error('NetID has already been taken');
     })
-    // .then(({token}) => {
-    //     createToken(token);
-    // })
+    .then(({token}) => {
+        createToken(token);
+    })
+}
+
+function getUser(){
+    getToken().then(token => {
+        console.log('getUser() - got token');
+        const user = JSON.parse(Base64.atob(token.split('.')[1]))['user'];
+        console.log(user);
+        try {
+            return user;
+        } catch (e) {
+            return null;
+        }
+    })
+}
+
+function logout(){
+    removeToken();
 }
 
 function getUserData(netID){
@@ -87,6 +106,8 @@ function getAllUserNetIDs(){
 export default {
     login,
     signup,
+    getUser,
+    logout,
     getUserData,
     putUserData,
     getUserLocation,
@@ -97,23 +118,43 @@ export default {
 function createToken(token){
     console.log('creating token ' + token);
     if (token) {
-        localStorage.setItem('token', token);
+        const storeData = async (token) => {
+        try {
+            await AsyncStorage.setItem('token', token)
+        } catch (e) {
+            // saving error
+        }
+    }
     } else {
-        localStorage.removeItem('token');
+        // AsyncStorage.removeItem('token');
     }
 }
 
-function getToken(){
-    return localStorage.getItem('token');
+async function getToken(){
+    console.log('getToken - start')
+    try {
+        return await AsyncStorage.getItem('token');
+    } catch(e) {
+        // error reading value
+    }
+    
 }
 
 function getUserFromToken(){
-    const token = getToken();
-    console.log('got token ' + token);
-    return token ? JSON.parse(atob(token.split('.')[1])): null;
+    getToken().then(token => {
+        console.log('got token ');
+        console.log(token);
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (e) {
+            return null;
+        }
+    })
+    
+    // return token ? JSON.parse(atob(token.split('.')[1])) : null;
 }
 
 function removeToken(){
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
     console.log('removed token');
 }

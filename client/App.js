@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -9,7 +9,8 @@ import ProfileScreen from './src/profile/profileScreen';
 import * as Linking from 'expo-linking';
 import Login from './src/login/loginScreen';
 import Signup from './src/login/signupScreen';
-
+import userutil from './src/utils/user.util';
+import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
 export default function App() {
 
@@ -35,49 +36,155 @@ export default function App() {
   };
 
   const Tab = createBottomTabNavigator();
+  const [user, setUser] = useState();
 
-  return (
-    <Signup />
-  )
+  async function getUser(){
+    return await userutil.getUser();
+  }
+
+  useEffect(() => {
+    getUser().then(response => {
+      console.log('App.js!!!')
+      console.log(response);
+      setUser(response);
+    })
+  }, []);
 
   return (
     <SafeAreaProvider>
       <NavigationContainer linking={linking}>
-        <Tab.Navigator>
-          <Tab.Screen 
-              name="List" 
-              component={ListScreen}
-              options={{
-                tabBarLabel: 'List',
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialIcons name="list-alt" color={color} size={size} />
-                ),
-              }}
-          />
-          <Tab.Screen 
-              name="Map" 
-              component={MapScreen} 
-              options={{
-                tabBarLabel: 'Map',
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialIcons name="map" color={color} size={size} />
-                ),
-              }}
-          />
-          <Tab.Screen 
-              name="Profile" 
-              component={ProfileScreen} 
-              options={{
-                tabBarLabel: 'Profile',
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialIcons name="person" color={color} size={size} />
-                ),
-              }}
-          />
-        </Tab.Navigator>
+        {user ? 
+          <Tab.Navigator>
+            <Tab.Screen 
+                name="List" 
+                component={ListScreen}
+                options={{
+                  tabBarLabel: 'List',
+                  tabBarIcon: ({ color, size }) => (
+                    <MaterialIcons name="list-alt" color={color} size={size} />
+                  ),
+                }}
+            />
+            <Tab.Screen 
+                name="Map" 
+                component={MapScreen} 
+                options={{
+                  tabBarLabel: 'Map',
+                  tabBarIcon: ({ color, size }) => (
+                    <MaterialIcons name="map" color={color} size={size} />
+                  ),
+                }}
+            />
+            <Tab.Screen 
+                name="Profile" 
+                component={ProfileScreen} 
+                options={{
+                  tabBarLabel: 'Profile',
+                  tabBarIcon: ({ color, size }) => (
+                    <MaterialIcons name="person" color={color} size={size} />
+                  ),
+                }}
+            />
+          </Tab.Navigator> :
+          <Login />
+        }
       </NavigationContainer>
     </SafeAreaProvider>
-  );
+  )
+
+  return (
+    user ? (
+      <>
+        <SafeAreaProvider>
+          <NavigationContainer linking={linking}>
+            <Tab.Navigator>
+              <Tab.Screen 
+                  name="List" 
+                  component={ListScreen}
+                  options={{
+                    tabBarLabel: 'List',
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialIcons name="list-alt" color={color} size={size} />
+                    ),
+                  }}
+              />
+              <Tab.Screen 
+                  name="Map" 
+                  component={MapScreen} 
+                  options={{
+                    tabBarLabel: 'Map',
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialIcons name="map" color={color} size={size} />
+                    ),
+                  }}
+              />
+              <Tab.Screen 
+                  name="Profile" 
+                  component={ProfileScreen} 
+                  options={{
+                    tabBarLabel: 'Profile',
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialIcons name="person" color={color} size={size} />
+                    ),
+                  }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </>
+    ) : (
+      <>
+        <Login />
+      </>
+    )
+  )
+
+  /*if (user){
+    return (
+        <SafeAreaProvider>
+          <NavigationContainer linking={linking}>
+            <Tab.Navigator>
+              <Tab.Screen 
+                  name="List" 
+                  component={ListScreen}
+                  options={{
+                    tabBarLabel: 'List',
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialIcons name="list-alt" color={color} size={size} />
+                    ),
+                  }}
+              />
+              <Tab.Screen 
+                  name="Map" 
+                  component={MapScreen} 
+                  options={{
+                    tabBarLabel: 'Map',
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialIcons name="map" color={color} size={size} />
+                    ),
+                  }}
+              />
+              <Tab.Screen 
+                  name="Profile" 
+                  component={ProfileScreen} 
+                  options={{
+                    tabBarLabel: 'Profile',
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialIcons name="person" color={color} size={size} />
+                    ),
+                  }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      );
+  } else {
+    return (
+      <Login />
+    );
+  }*/
+
+  
 }
 
 
