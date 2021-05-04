@@ -13,13 +13,13 @@ export default function JoinMeetup() {
     return (
         <View style={styles.container}>
             <FAB
-                style={styles.fab}
+                style={styles.fabJoin}
                 label='Join Meetup'
                 icon="walk"
                 onPress={() => navigation.navigate('MyModal')}
             />
             <FAB
-                style={styles.fab}
+                style={styles.fabDeny}
                 label='Deny Meetup Request'
                 icon="stop"
                 onPress={() => navigation.navigate('Listings')}
@@ -31,17 +31,16 @@ export default function JoinMeetup() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      justifyContent: 'center'
     },
-    btnContainer: {
-        backgroundColor: "white",
-        marginTop: 12
-    },
-    fab: {
+    fabDeny: {
       alignSelf: 'center',
-      marginBottom: 16,
-      bottom: 0,
-      color: 'green',
-      position: 'absolute'
+      marginVertical: 20,
+      backgroundColor: 'red'
+    },
+    fabJoin: {
+      alignSelf: 'center',
+      marginVertical: 20
     }
 });

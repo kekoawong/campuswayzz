@@ -39,7 +39,7 @@ const items = [{
 
 export default function MeetupScreen() {
 
-    const redirectUrl = Linking.createURL('Profile');
+    const redirectUrl = Linking.createURL('List/Main/JoinMeetup');
   
     const copyToClipboard = () => {
       Clipboard.setString(redirectUrl);
@@ -97,7 +97,7 @@ export default function MeetupScreen() {
             <View style={styles.selector}>
                 <Headline>{redirectUrl}</Headline>
                 <Button icon="link" mode="contained" onPress={copyToClipboard}>
-                  Get Link
+                  Get Shareable Link
                 </Button>
             </View>
             <FAB

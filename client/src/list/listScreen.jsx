@@ -8,6 +8,7 @@ import Location from './location';
 import DetailsScreen from './detailsScreen';
 import MeetupScreen from '../meetup/meetupScreen';
 import MeetupMap from '../meetup/meetupMap';
+import JoinMeetup from '../meetup/joinMeetup';
 import locationutil from '../utils/location.util';
 
 function MainList() {
@@ -78,6 +79,7 @@ function MainListScreen() {
               options={({ route }) => ({ title: route.params.item.name })} />
             <Stack.Screen name="CreateMeetup" component={MeetupScreen} options={{title: "Create Meetup"}}/>
             <Stack.Screen name="MeetupMap" component={MeetupMap} options={{title: "Meetup"}}/>
+            <Stack.Screen name="JoinMeetup" component={JoinMeetup} options={{title: "Join Meetup"}}/>
         </Stack.Navigator>
     );
 }
