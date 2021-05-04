@@ -89,7 +89,7 @@ export default function ListScreen() {
     return (
         <ModalStack.Navigator mode="modal" headerMode="none">
             <ModalStack.Screen name="Main" component={MainListScreen} />
-            <ModalStack.Screen name="MeetupMap" component={MeetupMap} />
+            <ModalStack.Screen name="MyModal" component={MeetupMap} />
         </ModalStack.Navigator>
     );
 }
