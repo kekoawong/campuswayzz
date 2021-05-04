@@ -43,9 +43,10 @@ export const linkingConfig = {
                         Details: "Details",
                         CreateMeetup: "CreateMeetup",
                         MeetupMap: "MeetupMap",
-                        JoinMeetup: "JoinMeetup"
                     }
-                }
+                },
+                JoinMeetup: "JoinMeetup",
+                MyModal: "MyModal"
             }
         },
         Map: 'Map',

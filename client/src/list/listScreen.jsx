@@ -79,7 +79,6 @@ function MainListScreen() {
               options={({ route }) => ({ title: route.params.item.name })} />
             <Stack.Screen name="CreateMeetup" component={MeetupScreen} options={{title: "Create Meetup"}}/>
             <Stack.Screen name="MeetupMap" component={MeetupMap} options={{title: "Meetup"}}/>
-            <Stack.Screen name="JoinMeetup" component={JoinMeetup} options={{title: "Join Meetup"}}/>
         </Stack.Navigator>
     );
 }
@@ -92,6 +91,7 @@ export default function ListScreen() {
         <ModalStack.Navigator mode="modal" headerMode="none">
             <ModalStack.Screen name="Main" component={MainListScreen} />
             <ModalStack.Screen name="MyModal" component={MeetupMap} />
+            <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} />
         </ModalStack.Navigator>
     );
 }

@@ -39,7 +39,7 @@ const items = [{
 
 export default function MeetupScreen() {
 
-    const redirectUrl = Linking.createURL('List/Main/JoinMeetup');
+    const redirectUrl = Linking.createURL('List/JoinMeetup');
   
     const copyToClipboard = () => {
       Clipboard.setString(redirectUrl);
