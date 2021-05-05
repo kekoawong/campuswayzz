@@ -40,23 +40,16 @@ export default function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   async function getUser(){
-    console.log('async lookie');
-    console.log(await userutil.getUser());
-    console.log('####')
-    return await userutil.getUser();
+    const res = await userutil.getUser();
+    if (res) {
+      setLoggedIn(true);
+      setUser(res);
+    }
+    return res;
   }
 
   useEffect(() => {
-    console.log('APP.JS: 1 GETTING USER IN USEEFFECT');
-    console.log(user);
-    console.log('----')
-    getUser().then(response => {
-      console.log('APP.JS: 2 GETTING USER IN USEEFFECT');
-      console.log(response);
-      console.log('@@@@@');
-      setLoggedIn(true);
-      setUser(response);
-    })
+    getUser();
   }, [isLoggedIn]);
 
   return (
@@ -101,52 +94,6 @@ export default function App() {
       </NavigationContainer>
     </SafeAreaProvider>
   )
-
-  /*if (user){
-    return (
-        <SafeAreaProvider>
-          <NavigationContainer linking={linking}>
-            <Tab.Navigator>
-              <Tab.Screen 
-                  name="List" 
-                  component={ListScreen}
-                  options={{
-                    tabBarLabel: 'List',
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialIcons name="list-alt" color={color} size={size} />
-                    ),
-                  }}
-              />
-              <Tab.Screen 
-                  name="Map" 
-                  component={MapScreen} 
-                  options={{
-                    tabBarLabel: 'Map',
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialIcons name="map" color={color} size={size} />
-                    ),
-                  }}
-              />
-              <Tab.Screen 
-                  name="Profile" 
-                  component={ProfileScreen} 
-                  options={{
-                    tabBarLabel: 'Profile',
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialIcons name="person" color={color} size={size} />
-                    ),
-                  }}
-              />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </SafeAreaProvider>
-      );
-  } else {
-    return (
-      <Login />
-    );
-  }*/
-
   
 }
 

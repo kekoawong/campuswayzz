@@ -37,7 +37,7 @@ function MainProfile({route}) {
   // console.log(route);
 
   useEffect(() => {
-    userutil.getUserData('kwong6')
+    userutil.getUserData(route.params.user.netID)
     .then(res => {
       setUserInfo(res)
       return
@@ -114,12 +114,10 @@ function MainProfile({route}) {
 }
 
 export default function ProfileScreen({route}) {
-  console.log('ProfileScreen() - route');
-  console.log(route);
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>
-          <Stack.Screen name="Profile" component={MainProfile} />
+          <Stack.Screen name="Profile" component={MainProfile} initialParams={{user: route.params.user}} />
       </Stack.Navigator>
   );
 }

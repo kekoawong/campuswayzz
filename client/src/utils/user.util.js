@@ -39,15 +39,20 @@ function signup(credentials) {
 }
 
 function getUser(){
-    getToken().then(token => {
+    return getToken()
+    .then(token => {
         const user = JSON.parse(Base64.atob(token.split('.')[1]))['user'];
         console.log(`userutil:: getUser :: got token for ${user['netID']}`);
-        try {
-            console.log('getToken - end')
-            return user;
-        } catch (e) {
-            return null;
-        }
+        return user;
+        // try {
+        //     console.log('userutil:: getUser :: end');
+        //     return user;
+        // } catch (e) {
+        //     return null;
+        // }
+    })
+    .then(res => {
+        return res;
     })
 }
 
@@ -55,7 +60,7 @@ function logout(){
     removeToken();
 }
 
-async function getUserData(netID){
+function getUserData(netID){
     return fetch(server + '/user/' + netID)
     .then(res => res.json())
     .then(json => {
@@ -131,7 +136,7 @@ function createToken(token){
 }
 
 async function getToken(){
-    console.log('getToken - start')
+    console.log('userutil:: getToken:: start')
     try {
         return await AsyncStorage.getItem('token');
     } catch(e) {
