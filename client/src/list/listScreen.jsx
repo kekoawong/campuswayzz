@@ -8,6 +8,7 @@ import Location from './location';
 import DetailsScreen from './detailsScreen';
 import MeetupScreen from '../meetup/meetupScreen';
 import MeetupMap from '../meetup/meetupMap';
+import JoinMeetup from '../meetup/joinMeetup';
 import locationutil from '../utils/location.util';
 
 function MainList() {
@@ -90,6 +91,7 @@ export default function ListScreen() {
         <ModalStack.Navigator mode="modal" headerMode="none">
             <ModalStack.Screen name="Main" component={MainListScreen} />
             <ModalStack.Screen name="MyModal" component={MeetupMap} />
+            <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} />
         </ModalStack.Navigator>
     );
 }

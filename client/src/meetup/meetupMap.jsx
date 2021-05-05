@@ -15,12 +15,12 @@ import * as Location from "expo-location";
 import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
-export default function MeetupMap() {
+export default function MeetupMap({route}) {
   /* TODO: get destination and userId from previous meetup screen */
   const [destination, setDestination] = useState({ name: "Main Building", coordinates: {latitude: 41.703, longitude: -86.239} });
   const userId = 'jchang5';
   // TEMPORARY MEETUPID
-  const tempMeetupID = '608efdc66754273ef3935f7e';
+  const meetupID = route.params['meetupID'];
   
   const navigation = useNavigation();
 
@@ -105,11 +105,11 @@ export default function MeetupMap() {
   }
 
   async function getFriendsLocation(){
-    return await meetuputil.getFriendsLocation(tempMeetupID);
+    return await meetuputil.getFriendsLocation(meetupID);
   }
 
   async function getMeetupLocation(){
-    return await meetuputil.getMeetupLocation(tempMeetupID);
+    return await meetuputil.getMeetupLocation(meetupID);
   }
 
   function findDistance() {
