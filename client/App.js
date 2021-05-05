@@ -37,23 +37,33 @@ export default function App() {
 
   const Tab = createBottomTabNavigator();
   const [user, setUser] = useState();
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   async function getUser(){
+    console.log('async lookie');
+    console.log(await userutil.getUser());
+    console.log('####')
     return await userutil.getUser();
   }
 
   useEffect(() => {
+    console.log('APP.JS: 1 GETTING USER IN USEEFFECT');
+    console.log(user);
+    console.log('----')
     getUser().then(response => {
-      console.log('App.js!!!')
+      console.log('APP.JS: 2 GETTING USER IN USEEFFECT');
       console.log(response);
+      console.log('@@@@@');
+      setLoggedIn(true);
       setUser(response);
     })
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <SafeAreaProvider>
       <NavigationContainer linking={linking}>
-        {user ? 
+        {!isLoggedIn ? 
+          <Login /> :
           <Tab.Navigator>
             <Tab.Screen 
                 name="List" 
@@ -77,66 +87,19 @@ export default function App() {
             />
             <Tab.Screen 
                 name="Profile" 
-                component={ProfileScreen} 
+                component={ProfileScreen}
                 options={{
                   tabBarLabel: 'Profile',
                   tabBarIcon: ({ color, size }) => (
                     <MaterialIcons name="person" color={color} size={size} />
                   ),
                 }}
+                initialParams={{user: user}}
             />
-          </Tab.Navigator> :
-          <Login />
+          </Tab.Navigator>
         }
       </NavigationContainer>
     </SafeAreaProvider>
-  )
-
-  return (
-    user ? (
-      <>
-        <SafeAreaProvider>
-          <NavigationContainer linking={linking}>
-            <Tab.Navigator>
-              <Tab.Screen 
-                  name="List" 
-                  component={ListScreen}
-                  options={{
-                    tabBarLabel: 'List',
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialIcons name="list-alt" color={color} size={size} />
-                    ),
-                  }}
-              />
-              <Tab.Screen 
-                  name="Map" 
-                  component={MapScreen} 
-                  options={{
-                    tabBarLabel: 'Map',
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialIcons name="map" color={color} size={size} />
-                    ),
-                  }}
-              />
-              <Tab.Screen 
-                  name="Profile" 
-                  component={ProfileScreen} 
-                  options={{
-                    tabBarLabel: 'Profile',
-                    tabBarIcon: ({ color, size }) => (
-                      <MaterialIcons name="person" color={color} size={size} />
-                    ),
-                  }}
-              />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </>
-    ) : (
-      <>
-        <Login />
-      </>
-    )
   )
 
   /*if (user){

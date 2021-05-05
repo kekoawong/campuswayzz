@@ -28,10 +28,13 @@ const GhostSwitch = () => {
 };
 
 
-function MainProfile() {
+function MainProfile({route}) {
   // User Information reloads after signing in or when user alters personal info
   const [userInfo, setUserInfo] = useState([]);
   const [editMode, swapMode] = useState(false);
+
+  // console.log('MainProfile() - route')
+  // console.log(route);
 
   useEffect(() => {
     userutil.getUserData('kwong6')
@@ -110,7 +113,9 @@ function MainProfile() {
   }
 }
 
-export default function ProfileScreen() {
+export default function ProfileScreen({route}) {
+  console.log('ProfileScreen() - route');
+  console.log(route);
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>

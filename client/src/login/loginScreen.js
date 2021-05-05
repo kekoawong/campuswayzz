@@ -15,7 +15,6 @@ function login() {
 
     async function handleSubmit(event){
         event.preventDefault();
-        console.log(user);
         try {
             await userutil.login(user);
         } catch (err) {
