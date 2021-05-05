@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
-import * as Linking from 'expo-linking';
-import { FAB, Headline, Button, Snackbar } from 'react-native-paper';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { FAB, Headline, Snackbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
-import Clipboard from 'expo-clipboard';
 import locationutil from '../utils/location.util';
 import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
 export default function MeetupScreen() {
-
-    const redirectUrl = Linking.createURL('List/JoinMeetup');
-  
-    const copyToClipboard = () => {
-      Clipboard.setString(redirectUrl);
-      Alert.alert('MeetUp Link', 'Link Copied to Clipboard!');
-    };
 
     // get navigation, set state
     const navigation = useNavigation();
@@ -115,12 +106,6 @@ export default function MeetupScreen() {
                     submitButtonColor='skyblue'
                     single
                 />
-            </View>
-            <View style={styles.selector}>
-                <Headline>{redirectUrl}</Headline>
-                <Button icon="link" mode="contained" onPress={copyToClipboard}>
-                  Get Shareable Link
-                </Button>
             </View>
             <FAB
                 style={styles.fab}
