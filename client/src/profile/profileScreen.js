@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Avatar, Button, Divider, ToggleButton, Switch, TextInput} from 'react-native-paper';
 import userutil from '../utils/user.util';
 
@@ -68,15 +68,17 @@ function MainProfile() {
             </Button>
           </View>
         <View style={styles.container_info}>
-          <TextInput mode='outlined' label='First Name' value={userInfo.firstName} onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
-          <TextInput mode='outlined' label='Last Name' value={userInfo.lastName} onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
-          <TextInput mode='outlined' label='NetID' value={userInfo.netID} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
-          <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
-            <ToggleButton icon='account-check' value='Share indefinitely'/>
-            <ToggleButton icon='account-clock' value='Share while using'/>
-            <ToggleButton icon='account-off' value='Never share'/>
-          </ToggleButton.Group>
-          <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
+          <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardOffset}>
+            <TextInput mode='outlined' label='First Name' value={userInfo.firstName} onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
+            <TextInput mode='outlined' label='Last Name' value={userInfo.lastName} onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
+            <TextInput mode='outlined' label='NetID' value={userInfo.netID} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
+            <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
+              <ToggleButton icon='account-check' value='Share indefinitely'/>
+              <ToggleButton icon='account-clock' value='Share while using'/>
+              <ToggleButton icon='account-off' value='Never share'/>
+            </ToggleButton.Group>
+            <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
+          </KeyboardAvoidingView>
         </View>
       </View>
       );
@@ -140,5 +142,8 @@ const styles = StyleSheet.create({
       color: 'gold',
       padding: 13.75,
       fontSize: 20
+    },
+    keyboardAvoid: { // Avoid keyboard for editing
+      flex: 1
     }
 });
