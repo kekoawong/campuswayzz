@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
 import * as Linking from 'expo-linking';
-import { FAB, Headline, Button } from 'react-native-paper';
+import { FAB, Headline, Button, Snackbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
 import Clipboard from 'expo-clipboard';
@@ -22,6 +22,7 @@ export default function MeetupScreen() {
     const navigation = useNavigation();
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState([]);
+    const [visible, setVisible] = useState(false);
     
     const [allUserNetIDs, setAllUserNetIDs] = useState([{'netID': 'Loading'}]);
     const [allLocations, setAllLocations] = useState([{'name': 'Loading'}]);
@@ -45,7 +46,14 @@ export default function MeetupScreen() {
 
     function handleMeetupPost(){
       console.log("LOOK");
+      // ensure that at least one location and user
+      if ( selectedLocation.length == 0 && selectedUsers.length == 0) {
+          setVisible(true);
+          return;
+      }
+
       console.log(selectedLocation);
+      console.log(selectedUsers);
       let friendsArray = [];
       for (const i in selectedUsers){
         friendsArray.push({"netID": selectedUsers[i], "status": "Pending"});
@@ -120,6 +128,17 @@ export default function MeetupScreen() {
                 icon="walk"
                 onPress={handleMeetupPost}
             />
+            <Snackbar
+              visible={visible}
+              onDismiss={() => setVisible(false)}
+              action={{
+                label: 'Dismiss',
+                onPress: () => {
+                  setVisible(false);
+                },
+              }}>
+              Must have at least one user and a location.
+            </Snackbar>
         </KeyboardAvoidingView>
     );
 }
