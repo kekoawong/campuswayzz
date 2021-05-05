@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
-import * as Linking from 'expo-linking';
-import { FAB, Headline, Button } from 'react-native-paper';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { FAB, Headline, Snackbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
-import Clipboard from 'expo-clipboard';
 import locationutil from '../utils/location.util';
 import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
 export default function MeetupScreen() {
 
-    const redirectUrl = Linking.createURL('List/JoinMeetup');
-  
-    const copyToClipboard = () => {
-      Clipboard.setString(redirectUrl);
-      Alert.alert('MeetUp Link', 'Link Copied to Clipboard!');
-    };
-
     // get navigation, set state
     const navigation = useNavigation();
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState([]);
+    const [visible, setVisible] = useState(false);
     
     const [allUserNetIDs, setAllUserNetIDs] = useState([{'netID': 'Loading'}]);
     const [allLocations, setAllLocations] = useState([{'name': 'Loading'}]);
@@ -44,8 +36,13 @@ export default function MeetupScreen() {
     }
 
     function handleMeetupPost(){
-      console.log("LOOK");
-      console.log(selectedLocation);
+
+      // ensure that at least one location and user
+      if ( selectedLocation.length == 0 && selectedUsers.length == 0) {
+          setVisible(true);
+          return;
+      }
+
       let friendsArray = [];
       for (const i in selectedUsers){
         friendsArray.push({"netID": selectedUsers[i], "status": "Pending"});
@@ -85,6 +82,7 @@ export default function MeetupScreen() {
                     styleDropdownMenu={styles.dropdown}
                     styleDropdownMenuSubsection={styles.dropdown}
                     styleMainWrapper={styles.mainWrapper}
+                    styleListContainer={styles.listContainer}
                     submitButtonText='Add users'
                     submitButtonColor='skyblue'
                 />
@@ -93,6 +91,7 @@ export default function MeetupScreen() {
                 <Headline>Select Location</Headline>
                 <MultiSelect
                     items={allLocations}
+                    fixedHeight
                     uniqueKey="name"
                     onSelectedItemsChange={setSelectedLocation}
                     selectedItems={selectedLocation}
@@ -101,18 +100,12 @@ export default function MeetupScreen() {
                     displayKey='name'
                     searchInputStyle={styles.textInput}
                     styleDropdownMenu={styles.dropdown}
-                    styleDropdownMenuSubsection={styles.dropdown}
                     styleMainWrapper={styles.mainWrapper}
+                    styleListContainer={styles.listContainer}
                     submitButtonText='Select Destination'
                     submitButtonColor='skyblue'
                     single
                 />
-            </View>
-            <View style={styles.selector}>
-                <Headline>{redirectUrl}</Headline>
-                <Button icon="link" mode="contained" onPress={copyToClipboard}>
-                  Get Shareable Link
-                </Button>
             </View>
             <FAB
                 style={styles.fab}
@@ -120,6 +113,17 @@ export default function MeetupScreen() {
                 icon="walk"
                 onPress={handleMeetupPost}
             />
+            <Snackbar
+              visible={visible}
+              onDismiss={() => setVisible(false)}
+              action={{
+                label: 'Dismiss',
+                onPress: () => {
+                  setVisible(false);
+                },
+              }}>
+              Must have at least one user and a location.
+            </Snackbar>
         </KeyboardAvoidingView>
     );
 }
@@ -132,6 +136,10 @@ const styles = StyleSheet.create({
     selector: {
         marginVertical: 7,
         marginHorizontal: 10
+    },
+    listContainer: {
+      backgroundColor: 'white',
+      maxHeight: 200
     },
     dropdown: {
         backgroundColor: 'white',

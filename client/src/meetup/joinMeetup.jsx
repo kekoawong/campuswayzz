@@ -4,7 +4,7 @@ import { FAB, Headline } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function JoinMeetup() {
+export default function JoinMeetup({ route }) {
 
 
     // get navigation, set state
@@ -19,13 +19,17 @@ export default function JoinMeetup() {
                 style={styles.fabJoin}
                 label='Join Meetup'
                 icon="walk"
-                onPress={() => navigation.navigate('MyModal')}
+                onPress={() => {
+                  navigation.navigate('MeetupMap');
+                  navigation.navigate('MeetupMap', {meetupID: route.params.groupID});
+                  console.log(route.params);
+                }}
             />
             <FAB
                 style={styles.fabDeny}
                 label='Deny Meetup Request'
                 icon="stop"
-                onPress={() => navigation.navigate('Listings')}
+                onPress={() => navigation.navigate('Main')}
             />
         </View>
     );
