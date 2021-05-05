@@ -45,7 +45,9 @@ export const linkingConfig = {
                         MeetupMap: "MeetupMap",
                     }
                 },
-                JoinMeetup: "JoinMeetup",
+                JoinMeetup: {
+                    path: "JoinMeetup/:groupID",
+                },
                 MyModal: "MyModal"
             }
         },

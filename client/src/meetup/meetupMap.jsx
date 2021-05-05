@@ -194,7 +194,7 @@ export default function MeetupMap({route}) {
       <View style={styles.buttons}>
         <FAB
           style={styles.fabLink}
-          label="Share Link"
+          label="Share Meetup Link"
           icon="link"
           onPress={copyToClipboard}
         />
