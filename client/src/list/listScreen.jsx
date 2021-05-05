@@ -71,14 +71,13 @@ function MainListScreen() {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Listings" component={MainList} />
+            <Stack.Screen name="Listings" component={MainList} options={{headerLeft: null}}/>
             <Stack.Screen 
               name="Details" 
               component={DetailsScreen} 
               // set title of screen to the location title
               options={({ route }) => ({ title: route.params.item.name })} />
             <Stack.Screen name="CreateMeetup" component={MeetupScreen} options={{title: "Create Meetup"}}/>
-            <Stack.Screen name="MeetupMap" component={MeetupMap} options={{title: "Meetup"}}/>
         </Stack.Navigator>
     );
 }
@@ -90,7 +89,7 @@ export default function ListScreen() {
     return (
         <ModalStack.Navigator mode="modal" headerMode="none">
             <ModalStack.Screen name="Main" component={MainListScreen} />
-            <ModalStack.Screen name="MyModal" component={MeetupMap} />
+            <ModalStack.Screen name="MeetupMap" component={MeetupMap} />
             <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} />
         </ModalStack.Navigator>
     );
