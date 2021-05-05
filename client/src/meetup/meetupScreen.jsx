@@ -45,15 +45,13 @@ export default function MeetupScreen() {
     }
 
     function handleMeetupPost(){
-      console.log("LOOK");
+      
       // ensure that at least one location and user
       if ( selectedLocation.length == 0 && selectedUsers.length == 0) {
           setVisible(true);
           return;
       }
 
-      console.log(selectedLocation);
-      console.log(selectedUsers);
       let friendsArray = [];
       for (const i in selectedUsers){
         friendsArray.push({"netID": selectedUsers[i], "status": "Pending"});

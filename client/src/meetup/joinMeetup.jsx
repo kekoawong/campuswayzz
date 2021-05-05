@@ -19,13 +19,13 @@ export default function JoinMeetup() {
                 style={styles.fabJoin}
                 label='Join Meetup'
                 icon="walk"
-                onPress={() => navigation.navigate('MyModal')}
+                onPress={() => navigation.navigate('MeetupMap')}
             />
             <FAB
                 style={styles.fabDeny}
                 label='Deny Meetup Request'
                 icon="stop"
-                onPress={() => navigation.navigate('Listings')}
+                onPress={() => navigation.navigate('Main')}
             />
         </View>
     );
