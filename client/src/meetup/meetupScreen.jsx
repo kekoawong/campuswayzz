@@ -45,7 +45,7 @@ export default function MeetupScreen() {
     }
 
     function handleMeetupPost(){
-      
+
       // ensure that at least one location and user
       if ( selectedLocation.length == 0 && selectedUsers.length == 0) {
           setVisible(true);
@@ -91,6 +91,7 @@ export default function MeetupScreen() {
                     styleDropdownMenu={styles.dropdown}
                     styleDropdownMenuSubsection={styles.dropdown}
                     styleMainWrapper={styles.mainWrapper}
+                    styleListContainer={styles.listContainer}
                     submitButtonText='Add users'
                     submitButtonColor='skyblue'
                 />
@@ -99,6 +100,7 @@ export default function MeetupScreen() {
                 <Headline>Select Location</Headline>
                 <MultiSelect
                     items={allLocations}
+                    fixedHeight
                     uniqueKey="name"
                     onSelectedItemsChange={setSelectedLocation}
                     selectedItems={selectedLocation}
@@ -107,8 +109,8 @@ export default function MeetupScreen() {
                     displayKey='name'
                     searchInputStyle={styles.textInput}
                     styleDropdownMenu={styles.dropdown}
-                    styleDropdownMenuSubsection={styles.dropdown}
                     styleMainWrapper={styles.mainWrapper}
+                    styleListContainer={styles.listContainer}
                     submitButtonText='Select Destination'
                     submitButtonColor='skyblue'
                     single
@@ -149,6 +151,10 @@ const styles = StyleSheet.create({
     selector: {
         marginVertical: 7,
         marginHorizontal: 10
+    },
+    listContainer: {
+      backgroundColor: 'white',
+      maxHeight: 200
     },
     dropdown: {
         backgroundColor: 'white',
