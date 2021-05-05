@@ -26,9 +26,11 @@ export default function MeetupMap({route}) {
   const meetupID = route.params['meetupID'];
 
   // make shareable link
-  const redirectUrl = Linking.createURL('List/JoinMeetup', {
-    queryParams: {groupID: meetupID}
-  });
+  // const redirectUrl = Linking.createURL('List/JoinMeetup', {
+  //   queryParams: {groupID: 'hi'}
+  // });
+
+  const redirectUrl = Linking.createURL('List/JoinMeetup');
 
   // function to copy link to clipboard
   const copyToClipboard = () => {

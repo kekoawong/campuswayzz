@@ -7,16 +7,8 @@ import ListScreen from './src/list/listScreen';
 import MapScreen from './src/map/mapScreen';
 import ProfileScreen from './src/profile/profileScreen';
 import { linkingConfig } from './src/linking/deepLinking';
-import * as Linking from 'expo-linking';
 
 export default function App() {
-
-  // event listener for deep linking
-  Linking.addEventListener('url', (item) => {
-    console.log(item.url);
-    const thing = Linking.parse(item.url);
-    console.log(thing);
-  });
 
   const Tab = createBottomTabNavigator();
 

@@ -20,9 +20,7 @@ export default function JoinMeetup({ route }) {
                 label='Join Meetup'
                 icon="walk"
                 onPress={() => {
-                  navigation.navigate('MeetupMap');
                   navigation.navigate('MeetupMap', {meetupID: route.params.groupID});
-                  console.log(route.params);
                 }}
             />
             <FAB
