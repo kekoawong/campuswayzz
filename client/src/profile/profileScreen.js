@@ -32,6 +32,7 @@ function MainProfile() {
   // User Information reloads after signing in or when user alters personal info
   const [userInfo, setUserInfo] = useState([]);
   const [editMode, swapMode] = useState(false);
+  const [keyboardOffset, setKeyboardOffset] = useState(150);
 
   useEffect(() => {
     userutil.getUserData('kwong6')
@@ -63,22 +64,28 @@ function MainProfile() {
           <Avatar.Image size={100} source={require('./kwong.jpg')}/>
         </View> 
           <View style={styles.container_picture}>
-            <Button icon='account-edit' mode='contained' onPress={editButton}>
+            <Button icon='account-edit' mode='contained' color={'gold'} onPress={editButton}>
               Save Changes
             </Button>
           </View>
         <View style={styles.container_info}>
-          <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardOffset}>
-            <TextInput mode='outlined' label='First Name' value={userInfo.firstName} onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
-            <TextInput mode='outlined' label='Last Name' value={userInfo.lastName} onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
-            <TextInput mode='outlined' label='NetID' value={userInfo.netID} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
+            <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardOffset}>
+              <TextInput mode='underlined' label='First Name' value={userInfo.firstName} selectionColor={'gold'} underlineColor={'gold'}
+              onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} 
+              onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
+              <TextInput mode='underlined' label='Last Name' value={userInfo.lastName} selectionColor={'gold'} underlineColor={'gold'}
+              onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} 
+              onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
+              <TextInput mode='underlined' label='NetID' value={userInfo.netID} selectionColor={'gold'} underlineColor={'gold'}
+              onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
+            
             <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
-              <ToggleButton icon='account-check' value='Share indefinitely'/>
-              <ToggleButton icon='account-clock' value='Share while using'/>
-              <ToggleButton icon='account-off' value='Never share'/>
+              <ToggleButton icon='account-check' value='Share indefinitely' color={'gold'}/>
+              <ToggleButton icon='account-clock' value='Share while using' color={'gold'}/>
+              <ToggleButton icon='account-off' value='Never share' color={'gold'}/>
             </ToggleButton.Group>
             <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
-          </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
         </View>
       </View>
       );
@@ -90,7 +97,7 @@ function MainProfile() {
           <Avatar.Image size={100} source={require('./kwong.jpg')}/>
         </View> 
           <View style={styles.container_picture}>
-            <Button icon='account-edit' mode='contained' onPress={editButton}>
+            <Button icon='account-edit' mode='contained' color={'gold'} onPress={editButton}>
               Edit Profile
             </Button>
           </View>
@@ -103,9 +110,6 @@ function MainProfile() {
           <Divider />
           <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
           <Divider />
-        </View>
-        <View style={styles.container_switch}>
-          <GhostSwitch/>
         </View>
       </View>
       );
@@ -124,11 +128,11 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
     container_info: { // User info
       flex: 3,
-      backgroundColor: 'white'
+      backgroundColor: 'navy'
     },
     container_picture: { // Profile Picture
       flex: 1,
-      backgroundColor: 'gold',
+      backgroundColor: 'navy',
       justifyContent: 'center',
       alignItems: 'center'
     },
