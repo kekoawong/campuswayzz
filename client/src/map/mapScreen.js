@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import DetailsScreen from '../list/detailsScreen';
-import maputil from '../utils/map.util';
+import locationutil from '../utils/location.util';
 import * as Location from 'expo-location';
 
 function MainMap() {
@@ -25,20 +25,6 @@ function MainMap() {
   /* google API for directions */
   const GOOGLE_MAPS_APIKEY = 'AIzaSyBiO2kOTm_XtfJLLvVitvEtuzUB3KtRPsY';
 
-  //const origin = {latitude: 41.6984, longitude: -86.2339}
-  //const destination = {latitude: 41.7030, longitude: -86.2390};
-
-  /* hard-coded marker coordinates - temporary until middleware works 
-  const arrLocations = [
-    {type:"Other", coordinates: {latitude: 41.7030, longitude: -86.2390}, name:"Main Building", building:"Main Building"},
-    {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Notre Dame Stadium"},
-    {type:"Study Space", coordinates: {latitude: 41.7025, longitude: -86.2341}, name:"Hesburgh Library", building:"Hesburgh Library"}
-  ]
-  const arrLocations1 = [
-    {type:"Recreation", coordinates: {latitude: 41.6984, longitude: -86.2339}, name:"Notre Dame Stadium", building: "Stadium"},
-  ]
-  */
-
   /* markers are a state so that they can RELOAD when the user queries */
   const [locations, setLocations] = useState([]);
   const navigation = useNavigation();
@@ -48,9 +34,13 @@ function MainMap() {
   const [destination, setDestination] = useState(null);
 
   useEffect(() => {
+    /* show all locations */
     setNewMarkers('All');
+
+    /* set initial user location to the dome while request waits */
     setUserLocation({"coords": {latitude: 41.7030, longitude: -86.2390}});
 
+    /* get and set user location at the start */
     (async () => {
       let {status} = await Location.requestPermissionsAsync();
 
@@ -62,6 +52,8 @@ function MainMap() {
       let userLocation = await Location.getCurrentPositionAsync({});
       console.log(userLocation);
       setUserLocation(userLocation);
+
+      /* TODO: push user location to the database */
     })();
   }, []);
 
@@ -70,30 +62,31 @@ function MainMap() {
 
     /* call the api to pull locations from the database */    
     if (type == 'All') {
-      maputil.getLocations()
+      locationutil.getLocations()
         .then(res => {
         setLocations(res)
         return
       })
     }
     else {
-      maputil.getLocationsForType(type)
+      locationutil.getLocationsForType(type)
       .then(res => {
         setLocations(res)
         return
       })
     }
 
-    /* return array with specific choice 
-    setLocations(arrLocations1); */
   }
 
+  /* TODO: function to continuously get and set user location in the database */
+
   function toggleDirections(destCoordinates) {
-    console.log("HERE2");
     console.log(destCoordinates)
 
+    /* set directions destination */
     setDestination(destCoordinates);
 
+    /* TODO: get new user location -> CHANGE THIS TO SIMPLY PULL FROM THE DATABSASE */
     (async () => {
       let {status} = await Location.requestPermissionsAsync();
 
@@ -107,39 +100,37 @@ function MainMap() {
       setUserLocation(userLocation);
     })();
 
-    console.log("DONE!");
-
+    /* toggle directions */
     setShowDirections(!showDirections);
   }
 
   return (
       <View style={styles.container}>
-
-        <DropDownPicker 
-          style={styles.dropdown} /* the main strip */
-          dropDownStyle={ /* the dropdown menu itself */
-            {backgroundColor: '#fafafa'},
-            {width: 275}
-          }
-          containerStyle={
-            {height: 40}
-          }
-          itemStyle={
-            {justifyContent: 'flex-start'}
-          }
-          labelStyle={styles.labels}
-          items={[
-            {label: 'All Locations', value: 'All'},
-            {label: 'Restaurants', value: 'Restaurant'},
-            {label: 'Recreation', value: 'Recreation'},
-            {label: 'Rest and Relaxation', value: 'R&R'},
-            {label: 'Study Spaces', value: 'Study Space'},
-            {label: 'Shopping', value: 'Shop'},
-            {label: 'Other', value: 'Other'},
-          ]}
-          defaultValue={'All'}
-          onChangeItem={item => setNewMarkers(item.value)}
-        /> 
+          <DropDownPicker 
+            style={styles.dropdown} /* the main strip */
+            dropDownStyle={ /* the dropdown menu itself */
+              {backgroundColor: '#fafafa'},
+              {width: 275}
+            }
+            containerStyle={
+              {height: 40}
+            }
+            itemStyle={
+              {justifyContent: 'flex-start'}
+            }
+            labelStyle={styles.labels}
+            items={[
+              {label: 'All Locations', value: 'All'},
+              {label: 'Restaurants', value: 'Restaurant'},
+              {label: 'Recreation', value: 'Recreation'},
+              {label: 'Rest and Relaxation', value: 'R&R'},
+              {label: 'Study Spaces', value: 'Study Space'},
+              {label: 'Shopping', value: 'Shop'},
+              {label: 'Other', value: 'Other'},
+            ]}
+            defaultValue={'All'}
+            onChangeItem={item => setNewMarkers(item.value)}
+          />
 
         <MapView style={styles.map} 
           initialRegion={initialCoordinates}
@@ -179,7 +170,7 @@ function MainMap() {
               destination={destination}
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={2}
-              strokeColor="dodgerblue"
+              strokeColor="#004EFF"
               optimizeWaypoints={true}
               mode="WALKING"
           />
@@ -211,7 +202,7 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     map: {
       width: Dimensions.get('window').width,
@@ -221,8 +212,7 @@ const styles = StyleSheet.create({
     dropdown: {
       width: 275,
       //height: 50,
-      backgroundColor: 'transparent',
-      //position: 'absolute',
+      backgroundColor: 'transparent'
       //bottom: 580,
       //left: 0,
       //right: -105,
