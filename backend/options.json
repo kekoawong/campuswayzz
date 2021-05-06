@@ -1,0 +1,6 @@
+{
+    "Location.days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "Location.types": ["Restaurant", "Study Space", "Recreation", "Shop", "R&R", "Other"],
+    "User.privacyOptions": ["Share indefinitely", "Share while using", "Never share"],
+    "Meetup.friendStatus": ["Accepted", "Rejected", "Pending"]
+}
