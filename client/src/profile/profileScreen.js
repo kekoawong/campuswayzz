@@ -60,6 +60,11 @@ function MainProfile({route}) {
     }
   }
 
+  // function handleLogout(){
+  //   route.params.onLogOut();
+  //   userutil.logout();
+  // }
+
   if(editMode){
     return (
       <View style={{flex:1}}> 
@@ -114,12 +119,19 @@ function MainProfile({route}) {
           <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
           <Divider />
         </View>
+        {/* <View style={styles.container_picture}>
+            <Button icon='' mode='contained' color={'gold'} onPress={handleLogout}>
+              Logout
+            </Button>
+          </View> */}
       </View>
       );
   }
 }
 
 export default function ProfileScreen({route}) {
+  console.log('profileScreen :: ProfileScreen Stack :: props')
+  console.log(route);
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>
