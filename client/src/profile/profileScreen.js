@@ -60,10 +60,9 @@ function MainProfile({route}) {
     }
   }
 
-  // function handleLogout(){
-  //   route.params.onLogOut();
-  //   userutil.logout();
-  // }
+  function handleLogout(){
+    userutil.logout();
+  }
 
   if(editMode){
     return (
@@ -119,11 +118,11 @@ function MainProfile({route}) {
           <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
           <Divider />
         </View>
-        {/* <View style={styles.container_picture}>
+        <View style={styles.container_picture}>
             <Button icon='' mode='contained' color={'gold'} onPress={handleLogout}>
               Logout
             </Button>
-          </View> */}
+          </View>
       </View>
       );
   }
