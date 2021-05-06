@@ -51,7 +51,7 @@ export default function MeetupScreen() {
       postMeetup(requestBody).then(response => {
         console.log('LOOK HERE');
         console.log(response);
-        navigation.navigate('MyModal', {meetupID: response['_id']});
+        navigation.navigate('MeetupMap', {meetupID: response['_id']});
       })
     }
 
