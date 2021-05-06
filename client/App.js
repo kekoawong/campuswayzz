@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import ListScreen from './src/list/listScreen';
 import MapScreen from './src/map/mapScreen';
 import ProfileScreen from './src/profile/profileScreen';
+import { linkingConfig } from './src/linking/deepLinking';
 import * as Linking from 'expo-linking';
 import Login from './src/login/loginScreen';
 import Signup from './src/login/signupScreen';
@@ -17,23 +18,9 @@ export default function App() {
   // event listener for deep linking
   Linking.addEventListener('url', (item) => {
     console.log(item.url);
-    //const [path, queryParams] = Linking.parse(item.url);
-    //console.log(path);
-    //console.log(queryParams)
+    const thing = Linking.parse(item.url);
+    console.log(thing);
   });
-
-  const initialURL = Linking.getInitialURL();
-  console.log(initialURL);
-
-  const linking = {
-    prefixes: ['https://campuswayzz.com', 'campuswayzz://', 'exp://'],
-    screens: {
-      List: 'list',
-      Map: 'map',
-      Profile: 'profile',
-      NotFound: '*',
-    },
-  };
 
   const Tab = createBottomTabNavigator();
   const [user, setUser] = useState();
@@ -54,7 +41,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer linking={linking}>
+      <NavigationContainer linking={linkingConfig}>
         {!isLoggedIn ? 
           <Login /> :
           <Tab.Navigator>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Avatar, Button, Divider, ToggleButton, Switch, TextInput} from 'react-native-paper';
 import userutil from '../utils/user.util';
 
@@ -32,6 +32,7 @@ function MainProfile({route}) {
   // User Information reloads after signing in or when user alters personal info
   const [userInfo, setUserInfo] = useState([]);
   const [editMode, swapMode] = useState(false);
+  const [keyboardOffset, setKeyboardOffset] = useState(150);
 
   // console.log('MainProfile() - route')
   // console.log(route);
@@ -66,20 +67,28 @@ function MainProfile({route}) {
           <Avatar.Image size={100} source={require('./kwong.jpg')}/>
         </View> 
           <View style={styles.container_picture}>
-            <Button icon='account-edit' mode='contained' onPress={editButton}>
+            <Button icon='account-edit' mode='contained' color={'gold'} onPress={editButton}>
               Save Changes
             </Button>
           </View>
         <View style={styles.container_info}>
-          <TextInput mode='outlined' label='First Name' value={userInfo.firstName} onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
-          <TextInput mode='outlined' label='Last Name' value={userInfo.lastName} onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
-          <TextInput mode='outlined' label='NetID' value={userInfo.netID} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
-          <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
-            <ToggleButton icon='account-check' value='Share indefinitely'/>
-            <ToggleButton icon='account-clock' value='Share while using'/>
-            <ToggleButton icon='account-off' value='Never share'/>
-          </ToggleButton.Group>
-          <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
+            <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardOffset}>
+              <TextInput mode='underlined' label='First Name' value={userInfo.firstName} selectionColor={'gold'} underlineColor={'gold'}
+              onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} 
+              onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
+              <TextInput mode='underlined' label='Last Name' value={userInfo.lastName} selectionColor={'gold'} underlineColor={'gold'}
+              onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} 
+              onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
+              <TextInput mode='underlined' label='NetID' value={userInfo.netID} selectionColor={'gold'} underlineColor={'gold'}
+              onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
+            
+            <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
+              <ToggleButton icon='account-check' value='Share indefinitely' color={'gold'}/>
+              <ToggleButton icon='account-clock' value='Share while using' color={'gold'}/>
+              <ToggleButton icon='account-off' value='Never share' color={'gold'}/>
+            </ToggleButton.Group>
+            <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
+            </KeyboardAvoidingView>
         </View>
       </View>
       );
@@ -91,7 +100,7 @@ function MainProfile({route}) {
           <Avatar.Image size={100} source={require('./kwong.jpg')}/>
         </View> 
           <View style={styles.container_picture}>
-            <Button icon='account-edit' mode='contained' onPress={editButton}>
+            <Button icon='account-edit' mode='contained' color={'gold'} onPress={editButton}>
               Edit Profile
             </Button>
           </View>
@@ -104,9 +113,6 @@ function MainProfile({route}) {
           <Divider />
           <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
           <Divider />
-        </View>
-        <View style={styles.container_switch}>
-          <GhostSwitch/>
         </View>
       </View>
       );
@@ -125,11 +131,11 @@ export default function ProfileScreen({route}) {
 const styles = StyleSheet.create({
     container_info: { // User info
       flex: 3,
-      backgroundColor: 'white'
+      backgroundColor: 'navy'
     },
     container_picture: { // Profile Picture
       flex: 1,
-      backgroundColor: 'gold',
+      backgroundColor: 'navy',
       justifyContent: 'center',
       alignItems: 'center'
     },
@@ -143,5 +149,8 @@ const styles = StyleSheet.create({
       color: 'gold',
       padding: 13.75,
       fontSize: 20
+    },
+    keyboardAvoid: { // Avoid keyboard for editing
+      flex: 1
     }
 });
