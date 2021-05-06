@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Button, TextInput} from 'react-native-paper';
 import userutil from '../utils/user.util';
 
-function login() {
+function login(props) {
     const [user, setUser] = useState({
         netID: '',
         password: ''
@@ -13,14 +13,20 @@ function login() {
 
     // const navigation = useNavigation();
 
-    async function handleSubmit(event){
-        event.preventDefault();
+    async function login() {
         try {
             await userutil.login(user);
         } catch (err) {
-            console.log('Invalid Credentials');
+            console.log('Login Screen: invalid credentials');
         }
-        console.log('login complete');
+    }
+
+    function handleSubmit(event){
+        event.preventDefault();
+        login().then(() => {
+            props.onLoggedIn();
+            console.log('Login Screen: login complete');
+        })
     }
 
     return (

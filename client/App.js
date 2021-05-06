@@ -14,7 +14,7 @@ import userutil from './src/utils/user.util';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
 export default function App() {
-
+  // userutil.logout();
   // event listener for deep linking
   Linking.addEventListener('url', (item) => {
     console.log(item.url);
@@ -28,6 +28,9 @@ export default function App() {
 
   async function getUser(){
     const res = await userutil.getUser();
+    console.log('App.js::getUser()::getting token');
+    console.log(res);
+    console.log('--------')
     if (res) {
       setLoggedIn(true);
       setUser(res);
@@ -35,15 +38,26 @@ export default function App() {
     return res;
   }
 
+  function handleLogin(){
+    console.log('App.js :: handleLogin');
+    getUser();
+  }
+
+  function handleLogout(){
+    console.log('App.js :: handleLogout');
+    setLoggedIn(false);
+  }
+
   useEffect(() => {
+    console.log('USE EFFECT');
     getUser();
   }, [isLoggedIn]);
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer linking={linkingConfig}>
-        {!isLoggedIn ? 
-          <Login /> :
+      {!isLoggedIn ? 
+        <Login onLoggedIn={handleLogin} /> :
+        <NavigationContainer linking={linkingConfig}>
           <Tab.Navigator>
             <Tab.Screen 
                 name="List" 
@@ -79,8 +93,8 @@ export default function App() {
                 initialParams={{user: user}}
             />
           </Tab.Navigator>
-        }
-      </NavigationContainer>
+        </NavigationContainer>
+      }
     </SafeAreaProvider>
   )
   
