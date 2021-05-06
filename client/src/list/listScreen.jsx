@@ -82,14 +82,14 @@ function MainListScreen() {
     );
 }
 
-export default function ListScreen() {
+export default function ListScreen({route}) {
 
     const ModalStack = createStackNavigator();
 
     return (
         <ModalStack.Navigator mode="modal" headerMode="none">
             <ModalStack.Screen name="Main" component={MainListScreen} />
-            <ModalStack.Screen name="MeetupMap" component={MeetupMap} />
+            <ModalStack.Screen name="MeetupMap" component={MeetupMap} initialParams={{user: route.params.user}} />
             <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} />
         </ModalStack.Navigator>
     );

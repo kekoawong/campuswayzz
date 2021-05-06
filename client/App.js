@@ -54,6 +54,7 @@ export default function App() {
                     <MaterialIcons name="list-alt" color={color} size={size} />
                   ),
                 }}
+                initialParams={{user: user}}
             />
             <Tab.Screen 
                 name="Map" 
