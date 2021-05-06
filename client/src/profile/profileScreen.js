@@ -28,14 +28,17 @@ const GhostSwitch = () => {
 };
 
 
-function MainProfile() {
+function MainProfile({route}) {
   // User Information reloads after signing in or when user alters personal info
   const [userInfo, setUserInfo] = useState([]);
   const [editMode, swapMode] = useState(false);
   const [keyboardOffset, setKeyboardOffset] = useState(150);
 
+  // console.log('MainProfile() - route')
+  // console.log(route);
+
   useEffect(() => {
-    userutil.getUserData('kwong6')
+    userutil.getUserData(route.params.user.netID)
     .then(res => {
       setUserInfo(res)
       return
@@ -116,11 +119,11 @@ function MainProfile() {
   }
 }
 
-export default function ProfileScreen() {
+export default function ProfileScreen({route}) {
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>
-          <Stack.Screen name="Profile" component={MainProfile} />
+          <Stack.Screen name="Profile" component={MainProfile} initialParams={{user: route.params.user}} />
       </Stack.Navigator>
   );
 }
