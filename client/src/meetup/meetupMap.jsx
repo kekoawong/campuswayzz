@@ -22,7 +22,6 @@ export default function MeetupMap({route}) {
   /* TODO: get destination and userId from previous meetup screen */
   const [destination, setDestination] = useState({ name: "Main Building", coordinates: {latitude: 41.703, longitude: -86.239} });
   const userId = route.params.user.netID;
-  console.log('GOT TO MEETUPMAP WITH ' + userId);
   // TEMPORARY MEETUPID
   const meetupID = route.params['meetupID'];
 

@@ -12,7 +12,7 @@ import DetailsScreen from '../list/detailsScreen';
 import locationutil from '../utils/location.util';
 import * as Location from 'expo-location';
 
-function MainMap() {
+function MainMap({route}) {
 
   /* initial coordinates that map will be centered on */
   const initialCoordinates = {
@@ -182,11 +182,11 @@ function MainMap() {
     );
 }
 
-export default function MapScreen() {
+export default function MapScreen({route}) {
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>
-          <Stack.Screen name="Map" component={MainMap} />
+          <Stack.Screen name="Map" component={MainMap} initialParams={{user: route.params.user}} />
           <Stack.Screen 
               name="Details" 
               component={DetailsScreen} 

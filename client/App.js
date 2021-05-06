@@ -65,6 +65,7 @@ export default function App() {
                     <MaterialIcons name="map" color={color} size={size} />
                   ),
                 }}
+                initialParams={{user: user}}
             />
             <Tab.Screen 
                 name="Profile" 
