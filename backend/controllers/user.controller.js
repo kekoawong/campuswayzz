@@ -135,7 +135,7 @@ function updateUserInfo(req, res){
 function putUserLocation(req, res){
     let tempNetId = req.params.netID;
     req.params.netID = tempNetId.toLowerCase();
-    
+
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
         if (dbResponse['n'] == 0){
@@ -168,7 +168,7 @@ function getUserLocation(req, res){
 }
 
 function getAllUserNetIDs(req, res){
-    User.find()
+    User.find().sort({netID: 1})
     .then(dbResponse => {
         let netIDs = [];
         for (const i in dbResponse){

@@ -77,7 +77,7 @@ function getLocationsForType(req, res){
 }
 
 function getAllLocationNames(req, res){
-    Location.find()
+    Location.find().sort({name: 1})
     .then(locations => {
         let locationNames = [];
         for (const i in locations){
