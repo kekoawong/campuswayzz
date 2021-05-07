@@ -10,7 +10,8 @@ module.exports = {
     postMeetup,
     getMeetupLocation,
     getFriendsLocations,
-    updateUserStatus
+    updateUserStatus,
+    meetupCleaner
 }
 
 /* POST request for meetup
@@ -74,7 +75,6 @@ function getMeetupLocation(req, res){
 function getFriendsLocations(req, res) {
     const userNetID = req.params.userNetID;
     req.params['_id'] = mongoose.Types.ObjectId(req.params['_id']);
-    console.log(req.params['_id'])
     Meetup.findOne({'_id': req.params['_id']})
     .then(foundMeetup => {
         if (!foundMeetup) {
@@ -162,4 +162,22 @@ function updateUserStatus(req, res){
 
     })
 
+}
+
+function meetupCleaner(req, res){
+    let date = new Date();
+    date.setDate(date.getDate() - 1);
+    let params = {
+        'updatedAt': {
+            $lt: date
+        }
+    }
+    Meetup.deleteMany({params})
+    .then(dbResponse => {
+        debuglog('LOG', 'meetup controller - meetupCleaner', `deleted ${dbResponse['n']} entries`);
+        res.status(200).json({result: 'success', message: `meetup cleaned up ${dbResponse['n']} entires`});
+    }).catch(err => {
+        debuglog('ERROR', 'meetup controller - updateUserStatus', err);
+        res.status(500).json(err.message);
+    })
 }

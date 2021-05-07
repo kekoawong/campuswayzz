@@ -42,5 +42,6 @@ router.post('/meetup', meetupsCtrl.postMeetup);
 router.get('/meetup/:_id/location', meetupsCtrl.getMeetupLocation);
 router.get('/meetup/:_id/friends/:userNetID', meetupsCtrl.getFriendsLocations);
 router.put('/meetup/:_id/userstatus', meetupsCtrl.updateUserStatus);
+router.delete('/meetup', meetupsCtrl.meetupCleaner);
 
 module.exports = router;

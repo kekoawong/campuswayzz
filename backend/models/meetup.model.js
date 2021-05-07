@@ -22,6 +22,6 @@ const meetupSchema = new mongoose.Schema({
             enum: friendStatus
         }
     }]
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('meetup', meetupSchema);
