@@ -21,8 +21,8 @@ function getMeetupLocation(meetupID){
     });
 }
 
-function getFriendsLocation(meetupID){
-    return fetch(server + '/meetup/' + meetupID + '/friends')
+function getFriendsLocation(meetupID, userNetID){
+    return fetch(server + '/meetup/' + meetupID + '/friends/' + userNetID)
     .then(res => res.json())
     .then(json => {
         return json;

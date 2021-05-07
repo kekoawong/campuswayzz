@@ -121,7 +121,7 @@ export default function MeetupMap({route}) {
   }
 
   async function getFriendsLocation(){
-    return await meetuputil.getFriendsLocation(meetupID);
+    return await meetuputil.getFriendsLocation(meetupID, userId);
   }
 
   async function getMeetupLocation(){
