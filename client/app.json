@@ -28,7 +28,8 @@
         "UIBackgroundModes": [
           "location"
         ]
-      }
+      },
+      "bundleIdentifier": "com.campuswayzz.client"
     },
     "android": {
       "adaptiveIcon": {
@@ -41,4 +42,3 @@
     }
   }
 }
-
