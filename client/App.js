@@ -9,7 +9,6 @@ import ProfileScreen from './src/profile/profileScreen';
 import { linkingConfig } from './src/linking/deepLinking';
 import * as Linking from 'expo-linking';
 import Login from './src/login/loginScreen';
-import Signup from './src/login/signupScreen';
 import userutil from './src/utils/user.util';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
