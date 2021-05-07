@@ -101,6 +101,7 @@ function putUserLocation(netID, coordinates){
 }
 
 function getAllUserNetIDs(userNetID){
+    console.log(`userNetID: ${userNetID}`)
     return fetch(server + '/user/netIDs/all/' + userNetID)
     .then(res => res.json())
     .then(json => {

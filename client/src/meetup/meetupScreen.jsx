@@ -8,8 +8,6 @@ import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
 export default function MeetupScreen({route}) {
-    console.log('im here right now')
-    console.log(route.params)
     // get navigation, set state
     const navigation = useNavigation();
     const [selectedUsers, setSelectedUsers] = useState([]);
@@ -33,7 +31,7 @@ export default function MeetupScreen({route}) {
       return await locationutil.getAllLocationNames();
     }
     async function getAllUserNetIDs(){
-      return await userutil.getAllUserNetIDs();
+      return await userutil.getAllUserNetIDs(route.params.user.netID);
     }
 
     function handleMeetupPost(){
@@ -44,7 +42,7 @@ export default function MeetupScreen({route}) {
           return;
       }
 
-      let friendsArray = [];
+      let friendsArray = [{"netID": route.params.user.netID, "status": "Accepted"}];
       for (const i in selectedUsers){
         friendsArray.push({"netID": selectedUsers[i], "status": "Pending"});
       }
