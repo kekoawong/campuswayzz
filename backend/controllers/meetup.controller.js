@@ -71,9 +71,11 @@ function getMeetupLocation(req, res){
 /* GET request for friends locations
 
 */
-function getFriendsLocations(req, res){
+function getFriendsLocations(req, res) {
+    const userNetID = req.params.userNetID;
     req.params['_id'] = mongoose.Types.ObjectId(req.params['_id']);
-    Meetup.findOne(req.params)
+    console.log(req.params['_id'])
+    Meetup.findOne({'_id': req.params['_id']})
     .then(foundMeetup => {
         if (!foundMeetup) {
             debuglog('ERROR', 'meetup controller - getFriendsLocation', 'meetup not found');
@@ -87,6 +89,9 @@ function getFriendsLocations(req, res){
 
         let netIDs = [];
         for (const i in friends){
+            if (friends[i]['netID'] == userNetID){
+                continue;
+            }
             if (friends[i]['status'] == 'Accepted'){
                 netIDs.push(friends[i]['netID']);
             }

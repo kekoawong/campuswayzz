@@ -40,7 +40,7 @@ router.get('/location/names/all', locationsCtrl.getAllLocationNames);
 // meetups
 router.post('/meetup', meetupsCtrl.postMeetup);
 router.get('/meetup/:_id/location', meetupsCtrl.getMeetupLocation);
-router.get('/meetup/:_id/friends', meetupsCtrl.getFriendsLocations);
+router.get('/meetup/:_id/friends/:userNetID', meetupsCtrl.getFriendsLocations);
 router.put('/meetup/:_id/userstatus', meetupsCtrl.updateUserStatus);
 
 module.exports = router;
