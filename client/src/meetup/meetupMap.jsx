@@ -152,6 +152,11 @@ export default function MeetupMap({route}) {
     return Math.round((c * r) * 18);
   }
 
+  function handleLeaveMeetup(){
+    meetuputil.updateUserStatus(meetupID, userId, 'Rejected');
+    navigation.navigate("Main");
+  }
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <MapView
@@ -202,7 +207,7 @@ export default function MeetupMap({route}) {
           style={styles.fabStop}
           label="Leave Meetup"
           icon="stop"
-          onPress={() => navigation.navigate("Main")}
+          onPress={handleLeaveMeetup}
         />
       </View>
     </View>

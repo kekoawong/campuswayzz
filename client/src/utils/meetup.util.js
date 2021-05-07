@@ -29,10 +29,10 @@ function getFriendsLocation(meetupID, userNetID){
     })
 }
 
-function updateUserStatus(userNetID, status){
+function updateUserStatus(meetupID, userNetID, status){
     const data = {'netID': userNetID, 'status': status};
     return fetch(server + '/meetup/' + meetupID + '/userstatus', {
-        method: 'POST',
+        method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     })
