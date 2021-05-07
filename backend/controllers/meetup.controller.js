@@ -125,7 +125,7 @@ function getFriendsLocations(req, res){
 
 */
 function updateUserStatus(req, res){
-    const userNetID = req.body['netID'];
+    const userNetID = req.body['netID'].toLowerCase();
     const meetupID = mongoose.Types.ObjectId(req.params['_id']);
     const status = req.body['status'];
 
