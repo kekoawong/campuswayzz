@@ -168,10 +168,14 @@ function getUserLocation(req, res){
 }
 
 function getAllUserNetIDs(req, res){
+    const userNetID = req.params.userNetID;
     User.find().sort({netID: 1})
     .then(dbResponse => {
         let netIDs = [];
         for (const i in dbResponse){
+            if (dbResponse[i]['netID'] == userNetID){
+                continue;
+            }
             netIDs.push({'netID': dbResponse[i]['netID']});
         }
         debuglog('LOG', 'user controller - getAllUserNetIDs', 'got all user netIDs');
