@@ -29,8 +29,22 @@ function getFriendsLocation(meetupID, userNetID){
     })
 }
 
+function updateUserStatus(userNetID, status){
+    const data = {'netID': userNetID, 'status': status};
+    return fetch(server + '/meetup/' + meetupID + '/userstatus', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Posting new meetup failed');
+    })
+}
+
 export default {
     postMeetup,
     getMeetupLocation,
-    getFriendsLocation
+    getFriendsLocation,
+    updateUserStatus
 }
