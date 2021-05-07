@@ -7,8 +7,9 @@ import locationutil from '../utils/location.util';
 import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
-export default function MeetupScreen() {
-
+export default function MeetupScreen({route}) {
+    console.log('im here right now')
+    console.log(route.params)
     // get navigation, set state
     const navigation = useNavigation();
     const [selectedUsers, setSelectedUsers] = useState([]);
