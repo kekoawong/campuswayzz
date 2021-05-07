@@ -63,9 +63,9 @@ function login(props) {
     return (
         <View>
             {userFlowView == 'login' ?
-                <View>
-                    <TextInput mode='outlined' label='NetID' placeholder={'NetID'} value={userLoginInfo.netID} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'netID': value}})}/>
-                    <TextInput mode='outlined' label='Password' placeholder={'Password'} value={userLoginInfo.password} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'password': value}})}/>
+                <View style={styles.container}>
+                    <TextInput mode='outlined' autoComplete="off" label='NetID' placeholder={'NetID'} value={userLoginInfo.netID} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'netID': value}})}/>
+                    <TextInput mode='outlined' secureTextEntry={true} autoComplete="off" label='Password' placeholder={'Password'} value={userLoginInfo.password} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'password': value}})}/>
                     <Button icon='check-outline' mode='contained' onPress={handleLoginButton}>
                         Login
                     </Button>
@@ -74,11 +74,11 @@ function login(props) {
                     </Text>
                 </View>
                 :
-                <View>
-                    <TextInput mode='outlined' label='First Name' placeholder={'First Name'} value={userSignupInfo.firstName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'firstName': value}})}/>
-                    <TextInput mode='outlined' label='Last Name' placeholder={'Last Name'} value={userSignupInfo.lastName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'lastName': value}})}/>
-                    <TextInput mode='outlined' label='NetID' placeholder={'NetID'} value={userSignupInfo.netID} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'netID': value}})}/>
-                    <TextInput mode='outlined' label='Password' placeholder={'Password'} value={userSignupInfo.password} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'password': value}})}/>
+                <View style={styles.container}>
+                    <TextInput mode='outlined' autoComplete="off" label='First Name' placeholder={'First Name'} value={userSignupInfo.firstName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'firstName': value}})}/>
+                    <TextInput mode='outlined' autoComplete="off" label='Last Name' placeholder={'Last Name'} value={userSignupInfo.lastName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'lastName': value}})}/>
+                    <TextInput mode='outlined' autoComplete="off" label='NetID' placeholder={'NetID'} value={userSignupInfo.netID} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'netID': value}})}/>
+                    <TextInput mode='outlined' autoComplete="off" secureTextEntry={true} label='Password' placeholder={'Password'} value={userSignupInfo.password} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'password': value}})}/>
                     <Button icon='clipboard-check-outline' mode='contained' onPress={handleSignupButton}>
                         Signup
                     </Button>
@@ -92,3 +92,10 @@ function login(props) {
 }
 
 export default login;
+
+const styles = StyleSheet.create({
+    container: {
+      overflow: 'scroll',
+      justifyContent: 'center'
+    }
+});

@@ -67,7 +67,7 @@ function MainList() {
 }
 
 // stack wrapper around main list screen
-function MainListScreen() {
+function MainListScreen({route}) {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator>
@@ -77,7 +77,7 @@ function MainListScreen() {
               component={DetailsScreen} 
               // set title of screen to the location title
               options={({ route }) => ({ title: route.params.item.name })} />
-            <Stack.Screen name="CreateMeetup" component={MeetupScreen} options={{title: "Create Meetup"}}/>
+            <Stack.Screen name="CreateMeetup" component={MeetupScreen} options={{title: "Create Meetup"}} initialParams={{user: route.params.user}} />
         </Stack.Navigator>
     );
 }
@@ -88,9 +88,9 @@ export default function ListScreen({route}) {
 
     return (
         <ModalStack.Navigator mode="modal" headerMode="none">
-            <ModalStack.Screen name="Main" component={MainListScreen} />
+            <ModalStack.Screen name="Main" component={MainListScreen} initialParams={{user: route.params.user}} />
             <ModalStack.Screen name="MeetupMap" component={MeetupMap} initialParams={{user: route.params.user}} />
-            <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} />
+            <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} initialParams={{ user: route.params.user }} />
         </ModalStack.Navigator>
     );
 }

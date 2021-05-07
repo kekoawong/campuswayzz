@@ -31,15 +31,15 @@ Signup a new user into the database
 
 */
 function signup(req, res){
+    let tempNetId = req.body.netID;
+    req.body.netID = tempNetId.toLowerCase();
 
     const user = new User(req.body);
     user.save()
     .then(newUser => {
         debuglog('LOG', 'user controller - signup', 'signed up user');
         const token = createToken(newUser);
-        res.header('auth-token', token);
         res.status(201).json({result: 'success', message: 'Signup successful', token: token});
-        res.status(201).json({result: 'success', message: 'Signup successful'});
     }).catch(err => { // catch errors
         debuglog('ERROR', 'user controller - signup', err);
         res.status(400).json(err);
@@ -62,7 +62,7 @@ Login an existing user
 function login(req, res){
     debuglog('LOG', 'user controller - login', 'attempting login');
     
-    User.findOne({netID: req.body.netID})
+    User.findOne({netID: req.body.netID.toLowerCase()})
     .then(foundUser => {
         if (!foundUser){
             debuglog('ERROR', 'user controller - login', 'user netID not found');
@@ -94,6 +94,9 @@ function createToken(user){
 }
 
 function getUserInfo(req, res){
+    let tempNetId = req.params.netID;
+    req.params.netID = tempNetId.toLowerCase();
+
     User.findOne(req.params)
     .then(userData => {
         if (userData){
@@ -111,10 +114,18 @@ function getUserInfo(req, res){
 }
 
 function updateUserInfo(req, res){
+    let tempNetId = req.params.netID;
+    req.params.netID = tempNetId.toLowerCase();
+
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
-        debuglog('LOG', 'user controller - updateUserInfo', 'updated user info');
-        res.status(200).json({result: 'success', message: 'User update successful'});
+        if (dbResponse['n'] == 1){
+            debuglog('LOG', 'user controller - updateUserInfo', 'updated user info');
+            res.status(200).json({result: 'success', message: 'User update successful'});
+        } else if (dbResponse['n'] == 0) {
+            debuglog('LOG', 'user controller - updateUserInfo', 'netID not found');
+            res.status(200).json({ result: 'error', message: 'User not found' });
+        }
     }).catch(err => { // catch errors
         debuglog('ERROR', 'user controller - updateUserInfo', err);
         res.status(500).json(err.message);
@@ -122,6 +133,9 @@ function updateUserInfo(req, res){
 }
 
 function putUserLocation(req, res){
+    let tempNetId = req.params.netID;
+    req.params.netID = tempNetId.toLowerCase();
+
     User.updateOne(req.params, {$set: req.body})
     .then(dbResponse => {
         if (dbResponse['n'] == 0){
@@ -139,6 +153,9 @@ function putUserLocation(req, res){
 }
 
 function getUserLocation(req, res){
+    let tempNetId = req.params.netID;
+    req.params.netID = tempNetId.toLowerCase();
+
     User.find(req.params) // req.params: {"netID": "___"}
     .then(dbResponse => {
         debuglog('LOG', 'user controller - getUserLocation', 'got user location');
@@ -151,10 +168,14 @@ function getUserLocation(req, res){
 }
 
 function getAllUserNetIDs(req, res){
-    User.find()
+    const userNetID = req.params.userNetID;
+    User.find().sort({netID: 1})
     .then(dbResponse => {
         let netIDs = [];
         for (const i in dbResponse){
+            if (dbResponse[i]['netID'] == userNetID){
+                continue;
+            }
             netIDs.push({'netID': dbResponse[i]['netID']});
         }
         debuglog('LOG', 'user controller - getAllUserNetIDs', 'got all user netIDs');

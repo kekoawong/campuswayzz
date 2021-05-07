@@ -121,7 +121,7 @@ export default function MeetupMap({route}) {
   }
 
   async function getFriendsLocation(){
-    return await meetuputil.getFriendsLocation(meetupID);
+    return await meetuputil.getFriendsLocation(meetupID, userId);
   }
 
   async function getMeetupLocation(){
@@ -150,6 +150,11 @@ export default function MeetupMap({route}) {
    
     // calculate the result --> assume walk time is 18 minutes per one mile 
     return Math.round((c * r) * 18);
+  }
+
+  function handleLeaveMeetup(){
+    meetuputil.updateUserStatus(meetupID, userId, 'Rejected');
+    navigation.navigate("Main");
   }
 
   return (
@@ -202,7 +207,7 @@ export default function MeetupMap({route}) {
           style={styles.fabStop}
           label="Leave Meetup"
           icon="stop"
-          onPress={() => navigation.navigate("Main")}
+          onPress={handleLeaveMeetup}
         />
       </View>
     </View>
