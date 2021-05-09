@@ -36,6 +36,7 @@ router.post('/location', locationsCtrl.postLocation);
 router.get('/locations', locationsCtrl.getAllLocations)
 router.get('/locations/:type', locationsCtrl.getLocationsForType);
 router.get('/location/names/all', locationsCtrl.getAllLocationNames);
+router.put('/location/:name', locationsCtrl.putLocationInfo);
 
 // meetups
 router.post('/meetup', meetupsCtrl.postMeetup);

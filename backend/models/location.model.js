@@ -30,22 +30,11 @@ const locationSchema = new mongoose.Schema({
             type: Number,
             required: true
         }
-    }/*,
-    hoursOfOperation: [{
-        day: {
-            type: String,
-            enum: days,
-            required: true
-        },
-        startTime: {
-            type: String,
-            required: true
-        },
-        endTime: {
-            type: String,
-            required: true
-        }
-    }]*/
+    },
+    description: {
+        type: String,
+        required: true
+    }
 });
 
 module.exports = mongoose.model('location', locationSchema);
