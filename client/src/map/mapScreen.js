@@ -5,7 +5,6 @@ import MapView, {
 } from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createStackNavigator } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import DetailsScreen from '../list/detailsScreen';
@@ -27,7 +26,6 @@ function MainMap({route}) {
 
   /* markers are a state so that they can RELOAD when the user queries */
   const [locations, setLocations] = useState([]);
-  const navigation = useNavigation();
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [showDirections, setShowDirections] = useState(false);
@@ -50,7 +48,6 @@ function MainMap({route}) {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      console.log(userLocation);
       setUserLocation(userLocation);
 
       /* TODO: push user location to the database */
@@ -58,7 +55,6 @@ function MainMap({route}) {
   }, []);
 
   function setNewMarkers(type) {
-    console.log(type);
 
     /* call the api to pull locations from the database */    
     if (type == 'All') {
@@ -81,7 +77,6 @@ function MainMap({route}) {
   /* TODO: function to continuously get and set user location in the database */
 
   function toggleDirections(destCoordinates) {
-    console.log(destCoordinates)
 
     /* set directions destination */
     setDestination(destCoordinates);
@@ -96,7 +91,6 @@ function MainMap({route}) {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      console.log(userLocation);
       setUserLocation(userLocation);
     })();
 
@@ -146,9 +140,7 @@ function MainMap({route}) {
               <Callout 
                 style={styles.plainView}
                 onPress={() => {
-                  toggleDirections(marker.coordinates)
-                  console.log(marker);
-                  //navigation.navigate('Details', { item: marker })
+                  toggleDirections(marker.coordinates);
                 }}>
                 <View>
                   <Text style={styles.header}>{marker.name}</Text>

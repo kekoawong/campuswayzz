@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { BottomNavigation, DataTable } from 'react-native-paper';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import meetuputil from '../utils/meetup.util';
 
@@ -39,12 +38,10 @@ const MyComponent = ({route}) => {
   }
   
   function handleAcceptClick(meetupID){
-      console.log("Send to Accepted " + meetupID);
       navigation.navigate('MeetupMap', {meetupID: meetupID});
   }
 
   function handlePendClick(meetupID){
-    console.log("Send to Pending " + meetupID);
     navigation.navigate('JoinMeetup', {groupID: meetupID})
   }
 
@@ -108,12 +105,10 @@ export default MyComponent;
 const styles = StyleSheet.create({
     container_accepted: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center'
     },
     container_pending: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center'
     }
 });

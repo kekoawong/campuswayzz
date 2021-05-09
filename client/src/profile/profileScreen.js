@@ -35,9 +35,6 @@ function MainProfile({route}) {
   const [editMode, swapMode] = useState(false);
   const [keyboardOffset, setKeyboardOffset] = useState(140);
 
-  // console.log('MainProfile() - route')
-  // console.log(route);
-
   useEffect(() => {
     userutil.getUserData(route.params.user.netID)
     .then(res => {
@@ -123,8 +120,6 @@ function MainProfile({route}) {
 }
 
 export default function ProfileScreen({route}) {
-  console.log('profileScreen :: ProfileScreen Stack :: props')
-  console.log(route);
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>
