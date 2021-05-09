@@ -57,7 +57,7 @@ const MyComponent = ({route}) => {
     const acceptedList = acceptedMeetups.map((meetup) => 
         <DataTable.Row key={meetup._id} onPress={() => handleAcceptClick(meetup._id)}>
             <DataTable.Cell>{meetup.locationName}</DataTable.Cell>
-            <DataTable.Cell>{meetup.createdAt}</DataTable.Cell>
+            <DataTable.Cell>{meetup.createdAt.substr(0, 10)}</DataTable.Cell>
         </DataTable.Row>
     )
     return (
@@ -65,7 +65,7 @@ const MyComponent = ({route}) => {
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title>Location</DataTable.Title>
-                    <DataTable.Title>Time</DataTable.Title>
+                    <DataTable.Title>Date</DataTable.Title>
                 </DataTable.Header>
                 {acceptedList}
             </DataTable>
@@ -77,7 +77,7 @@ const MyComponent = ({route}) => {
     const pendingList = pendingMeetups.map((meetup) => 
         <DataTable.Row key={meetup._id} onPress={() => handlePendClick(meetup._id)}>
             <DataTable.Cell>{meetup.locationName}</DataTable.Cell>
-            <DataTable.Cell>{meetup.createdAt}</DataTable.Cell>
+            <DataTable.Cell>{meetup.createdAt.substr(0, 10)}</DataTable.Cell>
         </DataTable.Row>
     )   
       return (
@@ -85,7 +85,7 @@ const MyComponent = ({route}) => {
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title>Location</DataTable.Title>
-                    <DataTable.Title>Time</DataTable.Title>
+                    <DataTable.Title>Date</DataTable.Title>
                 </DataTable.Header>
                 {pendingList}
             </DataTable>
@@ -97,6 +97,7 @@ const MyComponent = ({route}) => {
     <BottomNavigation
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
+      barStyle={{backgroundColor: 'blue'}}
       renderScene={renderScene}
     />
   );
