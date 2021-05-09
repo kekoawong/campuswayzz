@@ -78,13 +78,13 @@ function MainProfile({route}) {
           </View>
         <View style={styles.container_info}>
             <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardOffset}>
-              <TextInput mode='underlined' label='First Name' value={userInfo.firstName} selectionColor={'gold'} underlineColor={'gold'}
+              <TextInput mode='flat' label='First Name' value={userInfo.firstName} selectionColor={'gold'} underlineColor={'gold'}
               onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} 
               onChangeText={val => setUserInfo({...userInfo, 'firstName': val})}/>
-              <TextInput mode='underlined' label='Last Name' value={userInfo.lastName} selectionColor={'gold'} underlineColor={'gold'}
+              <TextInput mode='flat' label='Last Name' value={userInfo.lastName} selectionColor={'gold'} underlineColor={'gold'}
               onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} 
               onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
-              <TextInput mode='underlined' label='NetID' value={userInfo.netID} selectionColor={'gold'} underlineColor={'gold'}
+              <TextInput mode='flat' label='NetID' value={userInfo.netID} selectionColor={'gold'} underlineColor={'gold'}
               onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
             
             <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
