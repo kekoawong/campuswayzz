@@ -36,6 +36,7 @@ router.post('/location', locationsCtrl.postLocation);
 router.get('/locations', locationsCtrl.getAllLocations)
 router.get('/locations/:type', locationsCtrl.getLocationsForType);
 router.get('/location/names/all', locationsCtrl.getAllLocationNames);
+router.put('/location/:name', locationsCtrl.putLocationInfo);
 
 // meetups
 router.post('/meetup', meetupsCtrl.postMeetup);
@@ -43,5 +44,7 @@ router.get('/meetup/:_id/location', meetupsCtrl.getMeetupLocation);
 router.get('/meetup/:_id/friends/:userNetID', meetupsCtrl.getFriendsLocations);
 router.put('/meetup/:_id/userstatus', meetupsCtrl.updateUserStatus);
 router.delete('/meetup', meetupsCtrl.meetupCleaner);
+router.get('/meetup/:userNetID/accepted', meetupsCtrl.getUsersAcceptedMeetups);
+router.get('/meetup/:userNetID/pending', meetupsCtrl.getUsersPendingMeetups);
 
 module.exports = router;

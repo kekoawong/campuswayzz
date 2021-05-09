@@ -6,7 +6,8 @@ module.exports = {
     postLocation,
     getAllLocations,
     getLocationsForType,
-    getAllLocationNames
+    getAllLocationNames,
+    putLocationInfo
 }
 
 /* POST request for location
@@ -89,5 +90,18 @@ function getAllLocationNames(req, res){
         debuglog('ERROR', 'location controller - getAllLocationNames', err);
         res.status(401).json(err);
         return;
+    })
+}
+
+function putLocationInfo(req, res){
+    Location.updateOne(req.params, {$set: req.body})
+    .then(dbResponse => {
+        if (dbResponse['n'] == 1) {
+            debuglog('LOG', 'location controller - putLocationInfo', 'updated location info');
+            res.status(200).json({ result: 'success', message: 'Location update successful' });
+        } else if (dbResponse['n'] == 0) {
+            debuglog('LOG', 'location controller - putLocationInfo', 'location not found');
+            res.status(200).json({ result: 'error', message: 'Location not found' });
+        }
     })
 }

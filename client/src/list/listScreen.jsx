@@ -17,6 +17,11 @@ function MainList() {
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = useState(false);
     const [data, setData] = useState();
+    const [state, setState] = React.useState({ open: false });
+
+    const onStateChange = ({ open }) => setState({ open });
+
+    const { open } = state;
 
     useEffect(() => {
       getData();
@@ -57,11 +62,24 @@ function MainList() {
             renderItem={(item) => Location(item, navigation)}
             keyExtractor={(item) => item._id}
           />
-          <FAB
+          <FAB.Group
             style={styles.fab_create}
-            label='Create Meetup'
-            icon="plus"
-            onPress={() => navigation.navigate('CreateMeetup')}
+            open={open}
+            label='Meetups'
+            icon={open ? 'minus' : 'plus'}
+            actions={[
+              {
+                icon: 'map-marker',
+                label: 'Create Meetup',
+                onPress: () => navigation.navigate('CreateMeetup')
+              },
+              {
+                icon: 'eye',
+                label: 'My Meetups',
+                onPress: () => navigation.navigate('MyMeetups')
+              }
+            ]}
+            onStateChange={onStateChange}
           />
           <FAB
             style={styles.fab_view}
