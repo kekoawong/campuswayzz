@@ -186,7 +186,7 @@ function meetupCleaner(req, res){
 
 function getUsersAcceptedMeetups(req, res){
     const userNetID = req.params['userNetID'].toLowerCase();
-    Meetup.find({ 'friends': {$elemMatch: {'netID': userNetID, 'status': 'Accepted'}}})
+    Meetup.find({ 'friends': {$elemMatch: {'netID': userNetID, 'status': 'Accepted'}}}).sort({createdAt: -1})
     .then(meetups => {
         debuglog('LOG', 'meetup controller - getUsersAcceptedMeetups', `got ${userNetID}'s accepted meetups`);
         res.status(200).json(meetups);
@@ -199,7 +199,7 @@ function getUsersAcceptedMeetups(req, res){
 
 function getUsersPendingMeetups(req, res){
     const userNetID = req.params['userNetID'].toLowerCase();
-    Meetup.find({ 'friends': {$elemMatch: {'netID': userNetID, 'status': 'Pending'}}})
+    Meetup.find({ 'friends': {$elemMatch: {'netID': userNetID, 'status': 'Pending'}}}).sort({createdAt: -1})
     .then(meetups => {
         debuglog('LOG', 'meetup controller - getUsersPendingMeetups', `got ${userNetID}'s pending meetups`);
         res.status(200).json(meetups);
