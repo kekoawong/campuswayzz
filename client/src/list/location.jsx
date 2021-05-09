@@ -17,15 +17,16 @@ export default function Location({ item }, navigation) {
                 style={styles.container}>
                 <Card.Content>
                     <Title>{item.name}</Title>
-                    <Paragraph>Card stuff</Paragraph>
-                    <Rating
+                    <Paragraph>{item.building}</Paragraph>
+                    <Paragraph style={{ fontStyle: 'italic' }}>{item.type}</Paragraph>
+                    {/* <Rating
                         showRating
                         imageSize={30}
                         style={styles.rating}
                         fractions={2}
-                    />
+                    /> */}
                 </Card.Content>
-                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                {/* <Card.Cover source={{ uri: 'https://picsum.photos/700' }} /> */}
             </Card>
         </TouchableOpacity>
 
