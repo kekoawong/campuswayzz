@@ -33,7 +33,7 @@ function MainProfile({route}) {
   // User Information reloads after signing in or when user alters personal info
   const [userInfo, setUserInfo] = useState([]);
   const [editMode, swapMode] = useState(false);
-  const [keyboardOffset, setKeyboardOffset] = useState(150);
+  const [keyboardOffset, setKeyboardOffset] = useState(140);
 
   // console.log('MainProfile() - route')
   // console.log(route);
@@ -86,13 +86,6 @@ function MainProfile({route}) {
               onChangeText={val => setUserInfo({...userInfo, 'lastName': val})}/>
               <TextInput mode='flat' label='NetID' value={userInfo.netID} selectionColor={'gold'} underlineColor={'gold'}
               onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)} onChangeText={val => setUserInfo({...userInfo, 'netID': val})}/>
-            
-            <ToggleButton.Group onValueChange={val => setUserInfo({...userInfo, 'privacy': val})} value={userInfo.privacy}>
-              <ToggleButton icon='account-check' value='Share indefinitely' color={'gold'}/>
-              <ToggleButton icon='account-clock' value='Share while using' color={'gold'}/>
-              <ToggleButton icon='account-off' value='Never share' color={'gold'}/>
-            </ToggleButton.Group>
-            <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
             </KeyboardAvoidingView>
         </View>
       </View>
@@ -116,10 +109,10 @@ function MainProfile({route}) {
           <Divider />
           <Text style={styles.rows}>NetID: {userInfo.netID}</Text>
           <Divider />
-          <Text style={styles.rows}>Privacy: {userInfo.privacy}</Text>
-          <Divider />
+          <Text style={styles.rows}>Privacy Statement: CampusWayzz uses your location in order to direct you to your destination. 
+            Your location will only be shown to other users when you create or join a meetup.</Text>
         </View>
-        <View style={styles.container_picture}>
+        <View style={styles.container_logout}>
             <Button icon='' mode='contained' color={'gold'} onPress={handleLogout}>
               Logout
             </Button>
@@ -145,6 +138,12 @@ const styles = StyleSheet.create({
     },
     container_picture: { // Profile Picture
       flex: 1,
+      backgroundColor: 'navy',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    container_logout: { // Profile Picture
+      flex: .5,
       backgroundColor: 'navy',
       justifyContent: 'center',
       alignItems: 'center'

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { Avatar, Button, TextInput} from 'react-native-paper';
+import { Avatar, Button, TextInput, Snackbar} from 'react-native-paper';
 import userutil from '../utils/user.util';
 const logo = require('../../assets/CW_logo.jpg');
 
@@ -14,6 +14,7 @@ function login(props) {
     const [keyboardLoginOffset, setKeyboardLoginOffset] = useState(290);
     const [keyboardSignupOffset, setKeyboardSignupOffset] = useState(220);
 
+    const [visible, setVisible] = useState(false);
 
     const [userSignupInfo, setUserSignupInfo] = useState({
         firstName: '',
@@ -27,7 +28,8 @@ function login(props) {
         try {
             await userutil.login(userLoginInfo);
         } catch (err) {
-            console.log('Login Screen: invalid credentials');
+            console.log('Login Screen: Invalid Credentials');
+            setVisible(true);
         }
     }
 
@@ -35,7 +37,8 @@ function login(props) {
         try {
             await userutil.signup(userSignupInfo);
         } catch (err) {
-            console.log('Signup Screen: invalid Credentials');
+            console.log('Signup Screen: Invalid Credentials');
+            setVisible(true);
         }
     }
 
@@ -80,6 +83,17 @@ function login(props) {
                             <Text style={{color: 'gold'}} onPress={switchToSignup}>
                                 Don't have an account? Sign up here.
                             </Text>
+                            <Snackbar
+                                visible={visible}
+                                onDismiss={() => setVisible(false)}
+                                action={{
+                                    label: 'Dismiss',
+                                    onPress: () => {
+                                    setVisible(false);
+                                    },
+                                }}>
+                                Username or Password is incorrect. Please try again. 
+                            </Snackbar>
                         </KeyboardAvoidingView>
                     </View>
                 </View>
@@ -101,6 +115,17 @@ function login(props) {
                         <Text style={{color: 'gold'}} onPress={switchToLogin}>
                             Already have an account? Login here.
                         </Text>
+                        <Snackbar
+                                visible={visible}
+                                onDismiss={() => setVisible(false)}
+                                action={{
+                                    label: 'Dismiss',
+                                    onPress: () => {
+                                    setVisible(false);
+                                    },
+                                }}>
+                                Username is already taken. Please try another username. 
+                            </Snackbar>
                     </View>
                 </View>
             }

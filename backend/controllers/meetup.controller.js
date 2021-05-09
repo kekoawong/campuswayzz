@@ -11,7 +11,9 @@ module.exports = {
     getMeetupLocation,
     getFriendsLocations,
     updateUserStatus,
-    meetupCleaner
+    meetupCleaner,
+    getUsersAcceptedMeetups,
+    getUsersPendingMeetups
 }
 
 /* POST request for meetup
@@ -168,7 +170,7 @@ function meetupCleaner(req, res){
     let date = new Date();
     date.setDate(date.getDate() - 1);
     let params = {
-        'updatedAt': {
+        'createdAt': {
             $lt: date
         }
     }
@@ -178,6 +180,32 @@ function meetupCleaner(req, res){
         res.status(200).json({result: 'success', message: `meetup cleaned up ${dbResponse['n']} entires`});
     }).catch(err => {
         debuglog('ERROR', 'meetup controller - updateUserStatus', err);
+        res.status(500).json(err.message);
+    })
+}
+
+function getUsersAcceptedMeetups(req, res){
+    const userNetID = req.params['userNetID'].toLowerCase();
+    Meetup.find({ 'friends': {$elemMatch: {'netID': userNetID, 'status': 'Accepted'}}}).sort({createdAt: -1})
+    .then(meetups => {
+        debuglog('LOG', 'meetup controller - getUsersAcceptedMeetups', `got ${userNetID}'s accepted meetups`);
+        res.status(200).json(meetups);
+        // console.log(meetups);
+    }).catch(err => {
+        debuglog('ERROR', 'meetup controller - getUsersAcceptedMeetups', err);
+        res.status(500).json(err.message);
+    })
+}
+
+function getUsersPendingMeetups(req, res){
+    const userNetID = req.params['userNetID'].toLowerCase();
+    Meetup.find({ 'friends': {$elemMatch: {'netID': userNetID, 'status': 'Pending'}}}).sort({createdAt: -1})
+    .then(meetups => {
+        debuglog('LOG', 'meetup controller - getUsersPendingMeetups', `got ${userNetID}'s pending meetups`);
+        res.status(200).json(meetups);
+        // console.log(meetups);
+    }).catch(err => {
+        debuglog('ERROR', 'meetup controller - getUsersPendingMeetups', err);
         res.status(500).json(err.message);
     })
 }
