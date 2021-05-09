@@ -1,7 +1,6 @@
 const server = 'http://107.191.49.209/api';
 
 function postMeetup(meetupData){
-    console.log(meetupData);
     return fetch(server + '/meetup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

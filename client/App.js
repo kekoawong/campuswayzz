@@ -16,9 +16,7 @@ export default function App() {
   // userutil.logout();
   // event listener for deep linking
   Linking.addEventListener('url', (item) => {
-    console.log(item.url);
     const thing = Linking.parse(item.url);
-    console.log(thing);
   });
 
   const Tab = createBottomTabNavigator();
@@ -27,9 +25,6 @@ export default function App() {
 
   async function getUser(){
     const res = await userutil.getUser();
-    console.log('App.js::getUser()::getting token');
-    console.log(res);
-    console.log('--------')
     if (res) {
       setLoggedIn(true);
       setUser(res);
@@ -38,17 +33,14 @@ export default function App() {
   }
 
   function handleLogin(){
-    console.log('App.js :: handleLogin');
     getUser();
   }
 
   function handleLogout(){
-    console.log('App.js :: handleLogout');
     setLoggedIn(false);
   }
 
   useEffect(() => {
-    console.log('USE EFFECT');
     getUser();
   }, [isLoggedIn]);
 

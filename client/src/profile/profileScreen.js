@@ -130,8 +130,6 @@ function MainProfile({route}) {
 }
 
 export default function ProfileScreen({route}) {
-  console.log('profileScreen :: ProfileScreen Stack :: props')
-  console.log(route);
   const Stack = createStackNavigator();
   return (
       <Stack.Navigator>
