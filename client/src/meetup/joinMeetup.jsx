@@ -6,6 +6,8 @@ import meetuputil from '../utils/meetup.util';
 
 
 export default function JoinMeetup({ route }) {
+  console.log('join meetup screen');
+  console.log(route);
     const userNetID = route.params.user.netID;
     const meetupID = route.params.groupID;
     // get navigation, set state
