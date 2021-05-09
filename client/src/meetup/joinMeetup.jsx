@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FAB, Headline } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -6,10 +6,12 @@ import meetuputil from '../utils/meetup.util';
 
 
 export default function JoinMeetup({ route }) {
-    const userNetID = route.params.user.netID;
-    const meetupID = route.params.groupID;
+    //const userNetID = route.params.user.netID;
+    //const meetupID = route.params.groupID;
     console.log("ROUTE");
     console.log(route);
+    const navigationRef = React.createRef();
+    console.log(navigationRef);
     // get navigation, set state
     const navigation = useNavigation();
       
@@ -23,7 +25,7 @@ export default function JoinMeetup({ route }) {
                 label='Join Meetup'
                 icon="walk"
                 onPress={() => {
-                  meetuputil.updateUserStatus(meetupID, userNetID, 'Accepted');
+                  //meetuputil.updateUserStatus(meetupID, userNetID, 'Accepted');
                   navigation.navigate('MeetupMap', {meetupID: meetupID});
                 }}
             />
@@ -32,7 +34,7 @@ export default function JoinMeetup({ route }) {
                 label='Deny Meetup Request'
                 icon="stop"
                 onPress={() => {
-                  meetuputil.updateUserStatus(meetupID, userNetID, 'Rejected');
+                  //meetuputil.updateUserStatus(meetupID, userNetID, 'Rejected');
                   navigation.navigate('Main');
                 }}
             />

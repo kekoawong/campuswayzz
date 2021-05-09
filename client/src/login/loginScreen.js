@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native'
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Avatar, Button, TextInput} from 'react-native-paper';
 import userutil from '../utils/user.util';

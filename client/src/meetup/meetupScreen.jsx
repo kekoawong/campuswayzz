@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { FAB, Headline, Snackbar } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 import MultiSelect from 'react-native-multiple-select';
 import locationutil from '../utils/location.util';
 import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
-export default function MeetupScreen({route}) {
-    // get navigation, set state
-    const navigation = useNavigation();
+export default function MeetupScreen({ route, navigation }) {
+
+  // set states
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState([]);
     const [visible, setVisible] = useState(false);

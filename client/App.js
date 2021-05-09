@@ -10,7 +10,6 @@ import { linkingConfig } from './src/linking/deepLinking';
 import * as Linking from 'expo-linking';
 import Login from './src/login/loginScreen';
 import userutil from './src/utils/user.util';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
 export default function App() {
   // userutil.logout();
