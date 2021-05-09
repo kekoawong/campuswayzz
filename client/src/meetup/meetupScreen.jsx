@@ -47,8 +47,6 @@ export default function MeetupScreen({route}) {
       }
       let requestBody = {"locationName": selectedLocation[0], "friends": friendsArray};
       postMeetup(requestBody).then(response => {
-        console.log('LOOK HERE');
-        console.log(response);
         navigation.navigate('MeetupMap', {meetupID: response['_id']});
       })
     }

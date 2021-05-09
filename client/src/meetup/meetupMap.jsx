@@ -27,14 +27,12 @@ export default function MeetupMap({route}) {
 
   // make shareable link
   const redirectUrl = Linking.createURL('List/JoinMeetup', {
-    queryParams: {groupID: meetupID}
+    // queryParams: {groupID: meetupID}
   });
 
   // function to copy link to clipboard
   const copyToClipboard = () => {
     Clipboard.setString(redirectUrl);
-    console.log(meetupID);
-    console.log(redirectUrl);
     Alert.alert('MeetUp Link', 'Link Copied to Clipboard!');
   };
   
@@ -72,9 +70,6 @@ export default function MeetupMap({route}) {
 
     getMeetupLocation()
     .then(response => {
-      console.log('RESPONSE');
-      console.log(response);
-
       setDestination(response);
     })
 
@@ -94,7 +89,6 @@ export default function MeetupMap({route}) {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      //console.log(userLocation);
       setUserLocation(userLocation);
 
       let coordinates = {"coordinates": {
