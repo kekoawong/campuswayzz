@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "CampusWayzz",
-    "slug": "client",
+    "slug": "campuswayzz",
     "scheme": "campuswayzz",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -39,6 +39,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Campus Wayzz is an application that allows users to see locations on Notre Dame's campus, get directions to those locations, and create meet ups with their friends."
   }
 }
