@@ -1,5 +1,5 @@
 # Campus Wayzz
-<img src='../assets/CW_logo.JPG'>
+![Campus Wayzz Logo](/CW_logo.JPG)
 
 ### Contributors:
 
