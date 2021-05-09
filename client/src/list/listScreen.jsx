@@ -94,6 +94,7 @@ function MainListScreen({route}) {
               // set title of screen to the location title
               options={({ route }) => ({ title: route.params.item.name })} />
             <Stack.Screen name="CreateMeetup" component={MeetupScreen} options={{title: "Create Meetup"}} initialParams={{user: route.params.user}} />
+            <Stack.Screen name="MyMeetups" component={myMeetups} options={{title: "My Meetups"}} initialParams={{user: route.params.user}} />
         </Stack.Navigator>
     );
 }
@@ -107,7 +108,6 @@ export default function ListScreen({route}) {
             <ModalStack.Screen name="Main" component={MainListScreen} initialParams={{user: route.params.user}} />
             <ModalStack.Screen name="MeetupMap" component={MeetupMap} initialParams={{user: route.params.user}} />
             <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} initialParams={{ user: route.params.user }} />
-            <ModalStack.Screen name="MyMeetups" component={myMeetups} initialParams={{ user: route.params.user }} />
         </ModalStack.Navigator>
     );
 }
