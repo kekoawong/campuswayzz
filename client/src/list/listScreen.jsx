@@ -78,12 +78,6 @@ function MainList({ navigation }) {
             ]}
             onStateChange={onStateChange}
           />
-          <FAB
-            style={styles.fab_view}
-            label='My Meetups'
-            icon="eye"
-            onPress={() => navigation.navigate('MyMeetups')}
-          />
         </View>
       );
 }
