@@ -35,9 +35,6 @@ function MainProfile({route}) {
   const [editMode, swapMode] = useState(false);
   const [keyboardOffset, setKeyboardOffset] = useState(140);
 
-  // console.log('MainProfile() - route')
-  // console.log(route);
-
   useEffect(() => {
     userutil.getUserData(route.params.user.netID)
     .then(res => {
