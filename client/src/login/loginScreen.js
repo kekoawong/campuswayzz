@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native'
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button, TextInput} from 'react-native-paper';
 import userutil from '../utils/user.util';
+const logo = require('../../assets/CW_logo.jpg');
 
 function login(props) {
     const [userFlowView, setUserFlowView] = useState('login');
@@ -65,7 +66,7 @@ function login(props) {
             {userFlowView == 'login' ?
                 <View style={{flex:1}}>
                     <View style={styles.container_logo}> 
-                        <Avatar.Image size={100} source={require('./CW_logo.JPG')}/>
+                        <Avatar.Image size={100} source={logo}/>
                     </View> 
                     <View style={styles.container_login}>
                         <TextInput mode='outlined' autoComplete="off" label='NetID' placeholder={'NetID'} value={userLoginInfo.netID} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'netID': value}})}/>
@@ -81,7 +82,7 @@ function login(props) {
             :
                 <View style={{flex:1}}>
                     <View style={styles.container_logo}> 
-                        <Avatar.Image size={100} source={require('./CW_logo.JPG')}/>
+                        <Avatar.Image size={100} source={logo}/>
                     </View> 
                     <View style={styles.container_signup}>
                         <TextInput mode='outlined' autoComplete="off" label='First Name' placeholder={'First Name'} value={userSignupInfo.firstName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'firstName': value}})}/>
