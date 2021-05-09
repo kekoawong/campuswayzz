@@ -39,12 +39,10 @@ const MyComponent = ({route}) => {
   }
   
   function handleAcceptClick(meetupID){
-      console.log("Send to Accepted " + meetupID);
       navigation.navigate('MeetupMap', {meetupID: meetupID});
   }
 
   function handlePendClick(meetupID){
-    console.log("Send to Pending " + meetupID);
     navigation.navigate('JoinMeetup', {groupID: meetupID})
   }
 

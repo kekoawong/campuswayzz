@@ -20,8 +20,6 @@ export default function App() {
   // event listener for deep linking
   Linking.addEventListener('url', (item) => {
     const parsedLink = Linking.parse(item.url);
-    console.log('PARSED LINK');
-    console.log(parsedLink.queryParams);
   });
 
   async function getUser(){

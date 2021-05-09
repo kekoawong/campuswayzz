@@ -48,7 +48,6 @@ function MainMap({route}) {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      console.log(userLocation);
       setUserLocation(userLocation);
 
       /* TODO: push user location to the database */
@@ -56,7 +55,6 @@ function MainMap({route}) {
   }, []);
 
   function setNewMarkers(type) {
-    console.log(type);
 
     /* call the api to pull locations from the database */    
     if (type == 'All') {
@@ -79,7 +77,6 @@ function MainMap({route}) {
   /* TODO: function to continuously get and set user location in the database */
 
   function toggleDirections(destCoordinates) {
-    console.log(destCoordinates)
 
     /* set directions destination */
     setDestination(destCoordinates);
@@ -94,7 +91,6 @@ function MainMap({route}) {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      console.log(userLocation);
       setUserLocation(userLocation);
     })();
 
@@ -144,8 +140,7 @@ function MainMap({route}) {
               <Callout 
                 style={styles.plainView}
                 onPress={() => {
-                  toggleDirections(marker.coordinates)
-                  console.log(marker);
+                  toggleDirections(marker.coordinates);
                 }}>
                 <View>
                   <Text style={styles.header}>{marker.name}</Text>

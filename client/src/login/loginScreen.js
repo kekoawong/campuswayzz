@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Avatar, Button, TextInput, Snackbar} from 'react-native-paper';
 import userutil from '../utils/user.util';
+import { color } from 'jimp';
 const logo = require('../../assets/CW_logo.jpg');
 
 function login(props) {
@@ -75,12 +76,12 @@ function login(props) {
                     </View> 
                     <View style={styles.container_login}>
                         <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardLoginOffset}>
-                            <TextInput mode='flat' autoComplete="off" label='NetID' placeholder={'NetID'} selectionColor={'gold'} underlineColor={'gold'} value={userLoginInfo.netID} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'netID': value}})}/>
-                            <TextInput mode='flat' secureTextEntry={true} autoComplete="off" label='Password' placeholder={'Password'} selectionColor={'gold'} underlineColor={'gold'} value={userLoginInfo.password} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'password': value}})}/>
-                            <Button icon='check-outline' mode='contained' color={'gold'}onPress={handleLoginButton}>
+                            <TextInput style={styles.input} mode='flat' autoComplete="off" label='NetID' placeholder={'NetID'} selectionColor={'gold'} underlineColor={'gold'} value={userLoginInfo.netID} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'netID': value}})}/>
+                            <TextInput style={styles.input} mode='flat' secureTextEntry={true} autoComplete="off" label='Password' placeholder={'Password'} selectionColor={'gold'} underlineColor={'gold'} value={userLoginInfo.password} onChangeText={value => setUserLoginInfo(prev => {return {...prev, 'password': value}})}/>
+                            <Button style={styles.input} icon='check-outline' mode='contained' color={'gold'}onPress={handleLoginButton}>
                                 Login
                             </Button>
-                            <Text style={{color: 'gold'}} onPress={switchToSignup}>
+                            <Text style={styles.signupText} style={{color: 'gold'}} onPress={switchToSignup}>
                                 Don't have an account? Sign up here.
                             </Text>
                             <Snackbar
@@ -104,15 +105,15 @@ function login(props) {
                     </View> 
                     <View style={styles.container_signup}>
                         <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardSignupOffset}>
-                            <TextInput mode='flat' autoComplete="off" label='First Name' placeholder={'First Name'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.firstName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'firstName': value}})}/>
-                            <TextInput mode='flat' autoComplete="off" label='Last Name' placeholder={'Last Name'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.lastName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'lastName': value}})}/>
-                            <TextInput mode='flat' autoComplete="off" label='NetID' placeholder={'NetID'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.netID} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'netID': value}})}/>
-                            <TextInput mode='flat' autoComplete="off" secureTextEntry={true} label='Password' placeholder={'Password'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.password} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'password': value}})}/>
+                            <TextInput style={styles.input} mode='flat' autoComplete="off" secureTextEntry={false} label='First Name' placeholder={'First Name'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.firstName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'firstName': value}})}/>
+                            <TextInput style={styles.input} mode='flat' autoComplete="off" secureTextEntry={false} label='Last Name' placeholder={'Last Name'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.lastName} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'lastName': value}})}/>
+                            <TextInput style={styles.input} mode='flat' autoComplete="off" secureTextEntry={false} label='NetID' placeholder={'NetID'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.netID} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'netID': value}})}/>
+                            <TextInput style={styles.input} mode='flat' autoComplete="off" secureTextEntry={true} label='Password' placeholder={'Password'} selectionColor={'gold'} underlineColor={'gold'} value={userSignupInfo.password} onChangeText={value => setUserSignupInfo(prev => {return {...prev, 'password': value}})}/>
                         </KeyboardAvoidingView>
-                        <Button icon='clipboard-check-outline' color={'gold'} mode='contained' onPress={handleSignupButton}>
+                        <Button style={styles.input} icon='clipboard-check-outline' color={'gold'} mode='contained' onPress={handleSignupButton}>
                             Signup
                         </Button>
-                        <Text style={{color: 'gold'}} onPress={switchToLogin}>
+                        <Text style={styles.signupText} onPress={switchToLogin}>
                             Already have an account? Login here.
                         </Text>
                         <Snackbar
@@ -140,6 +141,15 @@ const styles = StyleSheet.create({
         overflow: 'scroll',
         justifyContent: 'center'
     },
+    input: {
+        marginHorizontal: 10,
+        marginBottom: 10
+    },
+    signupText: {
+        marginHorizontal: 10,
+        marginBottom: 10,
+        color: 'gold'
+    },
     container_logo: {
         flex: .75,
         backgroundColor: 'green',
@@ -150,12 +160,12 @@ const styles = StyleSheet.create({
         flex: 2,
         backgroundColor: 'navy',
         overflow: 'scroll',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     container_login: {
         flex: 2,
         backgroundColor: 'navy',
         overflow: 'scroll',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
 });

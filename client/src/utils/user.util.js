@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Base64 } from 'js-base64';
 
 function login(credentials){
-    console.log(credentials);
     return fetch(server + '/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -22,7 +21,6 @@ function login(credentials){
 }
 
 function signup(credentials) {
-    console.log(credentials);
     return fetch(server + '/signup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
