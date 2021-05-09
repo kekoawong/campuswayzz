@@ -1,4 +1,5 @@
 # Campus Wayzz
+![Campus Wayzz Logo](/CW_logo.JPG)
 
 ### Contributors:
 
