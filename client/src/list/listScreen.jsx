@@ -10,6 +10,7 @@ import MeetupScreen from '../meetup/meetupScreen';
 import MeetupMap from '../meetup/meetupMap';
 import JoinMeetup from '../meetup/joinMeetup';
 import locationutil from '../utils/location.util';
+import myMeetups from '../meetup/myMeetups.jsx';
 
 function MainList() {
     // get navigation, set state
@@ -57,10 +58,16 @@ function MainList() {
             keyExtractor={(item) => item._id}
           />
           <FAB
-            style={styles.fab}
+            style={styles.fab_create}
             label='Create Meetup'
             icon="plus"
             onPress={() => navigation.navigate('CreateMeetup')}
+          />
+          <FAB
+            style={styles.fab_view}
+            label='My Meetups'
+            icon="eye"
+            onPress={() => navigation.navigate('MyMeetups')}
           />
         </View>
       );
@@ -91,6 +98,7 @@ export default function ListScreen({route}) {
             <ModalStack.Screen name="Main" component={MainListScreen} initialParams={{user: route.params.user}} />
             <ModalStack.Screen name="MeetupMap" component={MeetupMap} initialParams={{user: route.params.user}} />
             <ModalStack.Screen name="JoinMeetup" component={JoinMeetup} initialParams={{ user: route.params.user }} />
+            <ModalStack.Screen name="MyMeetups" component={myMeetups} initialParams={{ user: route.params.user }} />
         </ModalStack.Navigator>
     );
 }
@@ -101,10 +109,16 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       overflow: 'scroll'
     },
-    fab: {
+    fab_create: {
       position: 'absolute',
       alignSelf: 'center',
       marginBottom: 16,
+      bottom: 0
+    },
+    fab_view: {
+      position: 'absolute',
+      alignSelf: 'center',
+      marginBottom: 80,
       bottom: 0
     }
 });

@@ -42,9 +42,27 @@ function updateUserStatus(meetupID, userNetID, status){
     })
 }
 
+function getUsersAccepted(userNetID){
+    return fetch(server + '/meetup/' + userNetID + '/accepted')
+    .then(res => res.json())
+    .then(json => {
+        return json;
+    });
+}
+
+function getUsersPending(userNetID){
+    return fetch(server + '/meetup/' + userNetID + '/pending')
+    .then(res => res.json())
+    .then(json => {
+        return json;
+    });
+}
+
 export default {
     postMeetup,
     getMeetupLocation,
     getFriendsLocation,
-    updateUserStatus
+    updateUserStatus,
+    getUsersAccepted,
+    getUsersPending
 }
