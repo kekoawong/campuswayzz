@@ -5,7 +5,6 @@ import MapView, {
 } from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker'
 import { createStackNavigator } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
 import MapViewDirections from 'react-native-maps-directions';
 import DetailsScreen from '../list/detailsScreen';
@@ -27,7 +26,6 @@ function MainMap({route}) {
 
   /* markers are a state so that they can RELOAD when the user queries */
   const [locations, setLocations] = useState([]);
-  const navigation = useNavigation();
   const [userLocation, setUserLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [showDirections, setShowDirections] = useState(false);
@@ -148,7 +146,6 @@ function MainMap({route}) {
                 onPress={() => {
                   toggleDirections(marker.coordinates)
                   console.log(marker);
-                  //navigation.navigate('Details', { item: marker })
                 }}>
                 <View>
                   <Text style={styles.header}>{marker.name}</Text>

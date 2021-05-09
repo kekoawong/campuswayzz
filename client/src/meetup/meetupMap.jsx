@@ -9,7 +9,6 @@ import {
   Alert
 } from "react-native";
 import { FAB } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Clipboard from 'expo-clipboard';
@@ -18,7 +17,7 @@ import * as Location from "expo-location";
 import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
-export default function MeetupMap({route}) {
+export default function MeetupMap({ route, navigation }) {
   /* TODO: get destination and userId from previous meetup screen */
   const [destination, setDestination] = useState({ name: "Main Building", coordinates: {latitude: 41.703, longitude: -86.239} });
   const userId = route.params.user.netID;
@@ -26,19 +25,13 @@ export default function MeetupMap({route}) {
   const meetupID = route.params['meetupID'];
 
   // make shareable link
-  const redirectUrl = Linking.createURL('List/JoinMeetup', {
-    queryParams: {groupID: meetupID}
-  });
+  const redirectUrl = Linking.createURL('List/JoinMeetup') + "/" + String(meetupID);
 
   // function to copy link to clipboard
   const copyToClipboard = () => {
     Clipboard.setString(redirectUrl);
-    console.log(meetupID);
-    console.log(redirectUrl);
     Alert.alert('MeetUp Link', 'Link Copied to Clipboard!');
   };
-  
-  const navigation = useNavigation();
 
   /* initial coordinates that map will be centered on */
   const initialCoordinates = {
@@ -72,9 +65,6 @@ export default function MeetupMap({route}) {
 
     getMeetupLocation()
     .then(response => {
-      console.log('RESPONSE');
-      console.log(response);
-
       setDestination(response);
     })
 
@@ -94,7 +84,6 @@ export default function MeetupMap({route}) {
       }
 
       let userLocation = await Location.getCurrentPositionAsync({});
-      //console.log(userLocation);
       setUserLocation(userLocation);
 
       let coordinates = {"coordinates": {

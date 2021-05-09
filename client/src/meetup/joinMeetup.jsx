@@ -1,17 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FAB, Headline } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import meetuputil from '../utils/meetup.util';
 
 
-export default function JoinMeetup({ route }) {
-  console.log('join meetup screen');
-  console.log(route);
+export default function JoinMeetup({route, navigation}) {
     const userNetID = route.params.user.netID;
-    const meetupID = route.params.groupID;
-    // get navigation, set state
-    const navigation = useNavigation();
+    const meetupID = getFocusedRouteNameFromRoute(route);
       
     return (
         <View style={styles.container}>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
 import { FlatList, View, Text, StyleSheet, RefreshControl } from 'react-native';
 import { FAB } from 'react-native-paper';
 import Empty from './emptyList';
@@ -12,9 +11,7 @@ import JoinMeetup from '../meetup/joinMeetup';
 import locationutil from '../utils/location.util';
 import myMeetups from '../meetup/myMeetups.jsx';
 
-function MainList() {
-    // get navigation, set state
-    const navigation = useNavigation();
+function MainList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [data, setData] = useState();
     const [state, setState] = React.useState({ open: false });
