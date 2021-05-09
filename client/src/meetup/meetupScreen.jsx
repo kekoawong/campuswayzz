@@ -34,10 +34,9 @@ export default function MeetupScreen({route}) {
       return await userutil.getAllUserNetIDs(route.params.user.netID);
     }
 
-    function handleMeetupPost(){
-
+    function handleMeetupPost() {
       // ensure that at least one location and user
-      if ( selectedLocation.length == 0 && selectedUsers.length == 0) {
+      if ( selectedLocation.length == 0 || selectedUsers.length == 0) {
           setVisible(true);
           return;
       }
