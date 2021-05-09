@@ -12,15 +12,17 @@ import Login from './src/login/loginScreen';
 import userutil from './src/utils/user.util';
 
 export default function App() {
-  // userutil.logout();
-  // event listener for deep linking
-  Linking.addEventListener('url', (item) => {
-    const thing = Linking.parse(item.url);
-  });
 
   const Tab = createBottomTabNavigator();
   const [user, setUser] = useState();
   const [isLoggedIn, setLoggedIn] = useState(false);
+
+  // event listener for deep linking
+  Linking.addEventListener('url', (item) => {
+    const parsedLink = Linking.parse(item.url);
+    console.log('PARSED LINK');
+    console.log(parsedLink.queryParams);
+  });
 
   async function getUser(){
     const res = await userutil.getUser();
@@ -49,7 +51,7 @@ export default function App() {
         <Login onLoggedIn={handleLogin} /> :
         <NavigationContainer linking={linkingConfig}>
           <Tab.Navigator>
-            <Tab.Screen 
+            <Tab.Screen
                 name="List" 
                 component={ListScreen}
                 options={{

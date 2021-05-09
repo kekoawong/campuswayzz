@@ -10,7 +10,7 @@ import MeetupMap from '../meetup/meetupMap';
 import JoinMeetup from '../meetup/joinMeetup';
 import locationutil from '../utils/location.util';
 
-function MainList({navigation}) {
+function MainList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [data, setData] = useState();
 
