@@ -70,6 +70,9 @@ export default function MeetupMap({ route, navigation }) {
 
     updateUserLocation();
 
+    console.log(destination);
+    console.log(friends);
+
     /* TOOD: add cleanup function to useEffect */
   }, []);
 
