@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { BottomNavigation, DataTable } from 'react-native-paper';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import meetuputil from '../utils/meetup.util';
 
@@ -106,12 +105,10 @@ export default MyComponent;
 const styles = StyleSheet.create({
     container_accepted: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center'
     },
     container_pending: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center'
     }
 });
