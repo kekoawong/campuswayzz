@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Avatar, Button, Divider, ToggleButton, Switch, TextInput} from 'react-native-paper';
 import userutil from '../utils/user.util';
+const logo = require('../../assets/CW_logo.jpg')
 
 // Ghost mode switch
 const GhostSwitch = () => {
@@ -68,7 +69,7 @@ function MainProfile({route}) {
     return (
       <View style={{flex:1}}> 
         <View style={styles.container_picture}> 
-          <Avatar.Image size={100} source={require('./CW_logo.JPG')}/>
+          <Avatar.Image size={100} source={logo}/>
         </View> 
           <View style={styles.container_picture}>
             <Button icon='account-edit' mode='contained' color={'gold'} onPress={editButton}>
@@ -101,7 +102,7 @@ function MainProfile({route}) {
     return (
       <View style={{flex:1}}> 
         <View style={styles.container_picture}> 
-          <Avatar.Image size={100} source={require('./CW_logo.jpg')}/>
+          <Avatar.Image size={100} source={logo}/>
         </View> 
           <View style={styles.container_picture}>
             <Button icon='account-edit' mode='contained' color={'gold'} onPress={editButton}>
