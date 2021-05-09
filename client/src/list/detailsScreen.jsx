@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { TextInput, Button, Card, Title, Subheading } from 'react-native-paper';
+import { TextInput, Button, Card, Title, Subheading, Paragraph } from 'react-native-paper';
 
 
 export default function DetailsScreen({ route, navigation }) {
@@ -15,13 +15,15 @@ export default function DetailsScreen({ route, navigation }) {
           <ScrollView>
             <KeyboardAvoidingView style={styles.keyboardAvoid} behavior={"position"} keyboardVerticalOffset={keyboardOffset}>
               <Card>
-                  <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                  {/* <Card.Cover source={{ uri: 'https://picsum.photos/700' }} /> */}
                   <Card.Content>
                     <Title style={styles.cardTitle}>{item.name}</Title>
-                    <Subheading>{item.type}</Subheading>
+                    <Subheading>{item.building}</Subheading>
+                    <Paragraph style={{ fontStyle: 'italic' }}>{item.type}</Paragraph>
+                    <Paragraph>{item.description}</Paragraph>
                   </Card.Content>
               </Card>
-              <Card>
+              {/* <Card>
                   <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
                   <Card.Content>
                     <Title style={styles.cardTitle}>{item.name}</Title>
@@ -36,7 +38,7 @@ export default function DetailsScreen({ route, navigation }) {
                 onContentSizeChange={() => setKeyboardOffset(keyboardOffset+1)}
                 value={text}
                 onChangeText={text => setText(text)}
-              />
+              /> */}
             </KeyboardAvoidingView>
             </ScrollView>
         </View>

@@ -7,8 +7,7 @@ import locationutil from '../utils/location.util';
 import userutil from '../utils/user.util';
 import meetuputil from '../utils/meetup.util';
 
-export default function MeetupScreen() {
-
+export default function MeetupScreen({route}) {
     // get navigation, set state
     const navigation = useNavigation();
     const [selectedUsers, setSelectedUsers] = useState([]);
@@ -32,18 +31,17 @@ export default function MeetupScreen() {
       return await locationutil.getAllLocationNames();
     }
     async function getAllUserNetIDs(){
-      return await userutil.getAllUserNetIDs();
+      return await userutil.getAllUserNetIDs(route.params.user.netID);
     }
 
-    function handleMeetupPost(){
-
+    function handleMeetupPost() {
       // ensure that at least one location and user
-      if ( selectedLocation.length == 0 && selectedUsers.length == 0) {
+      if ( selectedLocation.length == 0 || selectedUsers.length == 0) {
           setVisible(true);
           return;
       }
 
-      let friendsArray = [];
+      let friendsArray = [{"netID": route.params.user.netID, "status": "Accepted"}];
       for (const i in selectedUsers){
         friendsArray.push({"netID": selectedUsers[i], "status": "Pending"});
       }

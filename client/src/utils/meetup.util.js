@@ -21,16 +21,48 @@ function getMeetupLocation(meetupID){
     });
 }
 
-function getFriendsLocation(meetupID){
-    return fetch(server + '/meetup/' + meetupID + '/friends')
+function getFriendsLocation(meetupID, userNetID){
+    return fetch(server + '/meetup/' + meetupID + '/friends/' + userNetID)
     .then(res => res.json())
     .then(json => {
         return json;
     })
 }
 
+function updateUserStatus(meetupID, userNetID, status){
+    const data = {'netID': userNetID, 'status': status};
+    return fetch(server + '/meetup/' + meetupID + '/userstatus', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Posting new meetup failed');
+    })
+}
+
+function getUsersAccepted(userNetID){
+    return fetch(server + '/meetup/' + userNetID + '/accepted')
+    .then(res => res.json())
+    .then(json => {
+        return json;
+    });
+}
+
+function getUsersPending(userNetID){
+    return fetch(server + '/meetup/' + userNetID + '/pending')
+    .then(res => res.json())
+    .then(json => {
+        return json;
+    });
+}
+
 export default {
     postMeetup,
     getMeetupLocation,
-    getFriendsLocation
+    getFriendsLocation,
+    updateUserStatus,
+    getUsersAccepted,
+    getUsersPending
 }

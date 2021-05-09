@@ -12,7 +12,7 @@ function login(credentials){
         body: JSON.stringify(credentials)
     })
     .then(res => {
-        console.log('logging in');
+        console.log('userutil :: login :: logging in');
         if (res.ok) return res.json();
         throw new Error('Bad credentials!');
     })
@@ -29,7 +29,7 @@ function signup(credentials) {
         body: JSON.stringify(credentials)
     })
     .then(res => {
-        console.log('signing up');
+        console.log('userutiL :: signup :: signing up');
         if (res.ok) return res.json();
         throw new Error('NetID has already been taken');
     })
@@ -41,15 +41,14 @@ function signup(credentials) {
 function getUser(){
     return getToken()
     .then(token => {
-        const user = JSON.parse(Base64.atob(token.split('.')[1]))['user'];
-        console.log(`userutil:: getUser :: got token for ${user['netID']}`);
-        return user;
-        // try {
-        //     console.log('userutil:: getUser :: end');
-        //     return user;
-        // } catch (e) {
-        //     return null;
-        // }
+        console.log('userutil :: getUser :: got raw token :: ' + token)
+        try {
+            const user = JSON.parse(Base64.atob(token.split('.')[1]))['user'];
+            console.log(`userutil :: getUser :: got token for ${user['netID']}`);
+            return user;
+        } catch (e) {
+            return null;
+        }
     })
     .then(res => {
         return res;
@@ -57,6 +56,7 @@ function getUser(){
 }
 
 function logout(){
+    console.log('userutil :: logout :: logging out');
     removeToken();
 }
 
@@ -100,8 +100,9 @@ function putUserLocation(netID, coordinates){
     })
 }
 
-function getAllUserNetIDs(){
-    return fetch(server + '/user/netIDs/all')
+function getAllUserNetIDs(userNetID){
+    console.log(`userNetID: ${userNetID}`)
+    return fetch(server + '/user/netIDs/all/' + userNetID)
     .then(res => res.json())
     .then(json => {
         return json;
@@ -111,6 +112,7 @@ function getAllUserNetIDs(){
 export default {
     login,
     signup,
+    logout,
     getUser,
     logout,
     getUserData,
@@ -121,24 +123,28 @@ export default {
 }
 
 function createToken(token){
-    console.log('creating token ' + token);
+    console.log('userutil :: createToken :: creating token ' + token);
     if (token) {
-        const storeData = async (token) => {
-        try {
-            await AsyncStorage.setItem('token', token)
-        } catch (e) {
-            // saving error
-        }
-    }
+        console.log('userutil :: createToken :: attempting');
+        AsyncStorage.setItem('token', token)
+        .then(() => {
+            AsyncStorage.getItem('token')
+            .then((result) => {
+                console.log('userutil :: createToken :: successfully created token ' + result);
+            })
+        })
     } else {
-        // AsyncStorage.removeItem('token');
+        console.log('userutil :: createToken :: no token passed');
+        AsyncStorage.removeItem('token');
     }
 }
 
 async function getToken(){
-    console.log('userutil:: getToken:: start')
+    console.log('userutil :: getToken :: start')
     try {
-        return await AsyncStorage.getItem('token');
+        const tok = await AsyncStorage.getItem('token');
+        console.log('userutil :: getToken :: got following token - ' + tok);
+        return tok;
     } catch(e) {
         // error reading value
     }
@@ -146,6 +152,6 @@ async function getToken(){
 }
 
 function removeToken(){
-    // localStorage.removeItem('token');
+    AsyncStorage.removeItem('token');
     console.log('removed token');
 }
