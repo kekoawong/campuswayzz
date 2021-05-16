@@ -174,7 +174,7 @@ function meetupCleaner(req, res){
             $lt: date
         }
     }
-    Meetup.deleteMany({params})
+    Meetup.deleteMany()
     .then(dbResponse => {
         debuglog('LOG', 'meetup controller - meetupCleaner', `deleted ${dbResponse['n']} entries`);
         res.status(200).json({result: 'success', message: `meetup cleaned up ${dbResponse['n']} entires`});
