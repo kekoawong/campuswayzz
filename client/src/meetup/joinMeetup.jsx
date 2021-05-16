@@ -7,7 +7,7 @@ import meetuputil from '../utils/meetup.util';
 
 export default function JoinMeetup({route, navigation}) {
     const userNetID = route.params.user.netID;
-    const meetupID = getFocusedRouteNameFromRoute(route);
+    const meetupID = (getFocusedRouteNameFromRoute(route) == undefined) ? route.params.groupID : getFocusedRouteNameFromRoute(route);
       
     return (
         <View style={styles.container}>

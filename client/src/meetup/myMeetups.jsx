@@ -5,7 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import meetuputil from '../utils/meetup.util';
 
 const MyComponent = ({ route, navigation }) => {
-    const userNetID = route['params']['user']['netID'];
+    const user = route.params.user;
+    const userNetID = user.netID;
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([

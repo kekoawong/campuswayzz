@@ -37,7 +37,7 @@ function updateUserStatus(meetupID, userNetID, status){
     })
     .then(res => {
         if (res.ok) return res.json();
-        throw new Error('Posting new meetup failed');
+        throw new Error('Updating meetup user status failed');
     })
 }
 
