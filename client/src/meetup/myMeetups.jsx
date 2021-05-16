@@ -4,9 +4,9 @@ import { BottomNavigation, DataTable } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import meetuputil from '../utils/meetup.util';
 
-const MyComponent = ({route}) => {
-    const navigation = useNavigation();
-    const userNetID = route['params']['user']['netID'];
+const MyComponent = ({ route, navigation }) => {
+    const user = route.params.user;
+    const userNetID = user.netID;
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -42,7 +42,7 @@ const MyComponent = ({route}) => {
   }
 
   function handlePendClick(meetupID){
-    navigation.navigate('JoinMeetup', {groupID: meetupID})
+      navigation.navigate('JoinMeetup', {groupID: meetupID})
   }
 
   const renderScene = BottomNavigation.SceneMap({

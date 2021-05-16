@@ -23,6 +23,7 @@ export default function MeetupMap({ route, navigation }) {
   const userId = route.params.user.netID;
   // TEMPORARY MEETUPID
   const meetupID = route.params['meetupID'];
+  const [loop, setLoop] = useState();
 
   // make shareable link
   const redirectUrl = Linking.createURL('List/JoinMeetup') + "/" + String(meetupID);
@@ -55,13 +56,15 @@ export default function MeetupMap({ route, navigation }) {
   const [showDirections, setShowDirections] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      /* consistently update friends' from the database */
-      updateFriendsLocations();
+    setLoop(
+      setInterval(() => {
+        /* consistently update friends' from the database */
+        updateFriendsLocations();
 
-      /* async to update current user location */
-      updateUserLocation();
-    }, 3000);
+        /* async to update current user location */
+        updateUserLocation();
+      }, 3000)
+    );
 
     getMeetupLocation()
     .then(response => {
@@ -69,6 +72,13 @@ export default function MeetupMap({ route, navigation }) {
     })
 
     updateUserLocation();
+
+    console.log(destination);
+    console.log(friends);
+
+    return function cleanup(){
+      clearInterval(loop);
+    }
 
     /* TOOD: add cleanup function to useEffect */
   }, []);
@@ -143,6 +153,7 @@ export default function MeetupMap({ route, navigation }) {
 
   function handleLeaveMeetup(){
     meetuputil.updateUserStatus(meetupID, userId, 'Rejected');
+    clearInterval(loop);
     navigation.navigate("Main");
   }
 
